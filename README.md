@@ -13,9 +13,9 @@ code block
 
 ## Contributing
 
-Saulius Vincevičius
-Marija Maikštėnaitė
-Lindsey Hinks
+Saulius Vincevičius <br >
+Marija Maikštėnaitė <br >
+Lindsey Hinks <br >
 Gabija Švedkauskaitė
 
 ## Type of project
