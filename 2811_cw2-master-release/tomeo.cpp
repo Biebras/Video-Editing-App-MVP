@@ -132,74 +132,57 @@ int main(int argc, char *argv[])
     //QVBoxLayout *top = new QVBoxLayout();
     //window.setLayout(top);
     window->setWindowTitle("tomeo");
-    //window->setMinimumSize(400, 720);
+    window->setMinimumSize(400, 720);
 
-    // the buttons are arranged horizontally
-//    QGridLayout* gridLayout = new QGridLayout(window);
-//    QHBoxLayout* header = new QHBoxLayout(window);
-//    QHBoxLayout* videoArea = new QHBoxLayout(window);
-//    QHBoxLayout* timeArea = new QHBoxLayout(window);
-//    QHBoxLayout* pauseArea = new QHBoxLayout(window);
-//    QHBoxLayout* videoEditingArea = new QHBoxLayout(window);
-//    QHBoxLayout* footer = new QHBoxLayout(window);
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    window->setLayout(mainLayout);
 
-//    gridLayout->addLayout(header, 0, 0);
-//    gridLayout->addLayout(videoArea, 1, 0);
-//    gridLayout->addLayout(timeArea, 2, 0);
-//    gridLayout->addLayout(pauseArea, 3, 0);
-//    gridLayout->addLayout(videoEditingArea, 4, 0);
-//    gridLayout->addLayout(footer, 5, 0);
+    //header
+    QHBoxLayout* headerLayout = new QHBoxLayout();
+    QWidget* headerWidget = new QWidget();
+    mainLayout->addWidget(headerWidget);
+    headerWidget->setLayout(headerLayout);
+    headerWidget->setStyleSheet("border: 1px solid black");
+    headerWidget->setMaximumHeight(window->height() * 0.08);
 
-//    header->
+    //video
+    QHBoxLayout* videoLayout = new QHBoxLayout();
+    QWidget* videoWidget = new QWidget();
+    mainLayout->addWidget(videoWidget);
+    videoWidget->setLayout(videoLayout);
+    videoWidget->setStyleSheet("border: 1px solid black");
 
-//    QFrame *label = new QFrame();
-//    QFrame *label2 = new QFrame();
-//    QFrame *label3 = new QFrame();
-//    QFrame *label4 = new QFrame();
-//    QFrame *label5 = new QFrame();
-//    QFrame *label6 = new QFrame();
+    //pause
+    QHBoxLayout* pauseLayout = new QHBoxLayout();
+    QWidget* pauseWidget = new QWidget();
+    mainLayout->addWidget(pauseWidget);
+    pauseWidget->setLayout(pauseLayout);
+    pauseWidget->setStyleSheet("border: 1px solid black");
+    pauseWidget->setMaximumHeight(window->height() * 0.05);
 
-//    label->setLineWidth(2);
-//    label->setFrameStyle(QFrame::Panel);
-//    label2->setLineWidth(2);
-//    label2->setFrameStyle(QFrame::Panel);
-//    label3->setLineWidth(2);
-//    label3->setFrameStyle(QFrame::Panel);
-//    label4->setLineWidth(2);
-//    label4->setFrameStyle(QFrame::Panel);
-//    label5->setLineWidth(2);
-//    label5->setFrameStyle(QFrame::Panel);
-//    label6->setLineWidth(2);
-//    label6->setFrameStyle(QFrame::Panel);
+    //timelapse
+    QHBoxLayout* timelapseLayout = new QHBoxLayout();
+    QWidget* timelapseWidget = new QWidget();
+    mainLayout->addWidget(timelapseWidget);
+    timelapseWidget->setLayout(timelapseLayout);
+    timelapseWidget->setStyleSheet("border: 1px solid black");
+    timelapseWidget->setMaximumHeight(window->height() * 0.05);
 
-//    header->addWidget(label);
-//    videoArea->addWidget(label2);
-//    timeArea->addWidget(label3);
-//    pauseArea->addWidget(label4);
-//    videoEditingArea->addWidget(label5);
-//    footer->addWidget(label6);
+    //edit
+    QHBoxLayout* editLayout = new QHBoxLayout();
+    QWidget* editWidget = new QWidget();
+    mainLayout->addWidget(editWidget);
+    editWidget->setLayout(editLayout);
+    editWidget->setStyleSheet("border: 1px solid black");
+    editWidget->setMaximumHeight(window->height() * 0.2);
 
-    QVBoxLayout* _mainLayout = new QVBoxLayout(window);
-    QHBoxLayout* header = new QHBoxLayout();
-    QHBoxLayout* videoArea = new QHBoxLayout(window);
-    QHBoxLayout* timeArea = new QHBoxLayout(window);
-
-    _mainLayout->addLayout(header);
-    _mainLayout->addLayout(videoArea);
-    _mainLayout->addLayout(timeArea);
-
-    QPushButton* button = new QPushButton("Header");
-    button->setGeometry(*new QRect(0, 0, window->width(), 10));
-    QPushButton* button1 = new QPushButton("Video Area");
-    QPushButton* button2 = new QPushButton("Time Area");
-
-    header->addWidget(button);
-    videoArea->addWidget(button1);
-    timeArea->addWidget(button2);
-
-    // add the video and the buttons to the top level widget
-    //top->addWidget(videoWidget);
-    //top->addWidget(buttonWidget);
+    //footer
+    QHBoxLayout* footerLayout = new QHBoxLayout();
+    QWidget* footerWidget = new QWidget();
+    mainLayout->addWidget(footerWidget);
+    footerWidget->setLayout(footerLayout);
+    footerWidget->setStyleSheet("border: 1px solid black");
+    footerWidget->setMaximumHeight(window->height() * 0.08);
 
     // showtime!
     window->show();
