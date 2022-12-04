@@ -14,14 +14,16 @@ SOURCES += \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp \
-        video.cpp
+        video.cpp \
+        videomanager.cpp
 
 HEADERS += \
     ModularLayout.h \
     Scene.h \
     the_button.h \
     the_player.h \
-    video.h
+    video.h \
+    videomanager.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

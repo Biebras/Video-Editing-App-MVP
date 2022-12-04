@@ -241,6 +241,7 @@ int main(int argc, char *argv[])
     //top->addWidget(videoWidget);
     //top->addWidget(buttonWidget);
 
+    std::
     // showtime!
     window->show();
 
