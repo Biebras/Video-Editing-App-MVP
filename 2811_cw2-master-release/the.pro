@@ -13,6 +13,8 @@ SOURCES += \
         tomeo.cpp
 
 HEADERS += \
+    Video.h \
+    VideoManager.h \
     the_button.h \
     the_player.h
 
