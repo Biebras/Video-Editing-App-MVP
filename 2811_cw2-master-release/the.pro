@@ -11,6 +11,7 @@ SOURCES += \
         EditorManager.cpp \
         ModularLayout.cpp \
         Scene.cpp \
+        VideoPlayer.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     ModularLayout.h \
     Scene.h \
+    VideoPlayer.h \
     the_button.h \
     the_player.h \
     video.h \
