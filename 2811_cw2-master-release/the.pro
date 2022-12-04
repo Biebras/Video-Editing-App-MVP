@@ -8,10 +8,10 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        EditorManager.cpp \
-        ModularLayout.cpp \
-        Scene.cpp \
-        VideoPlayer.cpp \
+        editormanager.cpp \
+        modularlayout.cpp \
+        scene.cpp \
+        videoplayer.cpp \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp \
@@ -19,9 +19,9 @@ SOURCES += \
         videomanager.cpp
 
 HEADERS += \
-    ModularLayout.h \
-    Scene.h \
-    VideoPlayer.h \
+    modularlayout.h \
+    scene.h \
+    videoplayer.h \
     the_button.h \
     the_player.h \
     video.h \
