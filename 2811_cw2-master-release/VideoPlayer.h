@@ -3,7 +3,7 @@
 
 #include <QMediaPlayer>
 #include "Video.h"
-
+#include "videomanager.h"
 
 
 class VideoPlayer : public QMediaPlayer
