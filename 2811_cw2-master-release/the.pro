@@ -13,13 +13,15 @@ SOURCES += \
         Scene.cpp \
         the_button.cpp \
         the_player.cpp \
-        tomeo.cpp
+        tomeo.cpp \
+        video.cpp
 
 HEADERS += \
     ModularLayout.h \
     Scene.h \
     the_button.h \
-    the_player.h
+    the_player.h \
+    video.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
