@@ -25,6 +25,8 @@
 #include "the_player.h"
 #include "the_button.h"
 #include <QFrame>
+#include <QtWidgets>
+#include <string>
 
 // read in videos and thumbnails to this directory
 std::vector<TheButtonInfo> getInfoIn (std::string loc)
@@ -96,21 +98,42 @@ int main(int argc, char *argv[])
         exit(-1);
     }
 
-    /*
+
     // the widget that will show the video
     QVideoWidget *videoWidget = new QVideoWidget;
 
+
+
     // the QMediaPlayer which controls the playback
     ThePlayer *player = new ThePlayer;
+    // setNotifyInterval sets the time at which the player updates
+    player->setNotifyInterval(100);
+
+
     player->setVideoOutput(videoWidget);
+
+    // set details of the pause button
+    player->pauseButton.setIcon(QIcon(":/pauseIcon.png"));
+    player->pauseButton.setToolTip("Pause");
+    player->pauseButton.setFixedSize(QSize(50, 50));
+
+    // initialise the timer label
+    player->timeLabel = new QLabel();
+    player->timeLabel->setAlignment(Qt::AlignCenter);
+    player->timeLabel->setStyleSheet("font-size: 18pt");
+
+    //player->videoSlider = new QSlider(Qt::Horizontal);
+    player->videoSlider.setOrientation(Qt::Horizontal);
+    player->videoSlider.setToolTip("Move through video");
+    //player->videoSlider->setMaximum(10);
+    //std::cout << player->duration()/1000;
+
+
 
     // a row of buttons
     QWidget *buttonWidget = new QWidget();
     // a list of the buttons
     std::vector<TheButton*> buttons;
-    // the buttons are arranged horizontally
-    QHBoxLayout *layout = new QHBoxLayout();
-    buttonWidget->setLayout(layout);
 
 
     // create the four buttons
@@ -119,13 +142,13 @@ int main(int argc, char *argv[])
         TheButton *button = new TheButton(buttonWidget);
         button->connect(button, SIGNAL(jumpTo(TheButtonInfo* )), player, SLOT (jumpTo(TheButtonInfo*))); // when clicked, tell the player to play.
         buttons.push_back(button);
-        layout->addWidget(button);
         button->init(&videos.at(i));
     }
 
     // tell the player what buttons and videos are available
     player->setContent(&buttons, &videos);
-    */
+
+    //player->videoSlider->setMaximum(player->duration()/1000);
 
     // create the main window and layout
     QWidget *window = new QWidget();
@@ -134,55 +157,89 @@ int main(int argc, char *argv[])
     window->setWindowTitle("tomeo");
     window->setMinimumSize(400, 720);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout();
-    window->setLayout(mainLayout);
+    QVBoxLayout* _mainLayout = new QVBoxLayout(window);
 
-    //header
-    QHBoxLayout* headerLayout = new QHBoxLayout();
-    QWidget* headerWidget = new QWidget();
-    mainLayout->addWidget(headerWidget);
-    headerWidget->setLayout(headerLayout);
-    headerWidget->setStyleSheet("border: 1px solid black");
-    headerWidget->setMaximumHeight(window->height() * 0.08);
+    // create all the widgets
+    QPushButton* backButton = new QPushButton();
+    backButton->setIcon(QIcon(":/backIcon.png"));
+    backButton->setToolTip("Go Back");
+    backButton->setFixedSize(QSize(50,50));
+    QPushButton* shareButton = new QPushButton();
+    shareButton->setIcon(QIcon(":/shareIcon.png"));
+    shareButton->setToolTip("Share");
+    shareButton->setFixedSize(QSize(50, 50));
+    QPushButton* addButton = new QPushButton();
+    addButton->setIcon(QIcon(":/addIcon.png"));
+    addButton->setToolTip("Add Video");
+    addButton->setFixedSize(QSize(50,50));
+//    QSlider* videoSlider = new QSlider(Qt::Horizontal);
+//    player->videoSlider = new QSlider(Qt::Horizontal);
+//    player->videoSlider->setToolTip("Move through video");
+    QPushButton* trimButton = new QPushButton();
+    trimButton->setIcon(QIcon(":/trimIcon.png"));
+    trimButton->setToolTip("Trim Video");
+    trimButton->setFixedSize(QSize(50, 50));
+    QPushButton* effectButton = new QPushButton();
+    effectButton->setIcon(QIcon(":/effectIcon.png"));
+    effectButton->setToolTip("Add Effects");
+    effectButton->setFixedSize(QSize(50, 50));
+    QPushButton* audioButton = new QPushButton();
+    audioButton->setIcon(QIcon(":/audioIcon.png"));
+    audioButton->setToolTip("Add Audio");
+    audioButton->setFixedSize(QSize(50, 50));
 
-    //video
-    QHBoxLayout* videoLayout = new QHBoxLayout();
-    QWidget* videoWidget = new QWidget();
-    mainLayout->addWidget(videoWidget);
-    videoWidget->setLayout(videoLayout);
-    videoWidget->setStyleSheet("border: 1px solid black");
 
-    //pause
-    QHBoxLayout* pauseLayout = new QHBoxLayout();
-    QWidget* pauseWidget = new QWidget();
-    mainLayout->addWidget(pauseWidget);
-    pauseWidget->setLayout(pauseLayout);
-    pauseWidget->setStyleSheet("border: 1px solid black");
-    pauseWidget->setMaximumHeight(window->height() * 0.05);
+    // layouts for each box
+    QHBoxLayout* header = new QHBoxLayout();
+    header->addWidget(backButton);
+    header->addStretch();
+    header->addWidget(shareButton);
+    header->addWidget(addButton);
+    QHBoxLayout* videoArea = new QHBoxLayout();
+    videoArea->addWidget(videoWidget);
+    QHBoxLayout* timeArea = new QHBoxLayout();
+    timeArea->addWidget(player->timeLabel);
+    QHBoxLayout* pauseArea = new QHBoxLayout();
+    pauseArea->addStretch();
+    pauseArea->addWidget(&(player->pauseButton));
+    pauseArea->addStretch();
+    QHBoxLayout* videoEditArea = new QHBoxLayout();
+    videoEditArea->addWidget(&player->videoSlider);
+    QHBoxLayout* footer = new QHBoxLayout();
+    footer->addStretch();
+    footer->addWidget(trimButton);
+    footer->addWidget(effectButton);
+    footer->addWidget(audioButton);
+    footer->addStretch();
 
-    //timelapse
-    QHBoxLayout* timelapseLayout = new QHBoxLayout();
-    QWidget* timelapseWidget = new QWidget();
-    mainLayout->addWidget(timelapseWidget);
-    timelapseWidget->setLayout(timelapseLayout);
-    timelapseWidget->setStyleSheet("border: 1px solid black");
-    timelapseWidget->setMaximumHeight(window->height() * 0.05);
+    // put all the layouts in a corresponding group box
+    QGroupBox* headerBox = new QGroupBox();
+    headerBox->setLayout(header);
+    QGroupBox* videoBox = new QGroupBox();
+    videoBox->setLayout(videoArea);
+    QGroupBox* timeBox = new QGroupBox();
+    timeBox->setLayout(timeArea);
+    QGroupBox* pauseBox = new QGroupBox();
+    pauseBox->setLayout(pauseArea);
+    QGroupBox* videoEditBox = new QGroupBox();
+    videoEditBox->setLayout(videoEditArea);
+    QGroupBox* footerBox = new QGroupBox();
+    footerBox->setLayout(footer);
 
-    //edit
-    QHBoxLayout* editLayout = new QHBoxLayout();
-    QWidget* editWidget = new QWidget();
-    mainLayout->addWidget(editWidget);
-    editWidget->setLayout(editLayout);
-    editWidget->setStyleSheet("border: 1px solid black");
-    editWidget->setMaximumHeight(window->height() * 0.2);
+    // add each group box to the main layout
+    _mainLayout->addWidget(headerBox);
+    _mainLayout->addStretch(1);
+    _mainLayout->addWidget(videoBox, 4);
+    _mainLayout->addWidget(timeBox);
+    _mainLayout->addWidget(pauseBox);
+    _mainLayout->addWidget(videoEditBox);
+    _mainLayout->addStretch(1);
+    _mainLayout->addWidget(footerBox);
 
-    //footer
-    QHBoxLayout* footerLayout = new QHBoxLayout();
-    QWidget* footerWidget = new QWidget();
-    mainLayout->addWidget(footerWidget);
-    footerWidget->setLayout(footerLayout);
-    footerWidget->setStyleSheet("border: 1px solid black");
-    footerWidget->setMaximumHeight(window->height() * 0.08);
+
+    // add the video and the buttons to the top level widget
+    //top->addWidget(videoWidget);
+    //top->addWidget(buttonWidget);
 
     // showtime!
     window->show();
