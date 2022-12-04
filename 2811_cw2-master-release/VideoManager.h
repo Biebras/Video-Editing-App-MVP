@@ -12,7 +12,8 @@ class VideoManager
         VideoManager();
         ~VideoManager();
         void AddVideo(Video* video);
-
+        void RemoveVideo(Video* video);
+        Video* GetVideo(int milliseconds);
 };
 
 #endif // VIDEOMANAGER_H
