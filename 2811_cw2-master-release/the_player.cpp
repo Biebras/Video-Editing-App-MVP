@@ -77,9 +77,11 @@ void ThePlayer::movedSlider(int val)
 void ThePlayer::pressedSlider()
 {
     this->pause();
+    pauseButton.setIcon(QIcon(":/playIcon.png"));
 }
 
 void ThePlayer::releasedSlider()
 {
     this->play();
+    pauseButton.setIcon(QIcon(":/pauseIcon.png"));
 }
