@@ -7,7 +7,7 @@
 class ModularLayout : public QHBoxLayout
 {
     public:
-        ModularLayout();
+        ModularLayout()  : QHBoxLayout() {};
         ~ModularLayout();
         QWidget* GetLayoutWidget();
 

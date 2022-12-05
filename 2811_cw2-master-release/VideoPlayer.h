@@ -9,7 +9,7 @@
 class VideoPlayer : public QMediaPlayer
 {
     public:
-        VideoPlayer();
+        VideoPlayer() : QMediaPlayer(NULL) {};
         void Update();
         void Play(int millisecond);
         void Pause();
