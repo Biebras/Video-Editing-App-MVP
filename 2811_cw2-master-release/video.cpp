@@ -1,6 +1,6 @@
 #include "video.h"
 
-Video::Video()
+Video::Video(string path, int start, int end, int volume)
 {
 
 }
