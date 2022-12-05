@@ -1,6 +1,5 @@
 #include "modularlayout.h"
 
-
 ModularLayout::~ModularLayout()
 {
     delete(_layoutWidget);
