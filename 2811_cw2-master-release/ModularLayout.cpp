@@ -1,6 +1,13 @@
-#include "ModularLayout.h"
+#include "modularlayout.h"
 
-ModularLayout::ModularLayout()
+
+ModularLayout::~ModularLayout()
 {
+    delete(_layoutWidget);
+    _layoutWidget = NULL;
+}
 
+QWidget* ModularLayout::GetLayoutWidget()
+{
+    return _layoutWidget;
 }

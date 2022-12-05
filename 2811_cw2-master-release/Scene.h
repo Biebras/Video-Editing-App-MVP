@@ -7,7 +7,7 @@
 class Scene : public QWidget
 {
     public:
-        Scene();
+    Scene() : QWidget() {};
         void CreateWidgets();
         void ArrangeWidgets();
         void MakeConnections();
