@@ -2,7 +2,7 @@
 #define VIDEOMANAGER_H
 
 #include <QList>
-#include "Video.h"
+#include "video.h"
 
 class VideoManager
 {
@@ -10,6 +10,10 @@ class VideoManager
         QList<Video*> _videos;
     public:
         VideoManager();
+        ~VideoManager();
+        void AddVideo(Video* video);
+        void RemoveVideo(Video* video);
+        Video* GetVideo(int milliseconds);
 };
 
 #endif // VIDEOMANAGER_H

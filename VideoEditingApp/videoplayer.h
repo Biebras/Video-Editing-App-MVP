@@ -2,7 +2,7 @@
 #define VIDEOPLAYER_H
 
 #include <QMediaPlayer>
-#include "Video.h"
+#include "video.h"
 #include "videomanager.h"
 
 
