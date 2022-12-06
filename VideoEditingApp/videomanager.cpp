@@ -2,8 +2,9 @@
 #include <QDir>
 #include <QtCore/QDirIterator>
 #include <QString>
-#include <QDebug>
 #include "videomanager.h"
+
+using namespace std;
 
 VideoManager::VideoManager(string conentPathName)
 {
@@ -25,7 +26,7 @@ VideoManager::VideoManager(string conentPathName)
 
     if(_videos.count() == 0)
     {
-        qDebug() << "No videos found, new project or there's something wrong with content path name " << Qt::endl;
+        cout << "No videos found, new project or there's something wrong with content path name " << endl;
     }
 }
 
@@ -45,7 +46,7 @@ void VideoManager::RemoveVideo(Video* video)
     bool success = _videos.removeOne(video);
 
     if(!success)
-        std::cout << "Couldn't remove video" << std::endl;
+        cout << "Couldn't remove video" << endl;
 }
 
 Video* VideoManager::GetVideo(int milliseconds)
@@ -56,6 +57,21 @@ Video* VideoManager::GetVideo(int milliseconds)
             return video;
     }
 
-    qDebug() << "Could't retvieve video within " << milliseconds << "ms" << Qt::endl;
+    cout << "Could't retvieve video within " << milliseconds << "ms" << endl;
     return NULL;
+}
+
+void VideoManager::PrintAllVideos()
+{
+    cout << "Printing videos" << endl;
+    cout << "==========================================" << endl;
+    for(auto video : _videos)
+    {
+        cout << "Path: " << video->GetFilePath() << endl;
+        cout << "Start: " << video->GetStart() << endl;
+        cout << "End: " << video->GetEnd() << endl;
+        cout << "Volume: " << video->GetVolume() << endl;
+        cout << "Duration: " << video->GetDuration() << endl;
+        cout << "==========================================" << endl;
+    }
 }
