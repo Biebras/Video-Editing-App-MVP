@@ -1,25 +1,22 @@
-#include <iostream>
-#include "videomanager.h"
+import numpy as np
+from math import cos, sin
+import matplotlib.pyplot as plt
 
-VideoManager::VideoManager()
-{
+g = 1
+l = 1
 
-}
-
-void VideoManager::AddVideo(Video* video)
-{
-    _videos.append(video);
-}
-
-void VideoManager::RemoveVideo(Video* video)
-{
-    bool success = _videos.removeOne(video);
-
-    if(!success)
-        std::cout << "Couldn't remove video" << std::endl;
-}
-
-Video* VideoManager::GetVideo(int milliseconds)
-{
-    return NULL;
-}
+def Euler_method(theta0, vel0, dt, n):
+    # Init arrays
+    theta = np.zeros(n+1)
+    vel = np.zeros(n+1)
+    
+    # Starting values
+    theta[0] = theta0
+    vel[0] = vel0
+    
+    #calculate theta and velocity
+    for i in range(0, n):
+        theta[i + 1] = theta[i] + dt * vel[i]
+        vel[i + 1] = vel[i] + dt * (-g/l*sin(theta[i]))
+                                       
+    return theta, vel
