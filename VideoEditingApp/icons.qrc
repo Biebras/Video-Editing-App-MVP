@@ -8,5 +8,6 @@
         <file>trimIcon.png</file>
         <file>effectIcon.png</file>
         <file>playIcon.png</file>
+        <file>volumeIcon.png</file>
     </qresource>
 </RCC>

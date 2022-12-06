@@ -9,6 +9,7 @@ CONFIG += c++11
 
 SOURCES += \
         editormanager.cpp \
+        editscene.cpp \
         modularlayout.cpp \
         scene.cpp \
         the_button.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     editormanager.h \
+    editscene.h \
     modularlayout.h \
     scene.h \
     the_button.h \
