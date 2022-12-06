@@ -3,12 +3,12 @@
 
 #include <QWidget>
 
-
 class Scene : public QWidget
 {
     Q_OBJECT
     public:
-        Scene() : QWidget() {
+        Scene() : QWidget()
+        {
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
