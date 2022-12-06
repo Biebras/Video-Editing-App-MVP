@@ -6,18 +6,18 @@
 
 class Scene : public QWidget
 {
+    Q_OBJECT
     public:
-        Scene() : QWidget()
-        {
+        Scene() : QWidget() {
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
         };
+
+    private:
         void CreateWidgets();
         void ArrangeWidgets();
         void MakeConnections();
-
-    private:
         bool _showScene;
 
 };
