@@ -31,7 +31,8 @@ VideoManager::VideoManager(string conentPathName)
 
 VideoManager::~VideoManager()
 {
-
+    qDeleteAll(_videos);
+    _videos.clear();
 }
 
 void VideoManager::AddVideo(Video* video)
@@ -49,5 +50,12 @@ void VideoManager::RemoveVideo(Video* video)
 
 Video* VideoManager::GetVideo(int milliseconds)
 {
+    for(auto video : _videos)
+    {
+        if(milliseconds >= video->GetStart() && milliseconds <= video->GetEnd())
+            return video;
+    }
+
+    qDebug() << "Could't retvieve video within " << milliseconds << "ms" << Qt::endl;
     return NULL;
 }
