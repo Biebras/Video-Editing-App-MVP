@@ -2,13 +2,11 @@
 #include "modularlayout.h"
 #include <iostream>
 
-
-
 void EditScene::CreateWidgets()
 {
+    std::cout<<"Hello"<<std::endl;
     // header
     _backButton = new QPushButton("test");
-    std::cout << "test";
 //    _backButton->setIcon(QIcon(":/backIcon.png"));
 //    _backButton->setToolTip("Go Back");
 //    _backButton->setFixedSize(QSize(50, 50));

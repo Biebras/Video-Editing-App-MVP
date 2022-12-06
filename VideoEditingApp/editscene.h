@@ -8,7 +8,12 @@
 class EditScene : public Scene
 {
     public:
-        EditScene() : Scene() {};
+        EditScene() : Scene()
+        {
+            CreateWidgets();
+            ArrangeWidgets();
+            MakeConnections();
+        };
 //        void CreateWidgets();
 //        void ArrangeWidgets();
 //        void MakeConnections();
