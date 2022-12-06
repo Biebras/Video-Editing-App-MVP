@@ -1,4 +1,6 @@
 #include "videoplayer.h"
+#include "videomanager.h"
+#include "video.h"
 #include <QList>
 #include <stdlib.h>
 #include <QUrl>
