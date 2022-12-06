@@ -8,7 +8,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        editormanager.cpp \
+        app.cpp \
         modularlayout.cpp \
         scene.cpp \
         the_button.cpp \
@@ -19,7 +19,7 @@ SOURCES += \
         videoplayer.cpp
 
 HEADERS += \
-    editormanager.h \
+    app.h \
     modularlayout.h \
     scene.h \
     the_button.h \
