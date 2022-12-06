@@ -1,22 +1,77 @@
-import numpy as np
-from math import cos, sin
-import matplotlib.pyplot as plt
+#include <iostream>
+#include <QDir>
+#include <QtCore/QDirIterator>
+#include <QString>
+#include "videomanager.h"
 
-g = 1
-l = 1
+using namespace std;
 
-def Euler_method(theta0, vel0, dt, n):
-    # Init arrays
-    theta = np.zeros(n+1)
-    vel = np.zeros(n+1)
-    
-    # Starting values
-    theta[0] = theta0
-    vel[0] = vel0
-    
-    #calculate theta and velocity
-    for i in range(0, n):
-        theta[i + 1] = theta[i] + dt * vel[i]
-        vel[i + 1] = vel[i] + dt * (-g/l*sin(theta[i]))
-                                       
-    return theta, vel
+VideoManager::VideoManager(string conentPathName)
+{
+    //Create access to directory's contet
+    QDir dir (QString::fromStdString(conentPathName));
+    //Create itirator to iterate directories
+    QDirIterator itirator(dir);
+
+    while(itirator.hasNext())
+    {
+        QString pathName = itirator.next();
+
+        if(pathName.contains(".mp4") || pathName.contains("MOV"))
+        {
+            Video* video = new Video(pathName.toStdString(), 0, 0, 1);
+            AddVideo(video);
+        }
+    }
+
+    if(_videos.count() == 0)
+    {
+        cout << "No videos found, new project or there's something wrong with content path name " << endl;
+    }
+}
+
+VideoManager::~VideoManager()
+{
+    qDeleteAll(_videos);
+    _videos.clear();
+}
+
+void VideoManager::AddVideo(Video* video)
+{
+    _videos.append(video);
+}
+
+void VideoManager::RemoveVideo(Video* video)
+{
+    bool success = _videos.removeOne(video);
+
+    if(!success)
+        cout << "Couldn't remove video" << endl;
+}
+
+Video* VideoManager::GetVideo(int milliseconds)
+{
+    for(auto video : _videos)
+    {
+        if(milliseconds >= video->GetStart() && milliseconds <= video->GetEnd())
+            return video;
+    }
+
+    cout << "Could't retvieve video within " << milliseconds << "ms" << endl;
+    return NULL;
+}
+
+void VideoManager::PrintAllVideos()
+{
+    cout << "Printing videos" << endl;
+    cout << "==========================================" << endl;
+    for(auto video : _videos)
+    {
+        cout << "Path: " << video->GetFilePath() << endl;
+        cout << "Start: " << video->GetStart() << endl;
+        cout << "End: " << video->GetEnd() << endl;
+        cout << "Volume: " << video->GetVolume() << endl;
+        cout << "Duration: " << video->GetDuration() << endl;
+        cout << "==========================================" << endl;
+    }
+}
