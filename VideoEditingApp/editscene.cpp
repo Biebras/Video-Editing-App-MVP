@@ -4,9 +4,9 @@
 
 void EditScene::CreateWidgets()
 {
-    std::cout<<"Hello"<<std::endl;
     // header
-    _backButton = new QPushButton("");
+    _backButton = new QPushButton("Test");
+
     _backButton->setIcon(QIcon(":/backIcon.png"));
     _backButton->setToolTip("Go Back");
     _backButton->setFixedSize(QSize(50, 50));

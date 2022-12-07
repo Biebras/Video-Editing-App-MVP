@@ -6,6 +6,7 @@
 class Scene : public QWidget
 {
     Q_OBJECT
+
     public:
         Scene() : QWidget()
         {

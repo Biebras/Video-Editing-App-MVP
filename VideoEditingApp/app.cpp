@@ -13,8 +13,12 @@ int main(int argc, char *argv[])
     if(argc != 2)
         cout << "There should be two arguments" << endl;
 
+    VideoManager& videoManager = VideoManager::Get();
+
+    videoManager.LoadVideos(argv[1]);
+    videoManager.PrintAllVideos();
+
     QWidget *window = new QWidget();
-    //VideoManager* videoManager = new VideoManager(argv[1]);
     EditScene* editScene = new EditScene();
 
     window->setWindowTitle("App");
