@@ -5,17 +5,16 @@
 void EditScene::CreateWidgets()
 {
     // header
-    _backButton = new QPushButton("Test");
-
-    _backButton->setIcon(QIcon(":/backIcon.png"));
+    _backButton = new QPushButton("");
+    _backButton->setIcon(QIcon(":/icons/backIcon.png"));
     _backButton->setToolTip("Go Back");
     _backButton->setFixedSize(QSize(50, 50));
     _shareButton = new QPushButton();
-    _shareButton->setIcon(QIcon(":/shareIcon.png"));
+    _shareButton->setIcon(QIcon(":/icons/shareIcon.png"));
     _shareButton->setToolTip("Share");
     _shareButton->setFixedSize(QSize(50, 50));
     _addButton = new QPushButton();
-    _addButton->setIcon(QIcon(":/addIcon.png"));
+    _addButton->setIcon(QIcon(":/icons/addIcon.png"));
     _addButton->setToolTip("Add Video");
     _addButton->setFixedSize(QSize(50,50));
 
@@ -29,7 +28,7 @@ void EditScene::CreateWidgets()
 
     // pause/play area
     _pauseButton = new QPushButton();
-    _pauseButton->setIcon(QIcon(":/pauseIcon.png"));
+    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
     _pauseButton->setToolTip("Pause");
     _pauseButton->setFixedSize(QSize(50, 50));
 
@@ -40,21 +39,21 @@ void EditScene::CreateWidgets()
 
     // volume area
     _volumeButton = new QPushButton();
-    _volumeButton->setIcon(QIcon(":/volumeIcon.png"));
+    _volumeButton->setIcon(QIcon(":/icons/volumeIcon.png"));
     _volumeButton->setToolTip("Mute Volume");
     _volumeButton->setFixedSize(QSize(50, 50));
 
     // footer
     _trimButton = new QPushButton();
-    _trimButton->setIcon(QIcon(":/trimIcon.png"));
+    _trimButton->setIcon(QIcon(":/icons/trimIcon.png"));
     _trimButton->setToolTip("Trim Video");
     _trimButton->setFixedSize(QSize(50, 50));
     _effectButton = new QPushButton();
-    _effectButton->setIcon(QIcon(":/effectIcon.png"));
+    _effectButton->setIcon(QIcon(":/icons/effectIcon.png"));
     _effectButton->setToolTip("Add Effects");
     _effectButton->setFixedSize(QSize(50, 50));
     _audioButton = new QPushButton();
-    _audioButton->setIcon(QIcon(":/audioIcon.png"));
+    _audioButton->setIcon(QIcon(":/icons/audioIcon.png"));
     _audioButton->setToolTip("Add Audio");
     _audioButton->setFixedSize(QSize(50, 50));
 }

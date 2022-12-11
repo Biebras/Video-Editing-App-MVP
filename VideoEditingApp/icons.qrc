@@ -1,13 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>shareIcon.png</file>
-        <file>backIcon.png</file>
-        <file>addIcon.png</file>
-        <file>pauseIcon.png</file>
-        <file>audioIcon.png</file>
-        <file>trimIcon.png</file>
-        <file>effectIcon.png</file>
-        <file>playIcon.png</file>
-        <file>volumeIcon.png</file>
+        <file>icons/addIcon.png</file>
+        <file>icons/audioIcon.png</file>
+        <file>icons/backIcon.png</file>
+        <file>icons/effectIcon.png</file>
+        <file>icons/pauseIcon.png</file>
+        <file>icons/playIcon.png</file>
+        <file>icons/shareIcon.png</file>
+        <file>icons/trimIcon.png</file>
+        <file>icons/volumeIcon.png</file>
+        <file>icons/muteIcon.png</file>
     </qresource>
 </RCC>
