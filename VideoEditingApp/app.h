@@ -1,11 +1,14 @@
 #ifndef APP_H
 #define APP_H
 
+#include <string>
 
-class editormanager
+using namespace std;
+
+class App
 {
 public:
-    editormanager();
+    App();
 };
 
 #endif // APP_H

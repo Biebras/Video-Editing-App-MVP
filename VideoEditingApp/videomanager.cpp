@@ -6,7 +6,7 @@
 
 using namespace std;
 
-VideoManager::VideoManager(string conentPathName)
+void VideoManager::LoadVideos(string conentPathName)
 {
     //Create access to directory's contet
     QDir dir (QString::fromStdString(conentPathName));

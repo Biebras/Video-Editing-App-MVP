@@ -30,7 +30,6 @@ class EditScene : public Scene
         QPushButton* _trimButton;
         QPushButton* _effectButton;
         QPushButton* _audioButton;
-
 };
 
 #endif // EDITSCENE_H
