@@ -10,7 +10,9 @@ using namespace std;
 class Project
 {
     public:
-        Project(string pathName);
+        Project(string path, string name);
+        ~Project();
+        void LoadProjectVideos();
         string GetProjectPath();
         string GetProjectName();
         void AddVideo(Video* video);
