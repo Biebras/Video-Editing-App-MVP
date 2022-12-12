@@ -7,6 +7,7 @@
 #include "createprojectscene.h"
 #include "trimscene.h"
 #include "scenemanager.h"
+#include "projectmanager.h"
 
 using namespace std;
 
@@ -20,9 +21,15 @@ int main(int argc, char *argv[])
         cout << "There should be two arguments" << endl;
 
     VideoManager& videoManager = VideoManager::Get();
+    ProjectManager& projectManager = ProjectManager::Get();
 
-    videoManager.LoadVideos(argv[1]);
-//    videoManager.PrintAllVideos();
+    projectManager.LoadProjects(argv[1]);
+    Project* fiirstProject = projectManager.GetProject(0);
+    projectManager.SetCurrentProject(fiirstProject);
+    videoManager.LoadVideos(fiirstProject->GetProjectPath());
+    //videoManager.PrintAllVideos();
+
+
 
     QWidget *window = new QWidget();
 
