@@ -7,13 +7,28 @@
 class ProjectManager
 {
     public:
-        ProjectManager(string projectsFolder);
+        ProjectManager(const ProjectManager&) = delete;
+
+        static ProjectManager& Get()
+        {
+            static ProjectManager instance;
+            return instance;
+        };
+
+        void LoadProjects(string projectsFolderPath);
         ~ProjectManager();
+        void AddProject(Project* project);
+        void RemoveProject(Project* project);
+        void SetCurrentProject(Project* project);
+        int GetTotalProjects();
+        Project* GetCurrentProject();
         Project* GetProject(int index);
         Project* GetProjectByName(string projectName);
 
     private:
+        ProjectManager(){}
         QList<Project*> _projects;
+        Project* _currentProject;
 };
 
 #endif // PROJECTMANAGER_H
