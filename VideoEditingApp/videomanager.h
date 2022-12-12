@@ -18,8 +18,10 @@ class VideoManager
         ~VideoManager();
         void AddVideo(Video* video);
         void RemoveVideo(Video* video);
-        Video* GetVideo(int milliseconds);
+        Video* GetVideoByMS(int milliseconds);
+        Video* GetVideo(int index);
         void PrintAllVideos();
+        int GetTotalVideos();
     private:
         VideoManager(){}
 

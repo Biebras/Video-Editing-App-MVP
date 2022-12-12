@@ -3,6 +3,7 @@
 #include <QtCore/QDirIterator>
 #include <QString>
 #include "videomanager.h"
+#include "qdebug.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ void VideoManager::RemoveVideo(Video* video)
         cout << "Couldn't remove video" << endl;
 }
 
-Video* VideoManager::GetVideo(int milliseconds)
+Video* VideoManager::GetVideoByMS(int milliseconds)
 {
     for(auto video : _videos)
     {
@@ -61,12 +62,28 @@ Video* VideoManager::GetVideo(int milliseconds)
     return NULL;
 }
 
+Video* VideoManager::GetVideo(int index)
+{
+    if (index < GetTotalVideos() && index > 0)
+        return _videos[index];
+
+    cout << "Couldn't retrieve video at index " << index << endl;
+    return NULL;
+}
+
 void VideoManager::PrintAllVideos()
 {
     cout << "Printing videos" << endl;
     cout << "==========================================" << endl;
     for(auto video : _videos)
     {
+        //qDebug() << video->GetFilePath();
+        qDebug() << video->GetStart();
+        qDebug() << video->GetEnd();
+        qDebug() << video->GetVolume();
+        qDebug() << video->GetDuration();
+
+
         cout << "Path: " << video->GetFilePath() << endl;
         cout << "Start: " << video->GetStart() << endl;
         cout << "End: " << video->GetEnd() << endl;
@@ -74,4 +91,9 @@ void VideoManager::PrintAllVideos()
         cout << "Duration: " << video->GetDuration() << endl;
         cout << "==========================================" << endl;
     }
+}
+
+int VideoManager::GetTotalVideos()
+{
+    return _videos.size();
 }
