@@ -64,7 +64,7 @@ Video* VideoManager::GetVideoByMS(int milliseconds)
 
 Video* VideoManager::GetVideo(int index)
 {
-    if (index < GetTotalVideos() && index > 0)
+    if (index < GetTotalVideos() && index > -1)
         return _videos[index];
 
     cout << "Couldn't retrieve video at index " << index << endl;

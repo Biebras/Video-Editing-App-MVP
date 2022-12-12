@@ -27,19 +27,20 @@ void VideoGalleryScene::CreateWidgets()
     for (int i = 0; i < videoManager.GetTotalVideos(); i++) {
         _selectVideos.append(new QPushButton());
         _selectVideos[i]->setToolTip("Select Video");
-//        QString filePath = QString::fromStdString(videoManager.GetVideo(i)->GetFilePath());
-//        QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
-//        if (QFile(thumbnailPath).exists()) // if file exists
-//        {
-//            QImageReader *imageReader = new QImageReader(thumbnailPath);
-//            QImage sprite = imageReader->read(); // read the thumbnail image
-//            if (!sprite.isNull())
-//            {
-//                _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
-//            } else
-//                _selectVideos[i]->setText("No thumbnail for this video");
-//        } else
-//            _selectVideos[i]->setText("No thumbnail for this video");
+        QString filePath = QString::fromStdString(videoManager.GetVideo(i)->GetFilePath());
+        QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
+        if (QFile(thumbnailPath).exists()) // if file exists
+        {
+            QImageReader *imageReader = new QImageReader(thumbnailPath);
+            QImage sprite = imageReader->read(); // read the thumbnail image
+            if (!sprite.isNull())
+            {
+                _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
+                _selectVideos[i]->setIconSize(_selectVideos[i]->size());
+            } else
+                _selectVideos[i]->setText("No thumbnail for this video");
+        } else
+            _selectVideos[i]->setText("No thumbnail for this video");
     }
 }
 
