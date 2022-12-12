@@ -15,14 +15,17 @@ class VideoGalleryScene : public Scene
             MakeConnections();
         }
 
+
     private:
         void CreateWidgets();
         void ArrangeWidgets();
         void MakeConnections();
+
         QPushButton* _backButton;
         QLabel* _title;
         QPushButton* _addVideos;
         QList<QPushButton*> _selectVideos;
+        QVBoxLayout* _mainLayout;
 };
 
 #endif // VIDEOGALLERYSCENE_H

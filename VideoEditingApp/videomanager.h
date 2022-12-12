@@ -22,6 +22,7 @@ class VideoManager
         Video* GetVideo(int index);
         void PrintAllVideos();
         int GetTotalVideos();
+        void InsertVideo(int index, Video* video);
     private:
         VideoManager(){}
 

@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     //videoManager.PrintAllVideos();
 
 
+
     QWidget *window = new QWidget();
 
     window->setWindowTitle("App");
@@ -38,14 +39,14 @@ int main(int argc, char *argv[])
 
     SceneManager& sceneManager = SceneManager::Get(window); // initialise the scene manager
 
-    //EditScene* editScene = new EditScene();
-    VideoGalleryScene* videoGalleryScene = new VideoGalleryScene();
+    EditScene* editScene = new EditScene();
+//    VideoGalleryScene* videoGalleryScene = new VideoGalleryScene();
     //ProjectsScene* projectsScene = new ProjectsScene();
     //CreateProjectScene* createProjectScene = new CreateProjectScene();
 //    TrimScene* trimScene = new TrimScene();
 
-    //window->setLayout(editScene->layout());
-    window->setLayout(videoGalleryScene->layout());
+    window->setLayout(editScene->layout());
+//    window->setLayout(videoGalleryScene->layout());
     //window->setLayout(projectsScene->layout());
    // window->setLayout(createProjectScene->layout());
 //    window->setLayout(trimScene->layout());

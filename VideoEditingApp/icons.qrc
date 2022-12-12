@@ -10,5 +10,6 @@
         <file>icons/trimIcon.png</file>
         <file>icons/volumeIcon.png</file>
         <file>icons/muteIcon.png</file>
+        <file>icons/rightIcon.png</file>
     </qresource>
 </RCC>

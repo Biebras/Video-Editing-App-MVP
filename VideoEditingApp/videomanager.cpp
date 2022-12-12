@@ -3,7 +3,7 @@
 #include <QtCore/QDirIterator>
 #include <QString>
 #include "videomanager.h"
-#include "qdebug.h"
+#include <QDebug>
 
 using namespace std;
 
@@ -73,27 +73,26 @@ Video* VideoManager::GetVideo(int index)
 
 void VideoManager::PrintAllVideos()
 {
-    cout << "Printing videos" << endl;
-    cout << "==========================================" << endl;
+    qDebug() << "Printing videos";
+    qDebug() << "==========================================";
     for(auto video : _videos)
     {
-        //qDebug() << video->GetFilePath();
-        qDebug() << video->GetStart();
-        qDebug() << video->GetEnd();
-        qDebug() << video->GetVolume();
-        qDebug() << video->GetDuration();
+        qDebug() << "Path: " << QString::fromStdString(video->GetFilePath());
+        qDebug() << "Start: " << video->GetStart();
+        qDebug() << "End: " << video->GetEnd();
+        qDebug() << "Volume: " << video->GetVolume();
+        qDebug() << "Duration: " << video->GetDuration();
+        qDebug() << "==========================================";
 
-
-        cout << "Path: " << video->GetFilePath() << endl;
-        cout << "Start: " << video->GetStart() << endl;
-        cout << "End: " << video->GetEnd() << endl;
-        cout << "Volume: " << video->GetVolume() << endl;
-        cout << "Duration: " << video->GetDuration() << endl;
-        cout << "==========================================" << endl;
     }
 }
 
 int VideoManager::GetTotalVideos()
 {
     return _videos.size();
+}
+
+void VideoManager::InsertVideo(int index, Video* video)
+{
+    _videos.insert(index, video);
 }
