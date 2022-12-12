@@ -24,6 +24,7 @@ void VideoGalleryScene::CreateWidgets()
 
     //Video* vid = videoManager.GetVideo(1);
 
+    // loop through videos
     for (int i = 0; i < videoManager.GetTotalVideos(); i++) {
         _selectVideos.append(new QPushButton());
         _selectVideos[i]->setToolTip("Select Video");
