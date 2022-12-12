@@ -22,8 +22,6 @@ void VideoGalleryScene::CreateWidgets()
     // videos area
     VideoManager& videoManager = VideoManager::Get();
 
-    //Video* vid = videoManager.GetVideo(1);
-
     // loop through videos
     for (int i = 0; i < videoManager.GetTotalVideos(); i++) {
         _selectVideos.append(new QPushButton());
@@ -37,7 +35,6 @@ void VideoGalleryScene::CreateWidgets()
             if (!sprite.isNull())
             {
                 _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
-                _selectVideos[i]->setIconSize(_selectVideos[i]->size());
             } else
                 _selectVideos[i]->setText("No thumbnail for this video");
         } else
@@ -47,8 +44,8 @@ void VideoGalleryScene::CreateWidgets()
 
 void VideoGalleryScene::ArrangeWidgets()
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout();
-    mainLayout->setAlignment(Qt::AlignTop);
+    _mainLayout = new QVBoxLayout();
+    _mainLayout->setAlignment(Qt::AlignTop);
 
 
     // create layouts for each area
@@ -60,9 +57,8 @@ void VideoGalleryScene::ArrangeWidgets()
     header->addWidget(_addVideos);
 
 
-
     header->GetLayoutWidget()->setLayout(header);
-    mainLayout->addWidget(header->GetLayoutWidget());
+    _mainLayout->addWidget(header->GetLayoutWidget());
 
     // get the window widget
     SceneManager& sceneManager = SceneManager::Get(nullptr);
@@ -80,17 +76,19 @@ void VideoGalleryScene::ArrangeWidgets()
         ModularLayout *videoRow = new ModularLayout();
         for (int j = 0; j < itemsPerRow; j++)
         {
+            _selectVideos[it]->setIconSize(_selectVideos[it]->size());
             videoRow->addWidget(_selectVideos[it]);
             it ++;
         }
         videoRow->GetLayoutWidget()->setLayout(videoRow);
-        mainLayout->addWidget(videoRow->GetLayoutWidget());
+        _mainLayout->addWidget(videoRow->GetLayoutWidget());
     }
 
     // last row of videos
     ModularLayout *videoRow = new ModularLayout();
     for (int i = 0; i < itemsLast; i++)
     {
+        _selectVideos[it]->setIconSize(_selectVideos[it]->size());
         videoRow->addWidget(_selectVideos[it]);
         it ++;
     }
@@ -102,10 +100,12 @@ void VideoGalleryScene::ArrangeWidgets()
         videoRow->addWidget(space);
     }
     videoRow->GetLayoutWidget()->setLayout(videoRow);
-    mainLayout->addWidget(videoRow->GetLayoutWidget());
+    _mainLayout->addWidget(videoRow->GetLayoutWidget());
 
-    this->setLayout(mainLayout);
+    this->setLayout(_mainLayout);
 }
+
+
 
 void VideoGalleryScene::MakeConnections()
 {

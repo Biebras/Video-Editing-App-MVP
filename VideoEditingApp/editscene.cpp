@@ -1,5 +1,7 @@
 #include "editscene.h"
 #include "modularlayout.h"
+#include "scenemanager.h"
+#include "videomanager.h"
 #include <iostream>
 
 void EditScene::CreateWidgets()
@@ -20,6 +22,9 @@ void EditScene::CreateWidgets()
 
     // video area
     _videoWidget = new QVideoWidget();
+    _videoPlayer = new VideoPlayer();
+    _videoPlayer->setVideoOutput(_videoWidget);
+    _videoPlayer->SetCurrentTime(0);
 
     // time area
     _timeLabel = new QLabel();
@@ -31,17 +36,52 @@ void EditScene::CreateWidgets()
     _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
     _pauseButton->setToolTip("Pause");
     _pauseButton->setFixedSize(QSize(50, 50));
+    _volumeButton = new QPushButton();
+    _volumeButton->setIcon(QIcon(":/icons/volumeIcon.png"));
+    _volumeButton->setToolTip("Mute Volume");
+    _volumeButton->setFixedSize(QSize(50, 50));
 
     // slider area
     _videoSlider = new QSlider();
     _videoSlider->setOrientation(Qt::Horizontal);
     _videoSlider->setToolTip("Move through video");
 
-    // volume area
-    _volumeButton = new QPushButton();
-    _volumeButton->setIcon(QIcon(":/icons/volumeIcon.png"));
-    _volumeButton->setToolTip("Mute Volume");
-    _volumeButton->setFixedSize(QSize(50, 50));
+    // thumbnails
+    VideoManager& videoManager = VideoManager::Get();
+    // loop through videos
+    //for (int i = 0; i < videoManager.GetTotalVideos(); i++)
+    // for now, just three videos until videoManager properly implemented
+    for (int i = 0; i < 3; i++)
+    {
+        _thumbnails.append(new QPushButton());
+        _thumbnails[i]->setFixedHeight(80);
+        _thumbnails[i]->setToolTip("Reorder Video");
+        QString filePath = QString::fromStdString(videoManager.GetVideo(i)->GetFilePath());
+        QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
+        if (QFile(thumbnailPath).exists()) // if file exists
+        {
+            QImageReader *imageReader = new QImageReader(thumbnailPath);
+            QImage sprite = imageReader->read(); // read the thumbnail image
+            if (!sprite.isNull())
+            {
+                _thumbnails[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
+                //_thumbnails[i]->setIconSize(_thumbnails[i]->size());
+                _thumbnails[i]->setIconSize(QSize(_thumbnails[i]->width() - 20, _thumbnails[i]->height() - 20));
+            } else
+                _thumbnails[i]->setText("No thumbnail for this video");
+        } else
+            _thumbnails[i]->setText("No thumbnail for this video");
+    }
+
+    // reorder buttons
+    _moveLeft = new QPushButton();
+    _moveLeft->setIcon(QIcon(":/icons/backIcon.png"));
+    _moveLeft->setFixedSize(QSize(50, 50));
+    _moveLeft->setEnabled(false);
+    _moveRight = new QPushButton();
+    _moveRight->setIcon(QIcon(":/icons/rightIcon.png"));
+    _moveRight->setFixedSize(QSize(50, 50));
+    _moveRight->setEnabled(false);
 
     // footer
     _trimButton = new QPushButton();
@@ -77,15 +117,24 @@ void EditScene::ArrangeWidgets()
     ModularLayout* pauseArea = new ModularLayout();
     pauseArea->addStretch();
     pauseArea->addWidget(_pauseButton);
+    pauseArea->addWidget(_volumeButton);
     pauseArea->addStretch();
 
     ModularLayout* videoEditArea = new ModularLayout();
     videoEditArea->addWidget(_videoSlider);
 
-    ModularLayout* volumeArea = new ModularLayout();
-    volumeArea->addStretch();
-    volumeArea->addWidget(_volumeButton);
-    volumeArea->addStretch();
+    ModularLayout* thumbnailArea = new ModularLayout();
+    for (auto thumbnail : _thumbnails)
+    {
+        thumbnailArea->addWidget(thumbnail);
+    }
+    thumbnailArea->setSpacing(0);
+
+    ModularLayout* reorderArea = new ModularLayout();
+    reorderArea->addStretch();
+    reorderArea->addWidget(_moveLeft);
+    reorderArea->addWidget(_moveRight);
+    reorderArea->addStretch();
 
     ModularLayout* footer = new ModularLayout();
     footer->addStretch();
@@ -100,7 +149,8 @@ void EditScene::ArrangeWidgets()
     timeArea->GetLayoutWidget()->setLayout(timeArea);
     pauseArea->GetLayoutWidget()->setLayout(pauseArea);
     videoEditArea->GetLayoutWidget()->setLayout(videoEditArea);
-    volumeArea->GetLayoutWidget()->setLayout(volumeArea);
+    thumbnailArea->GetLayoutWidget()->setLayout(thumbnailArea);
+    reorderArea->GetLayoutWidget()->setLayout(reorderArea);
     footer->GetLayoutWidget()->setLayout(footer);
 
     // set each layout widget to show in the main layout
@@ -111,8 +161,8 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(timeArea->GetLayoutWidget());
     mainLayout->addWidget(pauseArea->GetLayoutWidget());
     mainLayout->addWidget(videoEditArea->GetLayoutWidget());
-    mainLayout->addWidget(volumeArea->GetLayoutWidget());
-    mainLayout->addStretch(1);
+    mainLayout->addWidget(thumbnailArea->GetLayoutWidget());
+    mainLayout->addWidget(reorderArea->GetLayoutWidget());
     mainLayout->addWidget(footer->GetLayoutWidget());
 
     this->setLayout(mainLayout);
@@ -130,5 +180,85 @@ void EditScene::MakeConnections()
      *  trim button -> trim scene
      *  effect button -> fx scene
      *  audio button -> audio scene
+     *  thumbnail button -> enable move left and right, if reordering enable reorder button
+     *  move left -> move video pressed left one place
+     *  move right -> move video pressed right one place
+     *  reorder button pressed -> reorder, disable move left and right buttons
     **/
+
+    for (auto thumbnail : _thumbnails)
+        connect(thumbnail, SIGNAL(clicked()), this, SLOT(thumbnailClicked()));
+
+    connect(_moveLeft, SIGNAL(clicked()), this, SLOT(reorderLeft()));
+    connect(_moveRight, SIGNAL(clicked()), this, SLOT(reorderRight()));
+
+    connect(_pauseButton, SIGNAL(clicked()), this, SLOT(pausePlay()));
+
+}
+
+void EditScene::thumbnailClicked()
+{
+    // enable move left and right buttons
+    _moveLeft->setEnabled(true);
+    _moveRight->setEnabled(true);
+
+    // get the index of the button that was pressed
+    _reorderVideoIndex = _thumbnails.indexOf(qobject_cast<QPushButton* >(QObject::sender()));
+
+    // disable thumbnail buttons except the one we are moving
+    for (int i =0; i < _thumbnails.size(); i++)
+    {
+        if (i != _reorderVideoIndex)
+            _thumbnails[i]->setEnabled(false);
+    }
+
+    if (_reorderVideoIndex == 0)
+        _moveLeft->setEnabled(false);
+    else if (_reorderVideoIndex == _thumbnails.size()-1)
+        _moveRight->setEnabled(false);
+}
+
+void EditScene::reorderLeft()
+{
+    for (auto thumbnail : _thumbnails)
+        thumbnail->setEnabled(true);
+    _moveLeft->setEnabled(false);
+    _moveRight->setEnabled(false);
+
+    VideoManager& videoManager = VideoManager::Get();
+
+    // swap videos
+    Video* temp = videoManager.GetVideo(_reorderVideoIndex);
+    videoManager.RemoveVideo(videoManager.GetVideo(_reorderVideoIndex));
+    videoManager.InsertVideo(_reorderVideoIndex-1, temp);
+
+    // swap icons
+    QIcon tempIcon = _thumbnails[_reorderVideoIndex]->icon();
+    _thumbnails[_reorderVideoIndex]->setIcon(_thumbnails[_reorderVideoIndex-1]->icon());
+    _thumbnails[_reorderVideoIndex-1]->setIcon(tempIcon);
+}
+
+void EditScene::reorderRight()
+{
+    for (auto thumbnail : _thumbnails)
+        thumbnail->setEnabled(true);
+    _moveLeft->setEnabled(false);
+    _moveRight->setEnabled(false);
+
+    VideoManager& videoManager = VideoManager::Get();
+
+    // swap videos
+    Video* temp = videoManager.GetVideo(_reorderVideoIndex);
+    videoManager.RemoveVideo(videoManager.GetVideo(_reorderVideoIndex));
+    videoManager.InsertVideo(_reorderVideoIndex+1, temp);
+
+    // swap icons
+    QIcon tempIcon = _thumbnails[_reorderVideoIndex]->icon();
+    _thumbnails[_reorderVideoIndex]->setIcon(_thumbnails[_reorderVideoIndex+1]->icon());
+    _thumbnails[_reorderVideoIndex+1]->setIcon(tempIcon);
+}
+
+void EditScene::pausePlay()
+{
+
 }
