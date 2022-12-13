@@ -37,8 +37,6 @@ int main(int argc, char *argv[])
     SceneManager& sceneManager = SceneManager::Get(window); // initialise the scene manager
     sceneManager.InitScenes();
 
-    sceneManager.SetScene("trim");
-
     window->show();
 
     return app.exec();
