@@ -51,6 +51,7 @@ void SceneManager::SetScene(QString sceneName)
         if(scene->GetSceneName().compare(sceneName) == 0)
         {
             scene->setVisible(true);
+            scene->UpdateScene();
             _currentScene = scene;
         }
         else

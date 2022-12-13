@@ -83,5 +83,4 @@ void CreateProjectScene::CreateProject()
 {
     _projectManager.CreateProject(_nameInput->text());
     _sceneManager.SetScene("projects");
-    _projectManager.PrintProjects();
 }

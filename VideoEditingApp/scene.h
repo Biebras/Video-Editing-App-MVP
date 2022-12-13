@@ -19,6 +19,8 @@ class Scene : public QWidget
             return _sceneName;
         }
 
+        virtual void UpdateScene();
+
     private:
         virtual void CreateWidgets();
         virtual void ArrangeWidgets();

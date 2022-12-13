@@ -4,6 +4,7 @@
 #include "scene.h"
 #include <QtWidgets>
 #include "scenemanager.h"
+#include "projectmanager.h"
 
 class ProjectsScene : public Scene
 {
@@ -17,14 +18,18 @@ class ProjectsScene : public Scene
             MakeConnections();
         };
 
+        void UpdateScene() override;
+
     private:
         void CreateWidgets() override;
         void ArrangeWidgets() override;
         void MakeConnections() override;
         SceneManager& _sceneManager = SceneManager::Get();
+        ProjectManager& _projectManager = ProjectManager::Get();
+        QVBoxLayout* _mainLayout = new QVBoxLayout();
         QLabel* _title;
         QPushButton* _addProject;
-        QPushButton* _projectButton;
+        QList<QPushButton*> _projectButtons;
         // no way of finding previous projects, so leave displaying those for now
 
     public slots:

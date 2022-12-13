@@ -73,6 +73,11 @@ Project* ProjectManager::GetProject(int index)
     return NULL;
 }
 
+QList<Project*> ProjectManager::GetProjects()
+{
+        return _projects;
+}
+
 Project* ProjectManager::GetProjectByName(QString projectName)
 {
     for(int i = 0; i < GetTotalProjects(); i++)

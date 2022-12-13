@@ -10,9 +10,12 @@ class ModularLayout : public QHBoxLayout
         ModularLayout()  : QHBoxLayout()
         {
             _layoutWidget = new QWidget();
+            _layoutWidget->setLayout(this);
         };
+
         ~ModularLayout();
         QWidget* GetLayoutWidget();
+        void ClearLayout(QLayout* layout, bool deleteWidgets = true);
 
     private:
         QWidget* _layoutWidget;
