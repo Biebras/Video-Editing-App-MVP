@@ -13,6 +13,12 @@ QWidget* SceneManager::GetWindow()
 
 void SceneManager::InitScenes()
 {
+    _window = new QWidget();
+
+    _window->setWindowTitle("App");
+    _window->setMinimumSize(400, 720);
+    _window->resize(_window->minimumSize());
+
     _sceneLayout = new ModularLayout();
 
     Scene* editScene = new EditScene("edit");
@@ -67,6 +73,11 @@ Scene* SceneManager::GetScene(QString sceneName)
 Scene* SceneManager::GetCurrentScene()
 {
     return _currentScene;
+}
+
+void SceneManager::ShowWindow()
+{
+        _window->show();
 }
 
 

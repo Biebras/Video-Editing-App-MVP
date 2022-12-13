@@ -3,7 +3,9 @@
 
 void ProjectsScene::CreateWidgets()
 {
+
     // header
+
     _title = new QLabel("My Projects");
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font-size: 18pt");
@@ -11,6 +13,8 @@ void ProjectsScene::CreateWidgets()
     _addProject->setIcon(QIcon(":icons/addIcon.png"));
     _addProject->setToolTip("Create Project");
     _addProject->setFixedSize(QSize(50, 50));
+
+    //buttons
 }
 
 void ProjectsScene::ArrangeWidgets()
@@ -32,7 +36,13 @@ void ProjectsScene::ArrangeWidgets()
 
 void ProjectsScene::MakeConnections()
 {
+    connect(_addProject, SIGNAL(clicked()), this, SLOT(ChangeSceneToCreateProject()));
     /** connections:
      *  add project button -> create project scene
      **/
+}
+
+void ProjectsScene::ChangeSceneToCreateProject()
+{
+    _sceneManager.SetScene("createProject");
 }

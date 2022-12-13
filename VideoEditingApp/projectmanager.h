@@ -17,6 +17,7 @@ class ProjectManager
 
         void LoadProjects(QString projectsFolderPath);
         ~ProjectManager();
+        void CreateProject(QString projectName);
         void AddProject(Project* project);
         void RemoveProject(Project* project);
         void SetCurrentProject(Project* project);
@@ -24,9 +25,11 @@ class ProjectManager
         Project* GetCurrentProject();
         Project* GetProject(int index);
         Project* GetProjectByName(QString projectName);
+        void PrintProjects();
 
     private:
         ProjectManager(){}
+        QString _projectsFolderPath;
         QList<Project*> _projects;
         Project* _currentProject;
 };
