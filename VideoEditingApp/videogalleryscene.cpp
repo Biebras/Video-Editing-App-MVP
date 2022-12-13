@@ -61,7 +61,7 @@ void VideoGalleryScene::ArrangeWidgets()
     _mainLayout->addWidget(header->GetLayoutWidget());
 
     // get the window widget
-    SceneManager& sceneManager = SceneManager::Get(nullptr);
+    SceneManager& sceneManager = SceneManager::Get();
     QWidget* window = sceneManager.GetWindow();
 
     // assuming buttons should be no less than 200 wide

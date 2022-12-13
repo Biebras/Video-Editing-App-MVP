@@ -24,20 +24,14 @@ int main(int argc, char *argv[])
     ProjectManager& projectManager = ProjectManager::Get();
 
     projectManager.LoadProjects(argv[1]);
-    Project* currentProject = projectManager.GetProject(0);
+    Project* currentProject = projectManager.GetProjectByName("Project1");
     projectManager.SetCurrentProject(currentProject);
     videoManager.LoadVideos(currentProject->GetProjectPath());
 
-    QWidget *window = new QWidget();
-
-    window->setWindowTitle("App");
-    window->setMinimumSize(400, 720);
-    window->resize(window->minimumSize());
-
-    SceneManager& sceneManager = SceneManager::Get(window); // initialise the scene manager
+    SceneManager& sceneManager = SceneManager::Get(); // initialise the scene manager
     sceneManager.InitScenes();
 
-    window->show();
+    sceneManager.ShowWindow();
 
     return app.exec();
 }

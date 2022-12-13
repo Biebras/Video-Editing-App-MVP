@@ -10,23 +10,21 @@ class SceneManager
     public:
         SceneManager(const SceneManager&) = delete;
 
-        static SceneManager& Get(QWidget* const window)
+        static SceneManager& Get()
         {
-            static SceneManager instance(window);
+            static SceneManager instance;
             return instance;
-        }
+        };
 
         QWidget* GetWindow();
         void InitScenes();
         void SetScene(QString sceneName);
         Scene* GetScene(QString sceneName);
         Scene* GetCurrentScene();
+        void ShowWindow();
 
     private:
-        SceneManager(QWidget* const window)
-        {
-            _window = window;
-        };
+        SceneManager(){};
 
         QWidget* _window;
         QList<Scene*> _scenes;

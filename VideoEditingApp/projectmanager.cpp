@@ -5,8 +5,9 @@
 
 void ProjectManager::LoadProjects(QString projectsFolderPath)
 {
+    _projectsFolderPath = projectsFolderPath;
     //Create access to directory's contet
-    QDir dir (projectsFolderPath);
+    QDir dir (_projectsFolderPath);
     //Ignore dot and dot dot
     QFileInfoList fList = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot, QDir::DirsFirst);
 
@@ -30,9 +31,18 @@ ProjectManager::~ProjectManager()
     _projects.clear();
 }
 
+void ProjectManager::CreateProject(QString projectName)
+{
+    QDir dir(_projectsFolderPath);
+    dir.mkdir(projectName);
+
+    Project* project = new Project(_projectsFolderPath + "/" + projectName, projectName);
+    AddProject(project);
+}
+
 void ProjectManager::AddProject(Project *project)
 {
-        _projects.append(project);
+        _projects.push_back(project);
 }
 
 void ProjectManager::RemoveProject(Project *project)
@@ -80,4 +90,17 @@ Project* ProjectManager::GetProjectByName(QString projectName)
 int ProjectManager::GetTotalProjects()
 {
     return _projects.size();
+}
+
+void ProjectManager::PrintProjects()
+{
+    qDebug() << "Printing projects";
+    qDebug() << "==========================================";
+
+    foreach(auto project, _projects)
+    {
+        qDebug() << "Name: " << project->GetProjectName();
+        qDebug() << "Path: " << project->GetProjectPath();
+        qDebug() << "==========================================";
+    }
 }
