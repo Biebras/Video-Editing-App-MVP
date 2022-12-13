@@ -3,10 +3,10 @@
 #include <QDebug>
 #include "projectmanager.h"
 
-void ProjectManager::LoadProjects(string projectsFolderPath)
+void ProjectManager::LoadProjects(QString projectsFolderPath)
 {
     //Create access to directory's contet
-    QDir dir (QString::fromStdString(projectsFolderPath));
+    QDir dir (projectsFolderPath);
     //Ignore dot and dot dot
     QFileInfoList fList = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot, QDir::DirsFirst);
 
@@ -14,7 +14,7 @@ void ProjectManager::LoadProjects(string projectsFolderPath)
     {
         QFileInfo file = fList.at(i);
 
-        Project* project = new Project( file.absoluteFilePath().toStdString(), file.fileName().toStdString());
+        Project* project = new Project( file.absoluteFilePath(), file.fileName());
         AddProject(project);
     }
 
@@ -63,7 +63,7 @@ Project* ProjectManager::GetProject(int index)
     return NULL;
 }
 
-Project* ProjectManager::GetProjectByName(string projectName)
+Project* ProjectManager::GetProjectByName(QString projectName)
 {
     for(int i = 0; i < GetTotalProjects(); i++)
     {
@@ -73,7 +73,7 @@ Project* ProjectManager::GetProjectByName(string projectName)
             return project;
     }
 
-    qDebug() << "Couldn't find project with name" << QString::fromStdString(projectName);
+    qDebug() << "Couldn't find project with name" << projectName;
     return NULL;
 }
 

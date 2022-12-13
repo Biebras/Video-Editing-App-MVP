@@ -15,7 +15,7 @@ class ProjectManager
             return instance;
         };
 
-        void LoadProjects(string projectsFolderPath);
+        void LoadProjects(QString projectsFolderPath);
         ~ProjectManager();
         void AddProject(Project* project);
         void RemoveProject(Project* project);
@@ -23,7 +23,7 @@ class ProjectManager
         int GetTotalProjects();
         Project* GetCurrentProject();
         Project* GetProject(int index);
-        Project* GetProjectByName(string projectName);
+        Project* GetProjectByName(QString projectName);
 
     private:
         ProjectManager(){}

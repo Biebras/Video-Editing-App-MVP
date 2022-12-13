@@ -24,12 +24,11 @@ int main(int argc, char *argv[])
     ProjectManager& projectManager = ProjectManager::Get();
 
     projectManager.LoadProjects(argv[1]);
-    Project* fiirstProject = projectManager.GetProject(0);
-    projectManager.SetCurrentProject(fiirstProject);
-    videoManager.LoadVideos(fiirstProject->GetProjectPath());
-    //videoManager.PrintAllVideos();
-
-
+    Project* currentProject = projectManager.GetProject(0);
+    projectManager.SetCurrentProject(currentProject);
+    videoManager.LoadVideos(currentProject->GetProjectPath());
+    //videoManager.SaveVideos(currentProject->GetProjectPath());
+    videoManager.PrintAllVideos();
 
     QWidget *window = new QWidget();
 

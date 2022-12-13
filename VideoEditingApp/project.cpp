@@ -2,12 +2,11 @@
 #include <QDirIterator>
 #include <QDebug>
 #include <QString>
-#include <string>
 #include "project.h"
 
 using namespace std;
 
-Project::Project(string path, string name)
+Project::Project(QString path, QString name)
 {
     _pathName = path;
     _projectName = name;
@@ -22,7 +21,7 @@ Project::~Project()
 void Project::LoadProjectVideos()
 {
     //Create access to directory's contet
-    QDir dir (QString::fromStdString(_pathName));
+    QDir dir (_pathName);
     //Create itirator to iterate directories
     QDirIterator itirator(dir);
 
@@ -32,7 +31,7 @@ void Project::LoadProjectVideos()
 
         if(pathName.contains(".mp4") || pathName.contains("MOV"))
         {
-            Video* video = new Video(pathName.toStdString(), 0, 0, 1);
+            Video* video = new Video(pathName, 0, 0, 1);
             AddVideo(video);
         }
     }
@@ -43,12 +42,12 @@ void Project::LoadProjectVideos()
     }
 }
 
-string Project::GetProjectPath()
+QString Project::GetProjectPath()
 {
     return _pathName;
 }
 
-string Project::GetProjectName()
+QString Project::GetProjectName()
 {
     return _projectName;
 }
@@ -82,7 +81,7 @@ void Project::PrintAllVideos()
     for(auto video : _videos)
     {
 
-        qDebug()  << "Path: " << QString::fromStdString(video->GetFilePath());
+        qDebug()  << "Path: " << video->GetFilePath();
 
         qDebug()  << "==========================================" ;
     }
