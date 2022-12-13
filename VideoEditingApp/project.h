@@ -2,7 +2,6 @@
 #define PROJECT_H
 
 #include <QList>
-#include <string>
 #include "video.h"
 
 using namespace std;
@@ -10,11 +9,11 @@ using namespace std;
 class Project
 {
     public:
-        Project(string path, string name);
+        Project(QString path, QString name);
         ~Project();
         void LoadProjectVideos();
-        string GetProjectPath();
-        string GetProjectName();
+        QString GetProjectPath();
+        QString GetProjectName();
         void AddVideo(Video* video);
         void RemoveVideo(Video* video);
         Video* GetVideo(int index);
@@ -22,8 +21,8 @@ class Project
         int GetTotalVideos();
 
     private:
-        string _projectName;
-        string _pathName;
+        QString _projectName;
+        QString _pathName;
         QList<Video*> _videos;
 };
 

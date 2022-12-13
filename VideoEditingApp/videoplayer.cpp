@@ -12,7 +12,7 @@ void VideoPlayer::Update()
     if (newVideo != _currentVideo)
     {
         // set the video player to show the new video
-        this->setMedia(QUrl(QString::fromStdString(newVideo->GetFilePath())));
+        this->setMedia(QUrl(newVideo->GetFilePath()));
     }
 }
 

@@ -14,7 +14,8 @@ class VideoManager
             static VideoManager instance;
             return instance;
         };
-        void LoadVideos(string conentPathName);
+        void LoadVideos(QString loadFilePath);
+        void SaveVideos(QString saveFilePathName);
         ~VideoManager();
         void AddVideo(Video* video);
         void RemoveVideo(Video* video);
@@ -25,7 +26,6 @@ class VideoManager
         void InsertVideo(int index, Video* video);
     private:
         VideoManager(){}
-
         QList<Video*> _videos;
 };
 
