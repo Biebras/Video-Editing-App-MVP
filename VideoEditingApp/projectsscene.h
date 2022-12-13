@@ -7,7 +7,7 @@
 class ProjectsScene : public Scene
 {
     public:
-        ProjectsScene() : Scene()
+        ProjectsScene(QString sceneName) : Scene(sceneName)
         {
             CreateWidgets();
             ArrangeWidgets();
@@ -15,9 +15,9 @@ class ProjectsScene : public Scene
         };
 
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
+        void CreateWidgets() override;
+        void ArrangeWidgets() override;
+        void MakeConnections() override;
         QLabel* _title;
         QPushButton *_addProject;
         // no way of finding previous projects, so leave displaying those for now

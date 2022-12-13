@@ -7,7 +7,7 @@
 class CreateProjectScene : public Scene
 {
     public:
-        CreateProjectScene(): Scene()
+        CreateProjectScene(QString sceneName) : Scene(sceneName)
         {
             CreateWidgets();
             ArrangeWidgets();
@@ -15,9 +15,9 @@ class CreateProjectScene : public Scene
         };
 
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
+        void CreateWidgets() override;
+        void ArrangeWidgets() override;
+        void MakeConnections() override;
         QLabel* _title;
         QPushButton *_addProject;
         QLabel* _nameLabel;

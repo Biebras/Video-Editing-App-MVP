@@ -8,18 +8,17 @@
 class VideoGalleryScene : public Scene
 {
     public:
-        VideoGalleryScene() : Scene()
+        VideoGalleryScene(QString sceneName) : Scene(sceneName)
         {
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
-        }
-
+        };
 
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
+        void CreateWidgets() override;
+        void ArrangeWidgets() override;
+        void MakeConnections() override;
 
         QPushButton* _backButton;
         QLabel* _title;

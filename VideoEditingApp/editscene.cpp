@@ -3,9 +3,11 @@
 #include "scenemanager.h"
 #include "videomanager.h"
 #include <iostream>
+#include <QDebug>
 
 void EditScene::CreateWidgets()
 {
+    qDebug()<<"Edit";
     // header
     _backButton = new QPushButton("");
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
