@@ -24,7 +24,7 @@ void EditScene::CreateWidgets()
     _videoWidget = new QVideoWidget();
     _videoPlayer = new VideoPlayer();
     _videoPlayer->setVideoOutput(_videoWidget);
-    _videoPlayer->SetCurrentTime(0);
+//    _videoPlayer->SetCurrentTime(0);
 
     // time area
     _timeLabel = new QLabel();
