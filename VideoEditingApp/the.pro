@@ -12,6 +12,7 @@ SOURCES += \
         editscene.cpp \
         app.cpp \
         modularlayout.cpp \
+        primarywindow.cpp \
         project.cpp \
         projectmanager.cpp \
         projectsscene.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     editscene.h \
     app.h \
     modularlayout.h \
+    primarywindow.h \
     project.h \
     projectmanager.h \
     projectsscene.h \
