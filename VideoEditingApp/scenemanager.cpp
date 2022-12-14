@@ -41,7 +41,7 @@ void SceneManager::InitScenes()
         _sceneLayout->addWidget(scene);
     }
 
-    SetScene("edit");
+    SetScene("projects");
 }
 
 void SceneManager::SetScene(QString sceneName)

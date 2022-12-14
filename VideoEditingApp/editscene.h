@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "videoplayer.h"
+#include "scenemanager.h"
 #include <QtWidgets>
 #include <QVideoWidget>
 #include <QString>
@@ -42,6 +43,7 @@ class EditScene : public Scene
         int _durationIndex; // the index of the video that we are currently getting the duration of
         int _totalDuration;
         VideoManager* _videoManager;
+        SceneManager& _sceneManager = SceneManager::Get();
 
     public slots:
         void thumbnailClicked();
@@ -53,6 +55,9 @@ class EditScene : public Scene
         void pressedSlider();
         void releasedSlider();
         void changeMediaStatus(QMediaPlayer::MediaStatus status);
+        void changeVolume();
+        void showProjects();
+        void showVideoLibrary();
 };
 
 #endif // EDITSCENE_H

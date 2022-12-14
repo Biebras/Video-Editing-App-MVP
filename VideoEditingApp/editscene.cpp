@@ -7,7 +7,7 @@
 
 void EditScene::CreateWidgets()
 {
-    qDebug()<<"Edit";
+    qDebug() << "get to create widgets";
     // header
     _backButton = new QPushButton("");
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
@@ -34,6 +34,9 @@ void EditScene::CreateWidgets()
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->play();
     }
+
+//    _videoManager->PrintAllVideos();
+
     // initialise the duration index and total duration
     _durationIndex = 0;
     _totalDuration = 0;
@@ -50,7 +53,7 @@ void EditScene::CreateWidgets()
     _pauseButton->setFixedSize(QSize(50, 50));
     _pauseButton->setEnabled(false);
     _volumeButton = new QPushButton();
-    _volumeButton->setIcon(QIcon(":/icons/volumeIcon.png"));
+    _volumeButton->setIcon(QIcon(":/icons/muteIcon.png"));
     _volumeButton->setToolTip("Mute Volume");
     _volumeButton->setFixedSize(QSize(50, 50));
 
@@ -105,7 +108,7 @@ void EditScene::CreateWidgets()
     _effectButton->setToolTip("Add Effects");
     _effectButton->setFixedSize(QSize(50, 50));
     _audioButton = new QPushButton();
-    _audioButton->setIcon(QIcon(":/icons/audioIcon.png"));
+    _audioButton->setIcon(QIcon(":/icons/muteIcon.png"));
     _audioButton->setToolTip("Add Audio");
     _audioButton->setFixedSize(QSize(50, 50));
 }
@@ -176,6 +179,7 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(footer->GetLayoutWidget());
 
     this->setLayout(mainLayout);
+    qDebug() << "arranges widgets";
 }
 
 void EditScene::MakeConnections()
@@ -184,17 +188,16 @@ void EditScene::MakeConnections()
      *  back button -> projects scene
      *  share button -> export scene
      *  add button -> video library scene
-     *  pause button -> pause/play video
-     *  slider -> new place in video
-     *  volume button -> mute/unmute video
      *  trim button -> trim scene
      *  effect button -> fx scene
      *  audio button -> audio scene
-     *  thumbnail button -> enable move left and right, if reordering enable reorder button
-     *  move left -> move video pressed left one place
-     *  move right -> move video pressed right one place
-     *  reorder button pressed -> reorder, disable move left and right buttons
     **/
+
+    // when back button pressed go to projects scene
+    connect(_backButton, SIGNAL(clicked()), this, SLOT(showProjects()));
+
+    // when add button pressed, go to video library scene
+    connect(_addButton, SIGNAL(clicked()), this, SLOT(showVideoLibrary()));
 
     // when thumbnail buttons pressed, allow user to reorder the video they have chosen
     for (auto thumbnail : _thumbnails)
@@ -221,6 +224,9 @@ void EditScene::MakeConnections()
 
     // when a video ends, play the next video in the project
     connect(_videoPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(changeMediaStatus(QMediaPlayer::MediaStatus)));
+
+    // when volume button pressed, mute or unmute video
+    connect(_volumeButton, SIGNAL(clicked()), this, SLOT(changeVolume()));
 }
 
 void EditScene::thumbnailClicked()
@@ -325,15 +331,18 @@ void EditScene::pausePlay()
     {
         _videoPlayer->play();
         _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
+        _pauseButton->setToolTip("Pause");
     } else
     {
         _videoPlayer->Pause();
         _pauseButton->setIcon(QIcon(":/icons/playIcon.png"));
+        _pauseButton->setToolTip("Play");
     }
 }
 
 void EditScene::changeTime(qint64 time)
 {
+    qDebug() << "in changeTime";
     // update current time of video player
     Video* currentVid = _videoPlayer->GetCurrentVideo();
     int actualTime = time + currentVid->GetStart();
@@ -422,4 +431,33 @@ void EditScene::changeMediaStatus(QMediaPlayer::MediaStatus status)
         _videoPlayer->Update();
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
     }
+}
+
+void EditScene::changeVolume()
+{
+    // if muted, unmute
+    if (_videoPlayer->GetCurrentVideo()->GetVolume() > 0)
+    {
+        _videoPlayer->GetCurrentVideo()->SetVolume(0);
+        _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
+        _volumeButton->setToolTip("Unmute video");
+        _videoPlayer->setVolume(0);
+    } else
+    {
+        // if unmuted, mute
+        _videoPlayer->GetCurrentVideo()->SetVolume(1);
+        _volumeButton->setIcon(QIcon(":icons/volumeIcon.png"));
+        _volumeButton->setToolTip("Mute video");
+        _videoPlayer->setVolume(100);
+    }
+}
+
+void EditScene::showProjects()
+{
+    _sceneManager.SetScene("projects");
+}
+
+void EditScene::showVideoLibrary()
+{
+    _sceneManager.SetScene("gallery");
 }

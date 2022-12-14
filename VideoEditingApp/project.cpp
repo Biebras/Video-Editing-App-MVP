@@ -29,12 +29,12 @@ void Project::LoadProjectVideos()
     {
         QString pathName = itirator.next();
 
-            if (pathName.contains("."))
+        if (pathName.contains("."))
 
 #if defined(_WIN32)
             if (pathName.contains(".wmv"))  { // windows
 #else
-            if (f.contains(".mp4") || f.contains("MOV"))
+            if (pathName.contains(".mp4") || pathName.contains("MOV"))
             { // mac/linux
 #endif
             Video* video = new Video(pathName, 0, 0, 1);
