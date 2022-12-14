@@ -65,13 +65,15 @@ void VideoGalleryScene::CreateWidgets()
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
     _backButton->setToolTip("Go Back");
     _backButton->setFixedSize(QSize(50, 50));
+    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _title = new QLabel("Video Gallery");
     _title->setAlignment(Qt::AlignCenter);
-    _title->setStyleSheet("font-size: 18pt");
+    _title->setStyleSheet("font: 20pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
     _addVideos = new QPushButton();
     _addVideos->setIcon(QIcon(":icons/addIcon.png"));
     _addVideos->setToolTip("Add Video(s)");
     _addVideos->setFixedSize(QSize(50, 50));
+    _addVideos->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // videos area
 
