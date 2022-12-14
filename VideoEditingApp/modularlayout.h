@@ -15,7 +15,6 @@ class ModularLayout : public QHBoxLayout
 
         ~ModularLayout();
         QWidget* GetLayoutWidget();
-        void ClearLayout(QLayout* layout, bool deleteWidgets = true);
 
     private:
         QWidget* _layoutWidget;

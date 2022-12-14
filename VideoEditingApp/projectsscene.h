@@ -27,6 +27,7 @@ class ProjectsScene : public Scene
         SceneManager& _sceneManager = SceneManager::Get();
         ProjectManager& _projectManager = ProjectManager::Get();
         QVBoxLayout* _mainLayout = new QVBoxLayout();
+        QVBoxLayout* _projectsLayout = new QVBoxLayout();
         QLabel* _title;
         QPushButton* _addProject;
         QList<QPushButton*> _projectButtons;

@@ -16,7 +16,6 @@ void ProjectsScene::CreateWidgets()
     //projects
     foreach(auto project, _projectManager.GetProjects())
     {
-        qDebug() << project->GetProjectName();
         QPushButton* projectButton = new QPushButton(project->GetProjectName());
         _projectButtons.push_back(projectButton);
     }
@@ -33,15 +32,17 @@ void ProjectsScene::ArrangeWidgets()
     header->addStretch();
     header->addWidget(_addProject);
 
-    _mainLayout->addWidget(header->GetLayoutWidget());
-
     //projects layout
+    QWidget* projectsLayoutWidget = new QWidget();
+    projectsLayoutWidget->setLayout(_projectsLayout);
+
     foreach(auto button, _projectButtons)
     {
-            ModularLayout* projectLayout = new ModularLayout();
-            projectLayout->addWidget(button);
-            _mainLayout->addWidget(projectLayout->GetLayoutWidget());
+            _projectsLayout->addWidget(button);
     }
+
+    _mainLayout->addWidget(header->GetLayoutWidget());
+    _mainLayout->addWidget(projectsLayoutWidget);
 
     this->setLayout(_mainLayout);
 }
@@ -56,7 +57,34 @@ void ProjectsScene::MakeConnections()
 
 void ProjectsScene::UpdateScene()
 {
+    while (_projectsLayout->count() > 0)
+    {
+        QWidget *w = _projectsLayout->takeAt(0)->widget();
 
+        if (w)
+        {
+            w->deleteLater();
+        }
+    }
+
+    _projectButtons.clear();
+
+    foreach(auto project, _projectManager.GetProjects())
+    {
+        QString projectName =  project->GetProjectName();
+        QPushButton* projectButton = new QPushButton(projectName);
+        _projectButtons.push_back(projectButton);
+        _projectsLayout->addWidget(projectButton);
+        //connect(projectButton, SIGNAL(clicked()), this, SLOT(ChangeSceneToEdit()));
+
+        connect(projectButton, &QPushButton::clicked, [project]()
+        {
+            ProjectManager& _projectManager = ProjectManager::Get();
+            SceneManager& _sceneManager = SceneManager::Get();
+            _projectManager.SetCurrentProject(project);
+            _sceneManager.SetScene("edit");
+        });
+    }
 }
 
 void ProjectsScene::ChangeSceneToCreateProject()
