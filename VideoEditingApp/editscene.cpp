@@ -375,7 +375,6 @@ void EditScene::pausePlay()
 
 void EditScene::changeTime(qint64 time)
 {
-    qDebug() << "in changeTime";
     // update current time of video player
     Video* currentVid = _videoPlayer->GetCurrentVideo();
     int actualTime = time + currentVid->GetStart();
@@ -492,5 +491,6 @@ void EditScene::showProjects()
 
 void EditScene::showVideoLibrary()
 {
+    _videoPlayer->pause();
     _sceneManager.SetScene("gallery");
 }
