@@ -7,18 +7,12 @@
 void VideoGalleryScene::CreateWidgetsForVideoGallery()
 {
     Project* currentProject = _projectManager.GetCurrentProject();
+    // loop through videos if the current project is loaded
     if (currentProject)
     {
-//        for (int i = 0; i < currentProject->GetTotalVideos(); i++)
-//        {
-//            QPushButton* button = new QPushButton();
-//            _selectVideos.append(button);
-//            button->setToolTip("Select Video");
-//            button->setText(currentProject->GetVideos()[i]->GetFilePath());
-//            _videoLayout->addWidget(button);
-//        }
         for (int i = 0; i < currentProject->GetTotalVideos(); i++)
         {
+            // create new button with thumbnail as icon if it exists
             _selectVideos.append(new QPushButton());
             _selectVideos[i]->setToolTip("Select Video");
             QString filePath = currentProject->GetVideo(i)->GetFilePath();
@@ -36,26 +30,6 @@ void VideoGalleryScene::CreateWidgetsForVideoGallery()
                 _selectVideos[i]->setText("No thumbnail for this video");
         }
     }
-
-    // loop through videos
-//    for (int i = 0; i < currentProject->GetTotalVideos(); i++)
-//    {
-//        _selectVideos.append(new QPushButton());
-//        _selectVideos[i]->setToolTip("Select Video");
-//        QString filePath = currentProject->GetVideo(i)->GetFilePath();
-//        QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
-//        if (QFile(thumbnailPath).exists()) // if file exists
-//        {
-//            QImageReader *imageReader = new QImageReader(thumbnailPath);
-//            QImage sprite = imageReader->read(); // read the thumbnail image
-//            if (!sprite.isNull())
-//            {
-//                _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
-//            } else
-//                _selectVideos[i]->setText("No thumbnail for this video");
-//        } else
-//            _selectVideos[i]->setText("No thumbnail for this video");
-//    }
 }
 
 void VideoGalleryScene::CreateWidgets()

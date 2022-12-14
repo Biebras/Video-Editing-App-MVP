@@ -253,6 +253,7 @@ void EditScene::UpdateScene()
     //  if there is at least one video in the project, play it
     if (_videoManager->GetTotalVideos() > 0)
     {
+        qDebug() << "should be playing";
         _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->play();
@@ -458,10 +459,17 @@ void EditScene::changeTime(qint64 time)
     _videoSlider->setValue(actualTime);
     _videoSlider->setMaximum(total);
 
-
+    qDebug() << "time change";
+    qDebug() << _durationIndex;
+    qDebug() << _videoManager->GetTotalVideos();
+    qDebug() << _videoPlayer->GetCurrentVideo()->GetFilePath();
+    qDebug() << _videoPlayer->state();
+    qDebug() << _videoPlayer->mediaStatus();
+    qDebug() << _videoPlayer->duration();
     // find the durations of the videos by playing each one at the start
     if (_videoPlayer->duration() > 0 && _durationIndex < _videoManager->GetTotalVideos() - 1)
     {
+        qDebug() << "here2";
         // set the start and end of current video and change the video playing to the next one
         _videoManager->GetVideo(_durationIndex)->SetStart(_totalDuration);
         _totalDuration += _videoPlayer->duration();
@@ -470,9 +478,11 @@ void EditScene::changeTime(qint64 time)
         _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(_durationIndex)->GetFilePath())));
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(_durationIndex));
         _videoPlayer->play();
+        _videoManager->PrintAllVideos();
     }
     else if (_videoPlayer->duration() > 0 && _durationIndex == _videoManager->GetTotalVideos() - 1)
     {
+        qDebug() << "here";
         // all videos loaded
         // set the start and end of current video and change the video playing to the first one
         _videoManager->GetVideo(_durationIndex)->SetStart(_totalDuration);
@@ -488,6 +498,7 @@ void EditScene::changeTime(qint64 time)
         _volumeButton->setEnabled(true);
         for (auto thumbnail : _thumbnails)
             thumbnail->setEnabled(true);
+        _videoManager->PrintAllVideos();
     }
 }
 
