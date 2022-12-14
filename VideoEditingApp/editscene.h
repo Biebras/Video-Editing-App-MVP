@@ -52,6 +52,9 @@ class EditScene : public Scene
         ModularLayout* _thumbnailArea = new ModularLayout();
         ModularLayout* _videoArea = new ModularLayout();
 
+        bool _fin = false;
+        bool _first = true;
+
     public slots:
         void thumbnailClicked();
         void reorderLeft();

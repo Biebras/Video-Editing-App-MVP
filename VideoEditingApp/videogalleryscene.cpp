@@ -7,10 +7,12 @@
 void VideoGalleryScene::CreateWidgetsForVideoGallery()
 {
     Project* currentProject = _projectManager.GetCurrentProject();
+    // loop through videos if the current project is loaded
     if (currentProject)
     {
         for (int i = 0; i < currentProject->GetTotalVideos(); i++)
         {
+            // create new button with thumbnail as icon if it exists
             _selectVideos.append(new QPushButton());
             _selectVideos[i]->setToolTip("Select Video");
             QString filePath = currentProject->GetVideo(i)->GetFilePath();
@@ -185,6 +187,8 @@ void VideoGalleryScene::AddVideo()
 {
     int index = _selectVideos.indexOf(qobject_cast<QPushButton* >(QObject::sender()));
     _videoManager.AddVideo(_projectManager.GetCurrentProject()->GetVideo(index));
+    qDebug()  << "-------gallery scene--------------------";
     _videoManager.PrintAllVideos();
+    qDebug() << "-------gallery scene--------------------";
     _sceneManager.SetScene("edit");
 }
