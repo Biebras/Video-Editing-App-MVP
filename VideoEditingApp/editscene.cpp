@@ -7,7 +7,6 @@
 
 void EditScene::CreateWidgets()
 {
-    qDebug() << "get to create widgets";
     // header
     _backButton = new QPushButton("");
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
@@ -137,12 +136,12 @@ void EditScene::ArrangeWidgets()
     ModularLayout* videoEditArea = new ModularLayout();
     videoEditArea->addWidget(_videoSlider);
 
-    ModularLayout* thumbnailArea = new ModularLayout();
+//    ModularLayout* thumbnailArea = new ModularLayout();
     for (auto thumbnail : _thumbnails)
     {
-        thumbnailArea->addWidget(thumbnail);
+        _thumbnailArea->addWidget(thumbnail);
     }
-    thumbnailArea->setSpacing(0);
+    _thumbnailArea->setSpacing(0);
 
     ModularLayout* reorderArea = new ModularLayout();
     reorderArea->addStretch();
@@ -163,7 +162,7 @@ void EditScene::ArrangeWidgets()
     timeArea->GetLayoutWidget()->setLayout(timeArea);
     pauseArea->GetLayoutWidget()->setLayout(pauseArea);
     videoEditArea->GetLayoutWidget()->setLayout(videoEditArea);
-    thumbnailArea->GetLayoutWidget()->setLayout(thumbnailArea);
+    _thumbnailArea->GetLayoutWidget()->setLayout(_thumbnailArea);
     reorderArea->GetLayoutWidget()->setLayout(reorderArea);
     footer->GetLayoutWidget()->setLayout(footer);
 
@@ -174,12 +173,30 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(timeArea->GetLayoutWidget());
     mainLayout->addWidget(pauseArea->GetLayoutWidget());
     mainLayout->addWidget(videoEditArea->GetLayoutWidget());
-    mainLayout->addWidget(thumbnailArea->GetLayoutWidget());
+    mainLayout->addWidget(_thumbnailArea->GetLayoutWidget());
     mainLayout->addWidget(reorderArea->GetLayoutWidget());
     mainLayout->addWidget(footer->GetLayoutWidget());
 
     this->setLayout(mainLayout);
-    qDebug() << "arranges widgets";
+}
+
+void EditScene::UpdateScene()
+{
+   // update thumbnails
+    while (_thumbnailArea->count() > 0)
+    {
+        QWidget *w = _thumbnailArea->takeAt(0)->widget();
+        if (w)
+            w->deleteLater();
+    }
+    //_thumbnailArea->clear();
+
+
+
+    //qDebug() << _videoManager->GetTotalVideos();
+
+
+
 }
 
 void EditScene::MakeConnections()

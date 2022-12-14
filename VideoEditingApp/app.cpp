@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
     ProjectManager& projectManager = ProjectManager::Get();
 
     projectManager.LoadProjects(argv[1]);
-    Project* currentProject = projectManager.GetProjectByName("Project1");
-    projectManager.SetCurrentProject(currentProject);
-    videoManager.LoadVideos(currentProject->GetProjectPath());
+//    Project* currentProject = projectManager.GetProjectByName("Project1");
+//    projectManager.SetCurrentProject(currentProject);
+//    videoManager.LoadVideos(currentProject->GetProjectPath());
 
     SceneManager& sceneManager = SceneManager::Get(); // initialise the scene manager
     sceneManager.InitScenes();
