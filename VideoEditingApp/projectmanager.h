@@ -25,6 +25,7 @@ class ProjectManager
         Project* GetCurrentProject();
         Project* GetProject(int index);
         Project* GetProjectByName(QString projectName);
+        QList<Project*> GetProjects();
         void PrintProjects();
 
     private:
