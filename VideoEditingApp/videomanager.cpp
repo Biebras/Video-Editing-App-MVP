@@ -10,12 +10,16 @@
 #include <QFile>
 #include <QString>
 #include "videomanager.h"
+#include "videoplayer.h"
 #include <QDebug>
+#include <QUrl>
 
 using namespace std;
 
 void VideoManager::LoadVideos(QString loadFilePath)
 {
+    ClearVideos();
+
     QString jsonFilePath = loadFilePath + "/save.json";
     QFile file(jsonFilePath);
 
@@ -100,6 +104,12 @@ void VideoManager::SaveVideos(QString saveFilePath)
      qDebug() << "Successfully saved video data";
 }
 
+void VideoManager::ClearVideos()
+{
+    qDeleteAll(_videos);
+    _videos.clear();
+}
+
 VideoManager::~VideoManager()
 {
     qDeleteAll(_videos);
@@ -165,4 +175,14 @@ int VideoManager::GetTotalVideos()
 void VideoManager::InsertVideo(int index, Video* video)
 {
     _videos.insert(index, video);
+}
+
+int VideoManager::GetTotalDuration()
+{
+    int total = 0;
+    for (auto video : _videos)
+    {
+        total += video->GetDuration();
+    }
+    return total;
 }

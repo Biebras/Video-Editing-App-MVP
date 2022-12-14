@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
     // create the Qt Application
     QApplication app(argc, argv);
 
-
     if(argc != 2)
         cout << "There should be two arguments" << endl;
 
@@ -24,9 +23,6 @@ int main(int argc, char *argv[])
     ProjectManager& projectManager = ProjectManager::Get();
 
     projectManager.LoadProjects(argv[1]);
-    Project* currentProject = projectManager.GetProjectByName("Project1");
-    projectManager.SetCurrentProject(currentProject);
-    videoManager.LoadVideos(currentProject->GetProjectPath());
 
     SceneManager& sceneManager = SceneManager::Get(); // initialise the scene manager
     sceneManager.InitScenes();
