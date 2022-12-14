@@ -4,6 +4,7 @@
 #include "qwidget.h"
 #include "scene.h"
 #include "modularlayout.h"
+#include "primarywindow.h"
 
 class SceneManager
 {
@@ -16,20 +17,21 @@ class SceneManager
             return instance;
         };
 
-        QWidget* GetWindow();
         void InitScenes();
         void SetScene(QString sceneName);
         Scene* GetScene(QString sceneName);
         Scene* GetCurrentScene();
+        void UpdateCurrentScene();
         void ShowWindow();
+        PrimaryWindow* GetWindow();
 
     private:
         SceneManager(){};
 
-        QWidget* _window;
         QList<Scene*> _scenes;
         Scene*_currentScene;
         ModularLayout* _sceneLayout;
+        PrimaryWindow* _window;
 };
 
 #endif // SCENEMANAGER_H
