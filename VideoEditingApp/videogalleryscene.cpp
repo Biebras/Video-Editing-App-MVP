@@ -64,43 +64,46 @@ void VideoGalleryScene::ArrangeWidgets()
     SceneManager& sceneManager = SceneManager::Get();
     QWidget* window = sceneManager.GetWindow();
 
-    // assuming buttons should be no less than 200 wide
-    int itemsPerRow = floor(float(window->width()) / 200.0);
-    int rows = ceil(float(_selectVideos.size()) / float(itemsPerRow));
-    int itemsLast = _selectVideos.size() - (rows-1)*itemsPerRow; //no. items on last row
-    int it = 0;
-
-    // create new ModularLayout for each row and add to mainLayout
-    for (int i = 0; i < rows - 1; i++)
+    if (_selectVideos.size() > 0)
     {
+        // assuming buttons should be no less than 200 wide
+        int itemsPerRow = floor(float(window->width()) / 200.0);
+        int rows = ceil(float(_selectVideos.size()) / float(itemsPerRow));
+        int itemsLast = _selectVideos.size() - (rows-1)*itemsPerRow; //no. items on last row
+        int it = 0;
+
+        // create new ModularLayout for each row and add to mainLayout
+        for (int i = 0; i < rows - 1; i++)
+        {
+            ModularLayout *videoRow = new ModularLayout();
+            for (int j = 0; j < itemsPerRow; j++)
+            {
+                _selectVideos[it]->setIconSize(_selectVideos[it]->size());
+                videoRow->addWidget(_selectVideos[it]);
+                it ++;
+            }
+            videoRow->GetLayoutWidget()->setLayout(videoRow);
+            _mainLayout->addWidget(videoRow->GetLayoutWidget());
+        }
+
+        // last row of videos
         ModularLayout *videoRow = new ModularLayout();
-        for (int j = 0; j < itemsPerRow; j++)
+        for (int i = 0; i < itemsLast; i++)
         {
             _selectVideos[it]->setIconSize(_selectVideos[it]->size());
             videoRow->addWidget(_selectVideos[it]);
             it ++;
         }
+
+        // add empty labels to take up space remaning on last row
+        QLabel* space = new QLabel();
+        for (int i = 0; i < itemsPerRow-itemsLast; i++)
+        {
+            videoRow->addWidget(space);
+        }
         videoRow->GetLayoutWidget()->setLayout(videoRow);
         _mainLayout->addWidget(videoRow->GetLayoutWidget());
     }
-
-    // last row of videos
-    ModularLayout *videoRow = new ModularLayout();
-    for (int i = 0; i < itemsLast; i++)
-    {
-        _selectVideos[it]->setIconSize(_selectVideos[it]->size());
-        videoRow->addWidget(_selectVideos[it]);
-        it ++;
-    }
-
-    // add empty labels to take up space remaning on last row
-    QLabel* space = new QLabel();
-    for (int i = 0; i < itemsPerRow-itemsLast; i++)
-    {
-        videoRow->addWidget(space);
-    }
-    videoRow->GetLayoutWidget()->setLayout(videoRow);
-    _mainLayout->addWidget(videoRow->GetLayoutWidget());
 
     this->setLayout(_mainLayout);
 }

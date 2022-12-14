@@ -7,20 +7,22 @@
 
 void EditScene::CreateWidgets()
 {
-    qDebug()<<"Edit";
     // header
     _backButton = new QPushButton("");
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
     _backButton->setToolTip("Go Back");
     _backButton->setFixedSize(QSize(50, 50));
+    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _shareButton = new QPushButton();
     _shareButton->setIcon(QIcon(":/icons/shareIcon.png"));
     _shareButton->setToolTip("Share");
     _shareButton->setFixedSize(QSize(50, 50));
+    _shareButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _addButton = new QPushButton();
     _addButton->setIcon(QIcon(":/icons/addIcon.png"));
     _addButton->setToolTip("Add Video");
     _addButton->setFixedSize(QSize(50,50));
+    _addButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // video area
     _videoWidget = new QVideoWidget();
@@ -34,6 +36,9 @@ void EditScene::CreateWidgets()
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->play();
     }
+
+//    _videoManager->PrintAllVideos();
+
     // initialise the duration index and total duration
     _durationIndex = 0;
     _totalDuration = 0;
@@ -41,23 +46,28 @@ void EditScene::CreateWidgets()
     // time area
     _timeLabel = new QLabel();
     _timeLabel->setAlignment(Qt::AlignCenter);
-    _timeLabel->setStyleSheet("font-size: 14pt");
+    _timeLabel->setStyleSheet("font-size: 18pt; color: #9EC5AB;");
 
     // pause/play area
     _pauseButton = new QPushButton();
     _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
     _pauseButton->setToolTip("Pause");
     _pauseButton->setFixedSize(QSize(50, 50));
+
+    _pauseButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _pauseButton->setEnabled(false);
     _volumeButton = new QPushButton();
-    _volumeButton->setIcon(QIcon(":/icons/volumeIcon.png"));
+    _volumeButton->setIcon(QIcon(":/icons/muteIcon.png"));
     _volumeButton->setToolTip("Mute Volume");
     _volumeButton->setFixedSize(QSize(50, 50));
+    _volumeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // slider area
     _videoSlider = new QSlider();
     _videoSlider->setOrientation(Qt::Horizontal);
     _videoSlider->setToolTip("Move through video");
+
+    _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
     _videoSlider->setTickInterval(1000);
 
     // thumbnails
@@ -65,6 +75,7 @@ void EditScene::CreateWidgets()
     for (int i = 0; i < _videoManager->GetTotalVideos(); i++)
     {
         _thumbnails.append(new QPushButton());
+        _thumbnails[i]->setStyleSheet("background-color: #011502;");
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
         QString filePath = _videoManager->GetVideo(i)->GetFilePath();
@@ -89,10 +100,12 @@ void EditScene::CreateWidgets()
     _moveLeft = new QPushButton();
     _moveLeft->setIcon(QIcon(":/icons/backIcon.png"));
     _moveLeft->setFixedSize(QSize(50, 50));
+    _moveLeft->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveLeft->setEnabled(false);
     _moveRight = new QPushButton();
     _moveRight->setIcon(QIcon(":/icons/rightIcon.png"));
     _moveRight->setFixedSize(QSize(50, 50));
+    _moveRight->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveRight->setEnabled(false);
 
     // footer
@@ -100,14 +113,18 @@ void EditScene::CreateWidgets()
     _trimButton->setIcon(QIcon(":/icons/trimIcon.png"));
     _trimButton->setToolTip("Trim Video");
     _trimButton->setFixedSize(QSize(50, 50));
+    _trimButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _effectButton = new QPushButton();
     _effectButton->setIcon(QIcon(":/icons/effectIcon.png"));
     _effectButton->setToolTip("Add Effects");
     _effectButton->setFixedSize(QSize(50, 50));
+    _effectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _audioButton = new QPushButton();
-    _audioButton->setIcon(QIcon(":/icons/audioIcon.png"));
+    _audioButton->setIcon(QIcon(":/icons/muteIcon.png"));
     _audioButton->setToolTip("Add Audio");
     _audioButton->setFixedSize(QSize(50, 50));
+    _audioButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+
 }
 
 void EditScene::ArrangeWidgets()
@@ -134,12 +151,12 @@ void EditScene::ArrangeWidgets()
     ModularLayout* videoEditArea = new ModularLayout();
     videoEditArea->addWidget(_videoSlider);
 
-    ModularLayout* thumbnailArea = new ModularLayout();
+//    ModularLayout* thumbnailArea = new ModularLayout();
     for (auto thumbnail : _thumbnails)
     {
-        thumbnailArea->addWidget(thumbnail);
+        _thumbnailArea->addWidget(thumbnail);
     }
-    thumbnailArea->setSpacing(0);
+    _thumbnailArea->setSpacing(0);
 
     ModularLayout* reorderArea = new ModularLayout();
     reorderArea->addStretch();
@@ -160,7 +177,7 @@ void EditScene::ArrangeWidgets()
     timeArea->GetLayoutWidget()->setLayout(timeArea);
     pauseArea->GetLayoutWidget()->setLayout(pauseArea);
     videoEditArea->GetLayoutWidget()->setLayout(videoEditArea);
-    thumbnailArea->GetLayoutWidget()->setLayout(thumbnailArea);
+    _thumbnailArea->GetLayoutWidget()->setLayout(_thumbnailArea);
     reorderArea->GetLayoutWidget()->setLayout(reorderArea);
     footer->GetLayoutWidget()->setLayout(footer);
 
@@ -171,11 +188,31 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(timeArea->GetLayoutWidget());
     mainLayout->addWidget(pauseArea->GetLayoutWidget());
     mainLayout->addWidget(videoEditArea->GetLayoutWidget());
-    mainLayout->addWidget(thumbnailArea->GetLayoutWidget());
+    mainLayout->addWidget(_thumbnailArea->GetLayoutWidget());
     mainLayout->addWidget(reorderArea->GetLayoutWidget());
     mainLayout->addWidget(footer->GetLayoutWidget());
 
     this->setLayout(mainLayout);
+
+}
+
+void EditScene::UpdateScene()
+{
+   // update thumbnails
+    while (_thumbnailArea->count() > 0)
+    {
+        QWidget *w = _thumbnailArea->takeAt(0)->widget();
+        if (w)
+            w->deleteLater();
+    }
+    //_thumbnailArea->clear();
+
+
+
+    //qDebug() << _videoManager->GetTotalVideos();
+
+
+
 }
 
 void EditScene::MakeConnections()
@@ -184,17 +221,16 @@ void EditScene::MakeConnections()
      *  back button -> projects scene
      *  share button -> export scene
      *  add button -> video library scene
-     *  pause button -> pause/play video
-     *  slider -> new place in video
-     *  volume button -> mute/unmute video
      *  trim button -> trim scene
      *  effect button -> fx scene
      *  audio button -> audio scene
-     *  thumbnail button -> enable move left and right, if reordering enable reorder button
-     *  move left -> move video pressed left one place
-     *  move right -> move video pressed right one place
-     *  reorder button pressed -> reorder, disable move left and right buttons
     **/
+
+    // when back button pressed go to projects scene
+    connect(_backButton, SIGNAL(clicked()), this, SLOT(showProjects()));
+
+    // when add button pressed, go to video library scene
+    connect(_addButton, SIGNAL(clicked()), this, SLOT(showVideoLibrary()));
 
     // when thumbnail buttons pressed, allow user to reorder the video they have chosen
     for (auto thumbnail : _thumbnails)
@@ -221,6 +257,9 @@ void EditScene::MakeConnections()
 
     // when a video ends, play the next video in the project
     connect(_videoPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(changeMediaStatus(QMediaPlayer::MediaStatus)));
+
+    // when volume button pressed, mute or unmute video
+    connect(_volumeButton, SIGNAL(clicked()), this, SLOT(changeVolume()));
 }
 
 void EditScene::thumbnailClicked()
@@ -325,15 +364,18 @@ void EditScene::pausePlay()
     {
         _videoPlayer->play();
         _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
+        _pauseButton->setToolTip("Pause");
     } else
     {
         _videoPlayer->Pause();
         _pauseButton->setIcon(QIcon(":/icons/playIcon.png"));
+        _pauseButton->setToolTip("Play");
     }
 }
 
 void EditScene::changeTime(qint64 time)
 {
+    qDebug() << "in changeTime";
     // update current time of video player
     Video* currentVid = _videoPlayer->GetCurrentVideo();
     int actualTime = time + currentVid->GetStart();
@@ -422,4 +464,33 @@ void EditScene::changeMediaStatus(QMediaPlayer::MediaStatus status)
         _videoPlayer->Update();
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
     }
+}
+
+void EditScene::changeVolume()
+{
+    // if muted, unmute
+    if (_videoPlayer->GetCurrentVideo()->GetVolume() > 0)
+    {
+        _videoPlayer->GetCurrentVideo()->SetVolume(0);
+        _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
+        _volumeButton->setToolTip("Unmute video");
+        _videoPlayer->setVolume(0);
+    } else
+    {
+        // if unmuted, mute
+        _videoPlayer->GetCurrentVideo()->SetVolume(1);
+        _volumeButton->setIcon(QIcon(":icons/volumeIcon.png"));
+        _volumeButton->setToolTip("Mute video");
+        _videoPlayer->setVolume(100);
+    }
+}
+
+void EditScene::showProjects()
+{
+    _sceneManager.SetScene("projects");
+}
+
+void EditScene::showVideoLibrary()
+{
+    _sceneManager.SetScene("gallery");
 }

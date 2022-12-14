@@ -1,11 +1,11 @@
 #include "projectsscene.h"
 #include "modularlayout.h"
+#include <QDebug>
+#include "videomanager.h"
 
 void ProjectsScene::CreateWidgets()
 {
-
     // header
-
     _title = new QLabel("My Projects");
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font-size: 18pt");
@@ -14,13 +14,17 @@ void ProjectsScene::CreateWidgets()
     _addProject->setToolTip("Create Project");
     _addProject->setFixedSize(QSize(50, 50));
 
-    //buttons
+    //projects
+    foreach(auto project, _projectManager.GetProjects())
+    {
+        QPushButton* projectButton = new QPushButton(project->GetProjectName());
+        _projectButtons.push_back(projectButton);
+    }
 }
 
 void ProjectsScene::ArrangeWidgets()
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout();
-    mainLayout->setAlignment(Qt::AlignTop);
+    _mainLayout->setAlignment(Qt::AlignTop);
 
     // layout for header
     ModularLayout* header = new ModularLayout();
@@ -29,20 +33,66 @@ void ProjectsScene::ArrangeWidgets()
     header->addStretch();
     header->addWidget(_addProject);
 
-    header->GetLayoutWidget()->setLayout(header);
-    mainLayout->addWidget(header->GetLayoutWidget());
-    this->setLayout(mainLayout);
+    //projects layout
+    QWidget* projectsLayoutWidget = new QWidget();
+    projectsLayoutWidget->setLayout(_projectsLayout);
+
+    foreach(auto button, _projectButtons)
+    {
+            _projectsLayout->addWidget(button);
+    }
+
+    _mainLayout->addWidget(header->GetLayoutWidget());
+    _mainLayout->addWidget(projectsLayoutWidget);
+
+    this->setLayout(_mainLayout);
 }
 
 void ProjectsScene::MakeConnections()
-{
+{ 
     connect(_addProject, SIGNAL(clicked()), this, SLOT(ChangeSceneToCreateProject()));
     /** connections:
      *  add project button -> create project scene
      **/
 }
 
+void ProjectsScene::UpdateScene()
+{
+    while (_projectsLayout->count() > 0)
+    {
+        QWidget *w = _projectsLayout->takeAt(0)->widget();
+
+        if (w)
+        {
+            w->deleteLater();
+        }
+    }
+
+    _projectButtons.clear();
+
+    foreach(auto project, _projectManager.GetProjects())
+    {
+        QString projectName =  project->GetProjectName();
+        QPushButton* projectButton = new QPushButton(projectName);
+        _projectButtons.push_back(projectButton);
+        _projectsLayout->addWidget(projectButton);
+        //connect(projectButton, SIGNAL(clicked()), this, SLOT(ChangeSceneToEdit()));
+
+        connect(projectButton, &QPushButton::clicked, [project]()
+        {
+            ProjectManager& _projectManager = ProjectManager::Get();
+            SceneManager& _sceneManager = SceneManager::Get();
+            VideoManager& _videoManager = VideoManager::Get();
+            _projectManager.SetCurrentProject(project);
+            _videoManager.LoadVideos(project->GetProjectPath());
+            _sceneManager.SetScene("edit");
+        });
+    }
+}
+
 void ProjectsScene::ChangeSceneToCreateProject()
 {
     _sceneManager.SetScene("createProject");
 }
+
+

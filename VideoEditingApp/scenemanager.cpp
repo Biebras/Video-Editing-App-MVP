@@ -19,6 +19,9 @@ void SceneManager::InitScenes()
     _window->setMinimumSize(400, 720);
     _window->resize(_window->minimumSize());
 
+    //set window background colour
+    _window->setStyleSheet("background-color: #01200F;");
+
     _sceneLayout = new ModularLayout();
 
     Scene* editScene = new EditScene("edit");
@@ -41,7 +44,7 @@ void SceneManager::InitScenes()
         _sceneLayout->addWidget(scene);
     }
 
-    SetScene("edit");
+    SetScene("projects");
 }
 
 void SceneManager::SetScene(QString sceneName)
@@ -51,6 +54,7 @@ void SceneManager::SetScene(QString sceneName)
         if(scene->GetSceneName().compare(sceneName) == 0)
         {
             scene->setVisible(true);
+            scene->UpdateScene();
             _currentScene = scene;
         }
         else
