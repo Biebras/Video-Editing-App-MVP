@@ -12,6 +12,7 @@ class EditScene : public Scene
     public:
         EditScene() : Scene()
         {
+            _videoManager = &VideoManager::Get();
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
@@ -37,12 +38,20 @@ class EditScene : public Scene
         QPushButton* _moveLeft;
         QPushButton* _moveRight;
         int _reorderVideoIndex; // the index of the video to be reordered
+        int _durationIndex; // the index of the video that we are currently getting the duration of
+        int _totalDuration;
+        VideoManager* _videoManager;
 
     public slots:
         void thumbnailClicked();
         void reorderLeft();
         void reorderRight();
         void pausePlay();
+        void changeTime(qint64 time);
+        void movedSlider(int val);
+        void pressedSlider();
+        void releasedSlider();
+        void changeMediaStatus(QMediaPlayer::MediaStatus status);
 };
 
 #endif // EDITSCENE_H

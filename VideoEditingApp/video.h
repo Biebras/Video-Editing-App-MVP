@@ -2,6 +2,7 @@
 #define VIDEO_H
 
 #include <string>
+#include <QObject>
 
 using namespace std;
 

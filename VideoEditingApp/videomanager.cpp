@@ -3,7 +3,9 @@
 #include <QtCore/QDirIterator>
 #include <QString>
 #include "videomanager.h"
+#include "videoplayer.h"
 #include <QDebug>
+#include <QUrl>
 
 using namespace std;
 
@@ -17,12 +19,18 @@ void VideoManager::LoadVideos(string conentPathName)
     while(itirator.hasNext())
     {
         QString pathName = itirator.next();
+        if (pathName.contains("."))
 
-        if(pathName.contains(".mp4") || pathName.contains("MOV"))
-        {
+#if defined(_WIN32)
+        if (pathName.contains(".wmv"))  { // windows
+#else
+        if (pathName.contains(".mp4") || pathName.contains("MOV"))
+        { // mac/linux
+#endif
+
             Video* video = new Video(pathName.toStdString(), 0, 0, 1);
             AddVideo(video);
-        }
+         }
     }
 
     if(_videos.count() == 0)
@@ -83,7 +91,6 @@ void VideoManager::PrintAllVideos()
         qDebug() << "Volume: " << video->GetVolume();
         qDebug() << "Duration: " << video->GetDuration();
         qDebug() << "==========================================";
-
     }
 }
 
@@ -95,4 +102,14 @@ int VideoManager::GetTotalVideos()
 void VideoManager::InsertVideo(int index, Video* video)
 {
     _videos.insert(index, video);
+}
+
+int VideoManager::GetTotalDuration()
+{
+    int total = 0;
+    for (auto video : _videos)
+    {
+        total += video->GetDuration();
+    }
+    return total;
 }
