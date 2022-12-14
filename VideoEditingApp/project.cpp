@@ -20,6 +20,7 @@ Project::~Project()
 
 void Project::LoadProjectVideos()
 {
+
     //Create access to directory's contet
     QDir dir (_pathName);
     //Create itirator to iterate directories
