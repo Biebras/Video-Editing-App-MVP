@@ -17,6 +17,7 @@ class Project
         void AddVideo(Video* video);
         void RemoveVideo(Video* video);
         Video* GetVideo(int index);
+        QList<Video*> GetVideos();
         void PrintAllVideos();
         int GetTotalVideos();
 

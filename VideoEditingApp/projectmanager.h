@@ -22,6 +22,7 @@ class ProjectManager
         void RemoveProject(Project* project);
         void SetCurrentProject(Project* project);
         int GetTotalProjects();
+        QString GetProjectsPath();
         Project* GetCurrentProject();
         Project* GetProject(int index);
         Project* GetProjectByName(QString projectName);
