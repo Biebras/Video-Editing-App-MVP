@@ -40,7 +40,6 @@ class EditScene : public Scene
         QPushButton* _effectButton;
         QPushButton* _audioButton;
         QList<QPushButton*> _thumbnails;
-        ModularLayout* _thumbnailArea = new ModularLayout();
         QPushButton* _moveLeft;
         QPushButton* _moveRight;
         int _reorderVideoIndex; // the index of the video to be reordered
@@ -49,6 +48,9 @@ class EditScene : public Scene
         VideoManager* _videoManager;
         SceneManager& _sceneManager = SceneManager::Get();
         ProjectManager& _projectManager = ProjectManager::Get();
+
+        ModularLayout* _thumbnailArea = new ModularLayout();
+        ModularLayout* _videoArea = new ModularLayout();
 
     public slots:
         void thumbnailClicked();

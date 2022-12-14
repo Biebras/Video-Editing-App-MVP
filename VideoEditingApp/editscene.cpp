@@ -37,8 +37,6 @@ void EditScene::CreateWidgets()
         _videoPlayer->play();
     }
 
-//    _videoManager->PrintAllVideos();
-
     // initialise the duration index and total duration
     _durationIndex = 0;
     _totalDuration = 0;
@@ -69,6 +67,7 @@ void EditScene::CreateWidgets()
 
     _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
     _videoSlider->setTickInterval(1000);
+    _videoSlider->setEnabled(false);
 
     // thumbnails
     // loop through videos
@@ -136,8 +135,8 @@ void EditScene::ArrangeWidgets()
     header->addWidget(_shareButton);
     header->addWidget(_addButton);
 
-    ModularLayout* videoArea = new ModularLayout();
-    videoArea->addWidget(_videoWidget);
+//    ModularLayout* videoArea = new ModularLayout();
+    _videoArea->addWidget(_videoWidget);
 
     ModularLayout* timeArea = new ModularLayout();
     timeArea->addWidget(_timeLabel);
@@ -173,7 +172,7 @@ void EditScene::ArrangeWidgets()
 
     // set the layout of all the layout widgets
     header->GetLayoutWidget()->setLayout(header);
-    videoArea->GetLayoutWidget()->setLayout(videoArea);
+    _videoArea->GetLayoutWidget()->setLayout(_videoArea);
     timeArea->GetLayoutWidget()->setLayout(timeArea);
     pauseArea->GetLayoutWidget()->setLayout(pauseArea);
     videoEditArea->GetLayoutWidget()->setLayout(videoEditArea);
@@ -184,7 +183,7 @@ void EditScene::ArrangeWidgets()
     // set each layout widget to show in the main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->addWidget(header->GetLayoutWidget());
-    mainLayout->addWidget(videoArea->GetLayoutWidget(), 4);
+    mainLayout->addWidget(_videoArea->GetLayoutWidget(), 4);
     mainLayout->addWidget(timeArea->GetLayoutWidget());
     mainLayout->addWidget(pauseArea->GetLayoutWidget());
     mainLayout->addWidget(videoEditArea->GetLayoutWidget());
@@ -205,11 +204,69 @@ void EditScene::UpdateScene()
         if (w)
             w->deleteLater();
     }
-    //_thumbnailArea->clear();
+    _thumbnails.clear();
 
+    for (int i = 0; i < _videoManager->GetTotalVideos(); i++)
+    {
+        _thumbnails.append(new QPushButton());
+        _thumbnails[i]->setFixedHeight(80);
+        _thumbnails[i]->setToolTip("Reorder Video");
+        QString filePath = _videoManager->GetVideo(i)->GetFilePath();
+        QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
+        if (QFile(thumbnailPath).exists()) // if file exists
+        {
+            QImageReader *imageReader = new QImageReader(thumbnailPath);
+            QImage sprite = imageReader->read(); // read the thumbnail image
+            if (!sprite.isNull())
+            {
+                _thumbnails[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
+                _thumbnails[i]->setIconSize(QSize(_thumbnails[i]->width() - 20, _thumbnails[i]->height() - 20));
+            } else
+                _thumbnails[i]->setText("No thumbnail for this video");
+        } else
+            _thumbnails[i]->setText("No thumbnail for this video");
+        _thumbnails[i]->setEnabled(false);
+        _thumbnailArea->addWidget(_thumbnails[i]);
+    }
 
+    // reset duration index and total duration
+    _durationIndex = 0;
+    _totalDuration = 0;
 
-    //qDebug() << _videoManager->GetTotalVideos();
+    // remove from video area
+    while (_videoArea->count() > 0)
+    {
+        QWidget *w = _videoArea->takeAt(0)->widget();
+        if (w)
+            w->deleteLater();
+    }
+
+    // video area
+    _videoWidget = new QVideoWidget();
+    _videoPlayer = new VideoPlayer();
+    _videoPlayer->setVideoOutput(_videoWidget);
+
+    _videoArea->addWidget(_videoWidget);
+
+    // reconnect signals and slots
+
+    //  if there is at least one video in the project, play it
+    if (_videoManager->GetTotalVideos() > 0)
+    {
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
+        _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
+        _videoPlayer->play();
+    }
+
+    // when thumbnail buttons pressed, allow user to reorder the video they have chosen
+    for (auto thumbnail : _thumbnails)
+        connect(thumbnail, SIGNAL(clicked()), this, SLOT(thumbnailClicked()));
+
+    // when the position of the video changes, set the current time, the time label, the video slider and initially load videos to set their details
+    connect(_videoPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(changeTime(qint64)));
+
+    // when a video ends, play the next video in the project
+    connect(_videoPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(changeMediaStatus(QMediaPlayer::MediaStatus)));
 
 
 
@@ -375,7 +432,6 @@ void EditScene::pausePlay()
 
 void EditScene::changeTime(qint64 time)
 {
-    qDebug() << "in changeTime";
     // update current time of video player
     Video* currentVid = _videoPlayer->GetCurrentVideo();
     int actualTime = time + currentVid->GetStart();
@@ -417,6 +473,7 @@ void EditScene::changeTime(qint64 time)
     }
     else if (_videoPlayer->duration() > 0 && _durationIndex == _videoManager->GetTotalVideos() - 1)
     {
+        // all videos loaded
         // set the start and end of current video and change the video playing to the first one
         _videoManager->GetVideo(_durationIndex)->SetStart(_totalDuration);
         _totalDuration += _videoPlayer->duration();
@@ -427,6 +484,8 @@ void EditScene::changeTime(qint64 time)
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
         _durationIndex++;
         _pauseButton->setEnabled(true);
+        _videoSlider->setEnabled(true);
+        _volumeButton->setEnabled(true);
         for (auto thumbnail : _thumbnails)
             thumbnail->setEnabled(true);
     }
@@ -487,6 +546,12 @@ void EditScene::changeVolume()
 
 void EditScene::showProjects()
 {
+    _videoPlayer->setMedia(QMediaContent());
+    _timeLabel->setText("00:00:00/00:00:00");
+    _pauseButton->setEnabled(false);
+    _volumeButton->setEnabled(false);
+    _videoSlider->setSliderPosition(0);
+    _videoSlider->setEnabled(false);
     _sceneManager.SetScene("projects");
 }
 
