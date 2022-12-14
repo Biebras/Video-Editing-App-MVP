@@ -19,6 +19,9 @@ void SceneManager::InitScenes()
     _window->setMinimumSize(400, 720);
     _window->resize(_window->minimumSize());
 
+    //set window background colour
+    _window->setStyleSheet("background-color: #01200F;");
+
     _sceneLayout = new ModularLayout();
 
     Scene* editScene = new EditScene("edit");

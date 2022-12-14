@@ -12,14 +12,17 @@ void EditScene::CreateWidgets()
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
     _backButton->setToolTip("Go Back");
     _backButton->setFixedSize(QSize(50, 50));
+    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _shareButton = new QPushButton();
     _shareButton->setIcon(QIcon(":/icons/shareIcon.png"));
     _shareButton->setToolTip("Share");
     _shareButton->setFixedSize(QSize(50, 50));
+    _shareButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _addButton = new QPushButton();
     _addButton->setIcon(QIcon(":/icons/addIcon.png"));
     _addButton->setToolTip("Add Video");
     _addButton->setFixedSize(QSize(50,50));
+    _addButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // video area
     _videoWidget = new QVideoWidget();
@@ -43,23 +46,28 @@ void EditScene::CreateWidgets()
     // time area
     _timeLabel = new QLabel();
     _timeLabel->setAlignment(Qt::AlignCenter);
-    _timeLabel->setStyleSheet("font-size: 14pt");
+    _timeLabel->setStyleSheet("font-size: 18pt; color: #9EC5AB;");
 
     // pause/play area
     _pauseButton = new QPushButton();
     _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
     _pauseButton->setToolTip("Pause");
     _pauseButton->setFixedSize(QSize(50, 50));
+
+    _pauseButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _pauseButton->setEnabled(false);
     _volumeButton = new QPushButton();
     _volumeButton->setIcon(QIcon(":/icons/muteIcon.png"));
     _volumeButton->setToolTip("Mute Volume");
     _volumeButton->setFixedSize(QSize(50, 50));
+    _volumeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // slider area
     _videoSlider = new QSlider();
     _videoSlider->setOrientation(Qt::Horizontal);
     _videoSlider->setToolTip("Move through video");
+
+    _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
     _videoSlider->setTickInterval(1000);
 
     // thumbnails
@@ -67,6 +75,7 @@ void EditScene::CreateWidgets()
     for (int i = 0; i < _videoManager->GetTotalVideos(); i++)
     {
         _thumbnails.append(new QPushButton());
+        _thumbnails[i]->setStyleSheet("background-color: #011502;");
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
         QString filePath = _videoManager->GetVideo(i)->GetFilePath();
@@ -91,10 +100,12 @@ void EditScene::CreateWidgets()
     _moveLeft = new QPushButton();
     _moveLeft->setIcon(QIcon(":/icons/backIcon.png"));
     _moveLeft->setFixedSize(QSize(50, 50));
+    _moveLeft->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveLeft->setEnabled(false);
     _moveRight = new QPushButton();
     _moveRight->setIcon(QIcon(":/icons/rightIcon.png"));
     _moveRight->setFixedSize(QSize(50, 50));
+    _moveRight->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveRight->setEnabled(false);
 
     // footer
@@ -102,14 +113,18 @@ void EditScene::CreateWidgets()
     _trimButton->setIcon(QIcon(":/icons/trimIcon.png"));
     _trimButton->setToolTip("Trim Video");
     _trimButton->setFixedSize(QSize(50, 50));
+    _trimButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _effectButton = new QPushButton();
     _effectButton->setIcon(QIcon(":/icons/effectIcon.png"));
     _effectButton->setToolTip("Add Effects");
     _effectButton->setFixedSize(QSize(50, 50));
+    _effectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _audioButton = new QPushButton();
     _audioButton->setIcon(QIcon(":/icons/muteIcon.png"));
     _audioButton->setToolTip("Add Audio");
     _audioButton->setFixedSize(QSize(50, 50));
+    _audioButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+
 }
 
 void EditScene::ArrangeWidgets()
@@ -178,6 +193,7 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(footer->GetLayoutWidget());
 
     this->setLayout(mainLayout);
+
 }
 
 void EditScene::UpdateScene()
