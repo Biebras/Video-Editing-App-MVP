@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     SceneManager& sceneManager = SceneManager::Get(); // initialise the scene manager
     sceneManager.InitScenes();
-    sceneManager.SetScene("edit");
+    //sceneManager.SetScene("edit");
     sceneManager.ShowWindow();
 
     return app.exec();
