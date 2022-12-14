@@ -557,5 +557,11 @@ void EditScene::showProjects()
 
 void EditScene::showVideoLibrary()
 {
+    _videoPlayer->setMedia(QMediaContent());
+    _timeLabel->setText("00:00:00/00:00:00");
+    _pauseButton->setEnabled(false);
+    _volumeButton->setEnabled(false);
+    _videoSlider->setSliderPosition(0);
+    _videoSlider->setEnabled(false);
     _sceneManager.SetScene("gallery");
 }
