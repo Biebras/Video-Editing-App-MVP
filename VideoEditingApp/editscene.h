@@ -4,6 +4,7 @@
 #include "scene.h"
 #include "videoplayer.h"
 #include "scenemanager.h"
+#include "projectmanager.h"
 #include <QtWidgets>
 #include <QVideoWidget>
 #include <QString>
@@ -19,6 +20,8 @@ class EditScene : public Scene
             ArrangeWidgets();
             MakeConnections();
         };
+
+        void UpdateScene() override;
 
     private:
         void CreateWidgets() override;
@@ -37,6 +40,7 @@ class EditScene : public Scene
         QPushButton* _effectButton;
         QPushButton* _audioButton;
         QList<QPushButton*> _thumbnails;
+        ModularLayout* _thumbnailArea = new ModularLayout();
         QPushButton* _moveLeft;
         QPushButton* _moveRight;
         int _reorderVideoIndex; // the index of the video to be reordered
@@ -44,6 +48,7 @@ class EditScene : public Scene
         int _totalDuration;
         VideoManager* _videoManager;
         SceneManager& _sceneManager = SceneManager::Get();
+        ProjectManager& _projectManager = ProjectManager::Get();
 
     public slots:
         void thumbnailClicked();
