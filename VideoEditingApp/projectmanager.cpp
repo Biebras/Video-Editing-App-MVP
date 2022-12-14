@@ -58,6 +58,11 @@ void ProjectManager::RemoveProject(Project *project)
         qDebug() << "Couldn't remove video";
 }
 
+QString ProjectManager::GetProjectsPath()
+{
+    return _projectsFolderPath;
+}
+
 void ProjectManager::SetCurrentProject(Project *project)
 {
      project->LoadProjectVideos();

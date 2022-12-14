@@ -1,6 +1,7 @@
 #include "projectsscene.h"
 #include "modularlayout.h"
 #include <QDebug>
+#include "videomanager.h"
 
 void ProjectsScene::CreateWidgets()
 {
@@ -81,7 +82,9 @@ void ProjectsScene::UpdateScene()
         {
             ProjectManager& _projectManager = ProjectManager::Get();
             SceneManager& _sceneManager = SceneManager::Get();
+            VideoManager& _videoManager = VideoManager::Get();
             _projectManager.SetCurrentProject(project);
+            _videoManager.LoadVideos(project->GetProjectPath());
             _sceneManager.SetScene("edit");
         });
     }

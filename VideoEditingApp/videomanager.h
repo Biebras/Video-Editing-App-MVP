@@ -26,6 +26,7 @@ class VideoManager
         void InsertVideo(int index, Video* video);
         int GetTotalDuration();
     private:
+        void ClearVideos();
         VideoManager(){}
         QList<Video*> _videos;
 };
