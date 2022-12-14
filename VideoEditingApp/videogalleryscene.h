@@ -39,7 +39,6 @@ class VideoGalleryScene : public Scene
 
     public slots:
         void GoBack();
-        void AddVideo();
 };
 
 #endif // VIDEOGALLERYSCENE_H

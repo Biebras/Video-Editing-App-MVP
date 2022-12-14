@@ -18,14 +18,16 @@ using namespace std;
 
 void VideoManager::LoadVideos(QString loadFilePath)
 {
-    ClearVideos();
+    if(_videos.size() == 0)
+        ClearVideos();
 
     QString jsonFilePath = loadFilePath + "/save.json";
+
     QFile file(jsonFilePath);
 
     if(!file.open(QIODevice::ReadOnly))
     {
-        qDebug() << "File open error";
+        qDebug() << "Can't load videos, no save file was found";
         return;
     }
 

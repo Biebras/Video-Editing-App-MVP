@@ -4,60 +4,6 @@
 #include "scenemanager.h"
 #include <iostream>
 
-void VideoGalleryScene::CreateWidgetsForVideoGallery()
-{
-    Project* currentProject = _projectManager.GetCurrentProject();
-    if (currentProject)
-    {
-//        for (int i = 0; i < currentProject->GetTotalVideos(); i++)
-//        {
-//            QPushButton* button = new QPushButton();
-//            _selectVideos.append(button);
-//            button->setToolTip("Select Video");
-//            button->setText(currentProject->GetVideos()[i]->GetFilePath());
-//            _videoLayout->addWidget(button);
-//        }
-        for (int i = 0; i < currentProject->GetTotalVideos(); i++)
-        {
-            _selectVideos.append(new QPushButton());
-            _selectVideos[i]->setToolTip("Select Video");
-            QString filePath = currentProject->GetVideo(i)->GetFilePath();
-            QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
-            if (QFile(thumbnailPath).exists()) // if file exists
-            {
-                QImageReader *imageReader = new QImageReader(thumbnailPath);
-                QImage sprite = imageReader->read(); // read the thumbnail image
-                if (!sprite.isNull())
-                {
-                    _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
-                } else
-                    _selectVideos[i]->setText("No thumbnail for this video");
-            } else
-                _selectVideos[i]->setText("No thumbnail for this video");
-        }
-    }
-
-    // loop through videos
-//    for (int i = 0; i < currentProject->GetTotalVideos(); i++)
-//    {
-//        _selectVideos.append(new QPushButton());
-//        _selectVideos[i]->setToolTip("Select Video");
-//        QString filePath = currentProject->GetVideo(i)->GetFilePath();
-//        QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
-//        if (QFile(thumbnailPath).exists()) // if file exists
-//        {
-//            QImageReader *imageReader = new QImageReader(thumbnailPath);
-//            QImage sprite = imageReader->read(); // read the thumbnail image
-//            if (!sprite.isNull())
-//            {
-//                _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
-//            } else
-//                _selectVideos[i]->setText("No thumbnail for this video");
-//        } else
-//            _selectVideos[i]->setText("No thumbnail for this video");
-//    }
-}
-
 void VideoGalleryScene::CreateWidgets()
 {
     // header
@@ -74,10 +20,6 @@ void VideoGalleryScene::CreateWidgets()
     _addVideos->setToolTip("Add Video(s)");
     _addVideos->setFixedSize(QSize(50, 50));
     _addVideos->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-
-    // videos area
-
-    CreateWidgetsForVideoGallery();
 }
 
 void VideoGalleryScene::ArrangeWidgets()
@@ -100,7 +42,6 @@ void VideoGalleryScene::ArrangeWidgets()
 
     // get the window widget
     SceneManager& sceneManager = SceneManager::Get();
-    QWidget* window = sceneManager.GetWindow();
 
     //videos layout
     QWidget* videosLayoutWidget = new QWidget();
@@ -165,7 +106,9 @@ void VideoGalleryScene::UpdateScene()
 
     for (int i = 0; i < currentProject->GetTotalVideos(); i++)
     {
-        _selectVideos.append(new QPushButton());
+        Video* video = currentProject->GetVideo(i);
+        QPushButton* button = new QPushButton();
+        _selectVideos.append(button);
         _selectVideos[i]->setToolTip("Select Video");
         QString filePath = currentProject->GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
@@ -182,24 +125,19 @@ void VideoGalleryScene::UpdateScene()
                 _selectVideos[i]->setText("No thumbnail for this video");
         } else
             _selectVideos[i]->setText("No thumbnail for this video");
-        _videoLayout->addWidget(_selectVideos[i]);
-    }
 
-    // reconnect
-    foreach(auto button, _selectVideos)
-        connect(button, SIGNAL(clicked()), this, SLOT(AddVideo()));
+        _videoLayout->addWidget(_selectVideos[i]);
+        connect(button, &QPushButton::clicked, [video]
+        {
+            VideoManager& _videoManager = VideoManager::Get();
+            SceneManager& _sceneManager = SceneManager::Get();
+            _videoManager.AddVideo(video);
+            _sceneManager.SetScene("edit");
+        });
+    }
 }
 
 void VideoGalleryScene::GoBack()
 {
-    qDebug() << "clicked";
-    _sceneManager.SetScene("edit");
-}
-
-void VideoGalleryScene::AddVideo()
-{
-    int index = _selectVideos.indexOf(qobject_cast<QPushButton* >(QObject::sender()));
-    _videoManager.AddVideo(_projectManager.GetCurrentProject()->GetVideo(index));
-    _videoManager.PrintAllVideos();
     _sceneManager.SetScene("edit");
 }

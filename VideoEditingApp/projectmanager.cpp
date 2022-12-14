@@ -5,6 +5,12 @@
 
 void ProjectManager::LoadProjects(QString projectsFolderPath)
 {
+    if(_projects.size() != 0)
+    {
+        qDeleteAll(_projects);
+        _projects.clear();
+    }
+
     //Create access to directory's contet
     QDir projectsDir (projectsFolderPath);
     //create project folder if does not exist

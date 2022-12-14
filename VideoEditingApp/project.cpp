@@ -20,6 +20,11 @@ Project::~Project()
 
 void Project::LoadProjectVideos()
 {
+    if(_videos.size() != 0)
+    {
+        qDeleteAll(_videos);
+        _videos.clear();
+    }
 
     //Create access to directory's contet
     QDir dir (_pathName);
@@ -38,6 +43,7 @@ void Project::LoadProjectVideos()
             if (pathName.contains(".mp4") || pathName.contains("MOV"))
             { // mac/linux
 #endif
+
             Video* video = new Video(pathName, 0, 0, 1);
             AddVideo(video);
         }
