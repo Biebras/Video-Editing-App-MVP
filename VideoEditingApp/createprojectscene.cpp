@@ -3,17 +3,12 @@
 
 void CreateProjectScene::CreateWidgets()
 {
-    // disabled header
-    _title = new QLabel("My Projects");
-    _title->setAlignment(Qt::AlignCenter);
-    _title->setStyleSheet("font: 30pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
-    _title->setEnabled(false);
-    _addProject = new QPushButton();
-    _addProject->setIcon(QIcon(":icons/addIcon.png"));
-    _addProject->setToolTip("Create Project");
-    _addProject->setFixedSize(QSize(50, 50));
-    _addProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-    _addProject->setEnabled(false);
+    // back button
+    _backButton = new QPushButton();
+    _backButton->setIcon(QIcon(":/icons/backIcon.png"));
+    _backButton->setToolTip("Go Back");
+    _backButton->setFixedSize(QSize(50, 50));
+    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // input
     _nameLabel = new QLabel("Project Name: ");
@@ -33,11 +28,8 @@ void CreateProjectScene::ArrangeWidgets()
 
     // layout for disabled header
     ModularLayout* header = new ModularLayout();
+    header->addWidget(_backButton);
     header->addStretch();
-    header->addWidget(_title);
-    header->addStretch();
-    header->addWidget(_addProject);
-    //header->setEnabled(true);
 
     // layout for input
     ModularLayout* inputLayout = new ModularLayout();
@@ -75,14 +67,18 @@ void CreateProjectScene::ArrangeWidgets()
 void CreateProjectScene::MakeConnections()
 {
     connect(_createProject, SIGNAL(clicked()), this, SLOT(CreateProject()));
-    /** connections:
-     *  create project button -> edit scene, store project name somewhere?
-     **/
+
+    connect(_backButton, SIGNAL(clicked()), this, SLOT(GoBack()));
 }
 
 void CreateProjectScene::CreateProject()
 {
     _projectManager.CreateProject(_nameInput->text());
 
+    _sceneManager.SetScene("projects");
+}
+
+void CreateProjectScene::GoBack()
+{
     _sceneManager.SetScene("projects");
 }

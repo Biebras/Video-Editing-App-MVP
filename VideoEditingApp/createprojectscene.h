@@ -24,14 +24,14 @@ class CreateProjectScene : public Scene
         void MakeConnections() override;
         SceneManager& _sceneManager = SceneManager::Get();
         ProjectManager& _projectManager = ProjectManager::Get();
-        QLabel* _title;
-        QPushButton *_addProject;
+        QPushButton* _backButton;
         QLabel* _nameLabel;
         QLineEdit* _nameInput;
         QPushButton* _createProject;
 
     public slots:
         void CreateProject();
+        void GoBack();
 };
 
 #endif // CREATEPROJECTSCENE_H
