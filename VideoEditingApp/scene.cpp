@@ -14,3 +14,8 @@ void Scene::MakeConnections()
 {
 
 }
+
+void Scene::UpdateScene()
+{
+
+}

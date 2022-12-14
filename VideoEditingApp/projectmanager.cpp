@@ -5,9 +5,14 @@
 
 void ProjectManager::LoadProjects(QString projectsFolderPath)
 {
-    _projectsFolderPath = projectsFolderPath;
     //Create access to directory's contet
-    QDir dir (_projectsFolderPath);
+    QDir projectsDir (projectsFolderPath);
+    //create project folder if does not exist
+    projectsDir.mkdir("Projects");
+
+    _projectsFolderPath = projectsFolderPath + "/Projects";
+    QDir dir(_projectsFolderPath);
+
     //Ignore dot and dot dot
     QFileInfoList fList = dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot, QDir::DirsFirst);
 
@@ -71,6 +76,11 @@ Project* ProjectManager::GetProject(int index)
 
     qDebug() <<  "Couldn't retrieve video at index: " << index;
     return NULL;
+}
+
+QList<Project*> ProjectManager::GetProjects()
+{
+        return _projects;
 }
 
 Project* ProjectManager::GetProjectByName(QString projectName)
