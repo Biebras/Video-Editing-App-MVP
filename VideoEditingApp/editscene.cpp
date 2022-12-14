@@ -30,7 +30,7 @@ void EditScene::CreateWidgets()
     //  if there is at least one video in the project, play it
     if (_videoManager->GetTotalVideos() > 0)
     {
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(QString::fromStdString(_videoManager->GetVideo(0)->GetFilePath()))));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->play();
     }
@@ -67,7 +67,7 @@ void EditScene::CreateWidgets()
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
-        QString filePath = videoManager.GetVideo(i)->GetFilePath();
+        QString filePath = _videoManager->GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
         {
@@ -369,7 +369,7 @@ void EditScene::changeTime(qint64 time)
         _totalDuration += _videoPlayer->duration();
         _videoManager->GetVideo(_durationIndex)->SetEnd(_totalDuration);
         _durationIndex++;
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(QString::fromStdString(_videoManager->GetVideo(_durationIndex)->GetFilePath()))));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(_durationIndex)->GetFilePath())));
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(_durationIndex));
         _videoPlayer->play();
     }
@@ -379,7 +379,7 @@ void EditScene::changeTime(qint64 time)
         _videoManager->GetVideo(_durationIndex)->SetStart(_totalDuration);
         _totalDuration += _videoPlayer->duration();
         _videoManager->GetVideo(_durationIndex)->SetEnd(_totalDuration);
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(QString::fromStdString(_videoManager->GetVideo(0)->GetFilePath()))));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->SetCurrentTime(0);
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());

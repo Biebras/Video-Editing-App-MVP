@@ -11,7 +11,7 @@ void VideoPlayer::Update()
     // if at the end of last video, play first video
     if (_currentTime >= _videoManager->GetTotalDuration())
     {
-        setMedia(QUrl(QUrl::fromLocalFile(QString::fromStdString(_videoManager->GetVideo(0)->GetFilePath()))));
+        setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
         SetCurrentVideo(_videoManager->GetVideo(0));
         SetCurrentTime(0);
         return;
@@ -22,7 +22,7 @@ void VideoPlayer::Update()
     if (newVideo != _currentVideo)
     {
         // set the video player to show the new video
-        this->setMedia(QUrl(newVideo->GetFilePath()));
+        this->setMedia(QUrl(QUrl::fromLocalFile(newVideo->GetFilePath())));
         SetCurrentVideo(newVideo);
         SetCurrentTime(newVideo->GetStart());
     }
