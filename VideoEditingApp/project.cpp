@@ -58,6 +58,11 @@ QString Project::GetProjectName()
     return _projectName;
 }
 
+QList<Video*> Project::GetVideos()
+{
+    return _videos;
+}
+
 void Project::AddVideo(Video* video)
 {
     _videos.append(video);

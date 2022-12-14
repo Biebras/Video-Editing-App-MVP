@@ -18,6 +18,8 @@ using namespace std;
 
 void VideoManager::LoadVideos(QString loadFilePath)
 {
+    ClearVideos();
+
     QString jsonFilePath = loadFilePath + "/save.json";
     QFile file(jsonFilePath);
 
@@ -100,6 +102,12 @@ void VideoManager::SaveVideos(QString saveFilePath)
     stream << bytes;
     file.close();
      qDebug() << "Successfully saved video data";
+}
+
+void VideoManager::ClearVideos()
+{
+    qDeleteAll(_videos);
+    _videos.clear();
 }
 
 VideoManager::~VideoManager()
