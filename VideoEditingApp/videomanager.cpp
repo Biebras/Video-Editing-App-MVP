@@ -1,6 +1,13 @@
+#include <QJsonParseError>
+#include <QTextStream>
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 #include <iostream>
 #include <QDir>
 #include <QtCore/QDirIterator>
+#include <QFile>
 #include <QString>
 #include "videomanager.h"
 #include "videoplayer.h"
@@ -9,34 +16,90 @@
 
 using namespace std;
 
-void VideoManager::LoadVideos(string conentPathName)
+void VideoManager::LoadVideos(QString loadFilePath)
 {
-    //Create access to directory's contet
-    QDir dir (QString::fromStdString(conentPathName));
-    //Create itirator to iterate directories
-    QDirIterator itirator(dir);
+    QString jsonFilePath = loadFilePath + "/save.json";
+    QFile file(jsonFilePath);
 
-    while(itirator.hasNext())
+    if(!file.open(QIODevice::ReadOnly))
     {
-        QString pathName = itirator.next();
-        if (pathName.contains("."))
-
-#if defined(_WIN32)
-        if (pathName.contains(".wmv"))  { // windows
-#else
-        if (pathName.contains(".mp4") || pathName.contains("MOV"))
-        { // mac/linux
-#endif
-
-            Video* video = new Video(pathName.toStdString(), 0, 0, 1);
-            AddVideo(video);
-         }
+        qDebug() << "File open error";
+        return;
     }
 
-    if(_videos.count() == 0)
+    qDebug() << "Successfully opened file";
+
+    QByteArray bytes = file.readAll();
+    file.close();
+
+    QJsonParseError jsonError;
+    QJsonDocument document = QJsonDocument::fromJson(bytes, &jsonError);
+
+    if(jsonError.error != QJsonParseError::NoError)
     {
-        cout << "No videos found, new project or there's something wrong with content path name " << endl;
+        qDebug() << "json failed: " << jsonError.errorString();
+        return;
     }
+
+    QJsonArray jsonArray = document.array();
+
+    foreach(const QJsonValue & value, jsonArray)
+    {
+        QJsonObject object = value.toObject();
+
+        QString pathName = object.value("pathName").toString();
+        int start = object.value("start").toInt();
+        int end = object.value("end").toInt();
+        int rawDuration = object.value("rawDuration").toInt();
+        int volume = object.value("volume").toInt();
+
+        Video* video = new Video(pathName, start, end, volume);
+        video->SetRawDuration(rawDuration);
+        AddVideo(video);
+    }
+
+     qDebug() << "Successfully loaded files";
+}
+
+void VideoManager::SaveVideos(QString saveFilePath)
+{
+    QString jsonFilePath = saveFilePath + "/save.json";
+    QFile file(jsonFilePath);
+
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+    {
+        qDebug() << "File open error";
+        return;
+    }
+
+    qDebug() << "Successfully opened file";
+
+    QJsonObject obj;
+    QJsonArray jsonArray;
+
+    foreach(auto video, _videos)
+    {
+        QJsonObject jsonVideo = QJsonObject(
+        {
+            qMakePair(QString("pathName"), QJsonValue(video->GetFilePath())),
+            qMakePair(QString("start"), QJsonValue(video->GetStart())),
+            qMakePair(QString("end"), QJsonValue(video->GetEnd())),
+            qMakePair(QString("rawDuration"), QJsonValue(video->GetRawDuration())),
+            qMakePair(QString("volume"), QJsonValue(video->GetVolume())),
+        });
+
+        jsonArray.push_back(jsonVideo);
+    }
+
+    QJsonDocument document;
+    document.setArray(jsonArray);
+    QByteArray bytes = document.toJson(QJsonDocument::Indented);
+
+    QTextStream stream(&file);
+    stream.setCodec("utf-8");
+    stream << bytes;
+    file.close();
+     qDebug() << "Successfully saved video data";
 }
 
 VideoManager::~VideoManager()
@@ -47,7 +110,7 @@ VideoManager::~VideoManager()
 
 void VideoManager::AddVideo(Video* video)
 {
-    _videos.append(video);
+    _videos.push_back(video);
 }
 
 void VideoManager::RemoveVideo(Video* video)
@@ -60,7 +123,7 @@ void VideoManager::RemoveVideo(Video* video)
 
 Video* VideoManager::GetVideoByMS(int milliseconds)
 {
-    for(auto video : _videos)
+    foreach(auto video, _videos)
     {
         if(milliseconds >= video->GetStart() && milliseconds <= video->GetEnd())
             return video;
@@ -83,13 +146,15 @@ void VideoManager::PrintAllVideos()
 {
     qDebug() << "Printing videos";
     qDebug() << "==========================================";
-    for(auto video : _videos)
+
+    foreach(auto video, _videos)
     {
-        qDebug() << "Path: " << QString::fromStdString(video->GetFilePath());
+        qDebug() << "Path: " << video->GetFilePath();
         qDebug() << "Start: " << video->GetStart();
         qDebug() << "End: " << video->GetEnd();
         qDebug() << "Volume: " << video->GetVolume();
         qDebug() << "Duration: " << video->GetDuration();
+        qDebug() << "Raw Duration: " << video->GetRawDuration();
         qDebug() << "==========================================";
     }
 }

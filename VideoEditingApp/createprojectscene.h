@@ -3,11 +3,15 @@
 
 #include "scene.h"
 #include <QtWidgets>
+#include "scenemanager.h"
+#include "projectmanager.h"
 
 class CreateProjectScene : public Scene
 {
+    Q_OBJECT
+
     public:
-        CreateProjectScene(): Scene()
+        CreateProjectScene(QString sceneName) : Scene(sceneName)
         {
             CreateWidgets();
             ArrangeWidgets();
@@ -15,14 +19,19 @@ class CreateProjectScene : public Scene
         };
 
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
+        void CreateWidgets() override;
+        void ArrangeWidgets() override;
+        void MakeConnections() override;
+        SceneManager& _sceneManager = SceneManager::Get();
+        ProjectManager& _projectManager = ProjectManager::Get();
         QLabel* _title;
         QPushButton *_addProject;
         QLabel* _nameLabel;
         QLineEdit* _nameInput;
         QPushButton* _createProject;
+
+    public slots:
+        void CreateProject();
 };
 
 #endif // CREATEPROJECTSCENE_H

@@ -5,12 +5,13 @@
 #include "videoplayer.h"
 #include <QtWidgets>
 #include <QVideoWidget>
+#include <QString>
 
 class EditScene : public Scene
 {
     Q_OBJECT
     public:
-        EditScene() : Scene()
+        EditScene(QString sceneName) : Scene(sceneName)
         {
             _videoManager = &VideoManager::Get();
             CreateWidgets();
@@ -19,9 +20,9 @@ class EditScene : public Scene
         };
 
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
+        void CreateWidgets() override;
+        void ArrangeWidgets() override;
+        void MakeConnections() override;
         QPushButton* _backButton;
         QPushButton* _shareButton;
         QPushButton* _addButton;

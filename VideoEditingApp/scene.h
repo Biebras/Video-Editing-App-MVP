@@ -2,24 +2,28 @@
 #define SCENE_H
 
 #include <QWidget>
+#include <QDebug>
 
 class Scene : public QWidget
 {
     Q_OBJECT
 
     public:
-        Scene() : QWidget()
+        Scene(QString sceneName) : QWidget()
         {
-            CreateWidgets();
-            ArrangeWidgets();
-            MakeConnections();
+            _sceneName = sceneName;
         };
 
+        QString GetSceneName()
+        {
+            return _sceneName;
+        }
+
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
-        bool _showScene;
+        virtual void CreateWidgets();
+        virtual void ArrangeWidgets();
+        virtual void MakeConnections();
+        QString _sceneName;
 
 };
 

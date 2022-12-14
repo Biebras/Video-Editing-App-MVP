@@ -23,26 +23,14 @@ int main(int argc, char *argv[])
     ProjectManager& projectManager = ProjectManager::Get();
 
     projectManager.LoadProjects(argv[1]);
-    Project* fiirstProject = projectManager.GetProject(0);
-    projectManager.SetCurrentProject(fiirstProject);
-    videoManager.LoadVideos(fiirstProject->GetProjectPath());
-    //videoManager.PrintAllVideos();
+    Project* currentProject = projectManager.GetProjectByName("Project1");
+    projectManager.SetCurrentProject(currentProject);
+    videoManager.LoadVideos(currentProject->GetProjectPath());
 
-     QWidget *window = new QWidget();
+    SceneManager& sceneManager = SceneManager::Get(); // initialise the scene manager
+    sceneManager.InitScenes();
 
-    window->setWindowTitle("App");
-    window->setMinimumSize(400, 720);
-    window->resize(window->minimumSize());
-    SceneManager& sceneManager = SceneManager::Get(window); // initialise the scene manager
-    EditScene* editScene = new EditScene();
-//    VideoGalleryScene* videoGalleryScene = new VideoGalleryScene();
-//    ProjectsScene* projectsScene = new ProjectsScene();
-//    CreateProjectScene* createProjectScene = new CreateProjectScene();
-//    TrimScene* trimScene = new TrimScene();
-
-    window->setLayout(editScene->layout());
-
-    window->show();
+    sceneManager.ShowWindow();
 
     return app.exec();
 }

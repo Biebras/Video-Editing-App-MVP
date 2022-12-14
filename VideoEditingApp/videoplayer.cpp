@@ -21,7 +21,8 @@ void VideoPlayer::Update()
     Video* newVideo = _videoManager->GetVideoByMS(_currentTime+1);
     if (newVideo != _currentVideo)
     {
-        setMedia(QUrl(QUrl::fromLocalFile(QString::fromStdString(newVideo->GetFilePath()))));
+        // set the video player to show the new video
+        this->setMedia(QUrl(newVideo->GetFilePath()));
         SetCurrentVideo(newVideo);
         SetCurrentTime(newVideo->GetStart());
     }

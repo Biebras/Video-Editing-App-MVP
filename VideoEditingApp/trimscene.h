@@ -8,7 +8,7 @@
 class TrimScene : public Scene
 {
     public:
-        TrimScene() : Scene()
+        TrimScene(QString sceneName) : Scene(sceneName)
         {
             CreateWidgets();
             ArrangeWidgets();
@@ -16,9 +16,9 @@ class TrimScene : public Scene
         };
 
     private:
-        void CreateWidgets();
-        void ArrangeWidgets();
-        void MakeConnections();
+        void CreateWidgets() override;
+        void ArrangeWidgets() override;
+        void MakeConnections() override;
         QPushButton* _backButton;
         QPushButton* _shareButton;
         QPushButton* _addButton;

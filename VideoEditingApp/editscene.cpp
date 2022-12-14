@@ -3,9 +3,11 @@
 #include "scenemanager.h"
 #include "videomanager.h"
 #include <iostream>
+#include <QDebug>
 
 void EditScene::CreateWidgets()
 {
+    qDebug()<<"Edit";
     // header
     _backButton = new QPushButton("");
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
@@ -65,7 +67,7 @@ void EditScene::CreateWidgets()
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
-        QString filePath = QString::fromStdString(_videoManager->GetVideo(i)->GetFilePath());
+        QString filePath = videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
         {

@@ -15,18 +15,21 @@ class ProjectManager
             return instance;
         };
 
-        void LoadProjects(string projectsFolderPath);
+        void LoadProjects(QString projectsFolderPath);
         ~ProjectManager();
+        void CreateProject(QString projectName);
         void AddProject(Project* project);
         void RemoveProject(Project* project);
         void SetCurrentProject(Project* project);
         int GetTotalProjects();
         Project* GetCurrentProject();
         Project* GetProject(int index);
-        Project* GetProjectByName(string projectName);
+        Project* GetProjectByName(QString projectName);
+        void PrintProjects();
 
     private:
         ProjectManager(){}
+        QString _projectsFolderPath;
         QList<Project*> _projects;
         Project* _currentProject;
 };

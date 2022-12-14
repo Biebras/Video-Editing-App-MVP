@@ -26,7 +26,7 @@ void VideoGalleryScene::CreateWidgets()
     for (int i = 0; i < videoManager.GetTotalVideos(); i++) {
         _selectVideos.append(new QPushButton());
         _selectVideos[i]->setToolTip("Select Video");
-        QString filePath = QString::fromStdString(videoManager.GetVideo(i)->GetFilePath());
+        QString filePath = videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
         {
@@ -61,7 +61,7 @@ void VideoGalleryScene::ArrangeWidgets()
     _mainLayout->addWidget(header->GetLayoutWidget());
 
     // get the window widget
-    SceneManager& sceneManager = SceneManager::Get(nullptr);
+    SceneManager& sceneManager = SceneManager::Get();
     QWidget* window = sceneManager.GetWindow();
 
     // assuming buttons should be no less than 200 wide

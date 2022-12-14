@@ -1,26 +1,28 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
-#include <string>
-#include <QObject>
+#include <QString>
 
 using namespace std;
 
 class Video
 {
     private:
-        string _pathName;
-        int _start;
-        int _end;
-        int _volume;
+        QString _pathName;
+        int _start = 0;
+        int _end = 0;
+        int _rawDuration = 0;
+        int _volume = 1;
 
     public:
-        Video(string path, int start, int end, int volume);
-        string GetFilePath();
+        Video(QString path, int start, int end, int volume);
+        QString GetFilePath();
         void SetStart(int start);
         int GetStart();
         void SetEnd(int end);
         int GetEnd();
+        void SetRawDuration(int rawDuration);
+        int GetRawDuration();
         void SetVolume(int volume);
         int GetVolume();
         int GetDuration();

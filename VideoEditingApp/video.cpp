@@ -1,6 +1,6 @@
 #include "video.h"
 
-Video::Video(string path, int start, int end, int volume)
+Video::Video(QString path, int start, int end, int volume)
 {
     _pathName = path;
     _start = start;
@@ -8,7 +8,7 @@ Video::Video(string path, int start, int end, int volume)
     _volume = volume;
 }
 
-string Video::GetFilePath()
+QString Video::GetFilePath()
 {
     return _pathName;
 }
@@ -31,6 +31,16 @@ void Video::SetEnd(int end)
 int Video::GetEnd()
 {
     return _end;
+}
+
+void Video::SetRawDuration(int rawDuration)
+{
+    _rawDuration = rawDuration;
+}
+
+int Video::GetRawDuration()
+{
+    return _rawDuration;
 }
 
 void Video::SetVolume(int volume)

@@ -2,26 +2,34 @@
 #define SCENEMANAGER_H
 
 #include "qwidget.h"
+#include "scene.h"
+#include "modularlayout.h"
 
 class SceneManager
 {
     public:
+        SceneManager(const SceneManager&) = delete;
 
-        SceneManager(QWidget* const window)
+        static SceneManager& Get()
         {
-            _window = window;
+            static SceneManager instance;
+            return instance;
         };
 
-        static SceneManager& Get(QWidget* const window)
-        {
-            static SceneManager instance(window);
-            return instance;
-        }
-
         QWidget* GetWindow();
+        void InitScenes();
+        void SetScene(QString sceneName);
+        Scene* GetScene(QString sceneName);
+        Scene* GetCurrentScene();
+        void ShowWindow();
 
     private:
+        SceneManager(){};
+
         QWidget* _window;
+        QList<Scene*> _scenes;
+        Scene*_currentScene;
+        ModularLayout* _sceneLayout;
 };
 
 #endif // SCENEMANAGER_H

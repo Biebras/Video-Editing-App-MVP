@@ -73,7 +73,15 @@ void CreateProjectScene::ArrangeWidgets()
 
 void CreateProjectScene::MakeConnections()
 {
+    connect(_createProject, SIGNAL(clicked()), this, SLOT(CreateProject()));
     /** connections:
      *  create project button -> edit scene, store project name somewhere?
      **/
+}
+
+void CreateProjectScene::CreateProject()
+{
+    _projectManager.CreateProject(_nameInput->text());
+    _sceneManager.SetScene("projects");
+    _projectManager.PrintProjects();
 }
