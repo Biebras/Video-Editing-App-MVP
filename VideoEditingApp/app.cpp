@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
     // create the Qt Application
     QApplication app(argc, argv);
 
-
     if(argc != 2)
         cout << "There should be two arguments" << endl;
 

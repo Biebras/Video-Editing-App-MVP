@@ -10,7 +10,9 @@
 #include <QFile>
 #include <QString>
 #include "videomanager.h"
+#include "videoplayer.h"
 #include <QDebug>
+#include <QUrl>
 
 using namespace std;
 
@@ -165,4 +167,14 @@ int VideoManager::GetTotalVideos()
 void VideoManager::InsertVideo(int index, Video* video)
 {
     _videos.insert(index, video);
+}
+
+int VideoManager::GetTotalDuration()
+{
+    int total = 0;
+    for (auto video : _videos)
+    {
+        total += video->GetDuration();
+    }
+    return total;
 }

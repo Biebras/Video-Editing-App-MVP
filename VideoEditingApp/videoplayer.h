@@ -5,23 +5,26 @@
 #include "video.h"
 #include "videomanager.h"
 
-
 class VideoPlayer : public QMediaPlayer
 {
     public:
-        VideoPlayer() : QMediaPlayer(NULL) {};
+        VideoPlayer() : QMediaPlayer(NULL) {
+            _videoManager = &VideoManager::Get();
+        };
         void Update();
         void Play(int millisecond);
         void Pause();
         Video* GetVideo(int milliseconds);
         void SetCurrentTime(int milliseconds);
-        int GetCurrentTime();
-
+        int GetCurrentTime2();
+        void SetCurrentVideo(Video* video);
+        Video* GetCurrentVideo();
 
     private:
         int _currentTime;
         Video* _currentVideo;
         VideoManager* _videoManager;
+
 };
 
 #endif // VIDEOPLAYER_H
