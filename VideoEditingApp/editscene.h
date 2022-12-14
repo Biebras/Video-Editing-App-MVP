@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "videoplayer.h"
+#include "scenemanager.h"
 #include <QtWidgets>
 #include <QVideoWidget>
 #include <QString>
@@ -13,6 +14,7 @@ class EditScene : public Scene
     public:
         EditScene(QString sceneName) : Scene(sceneName)
         {
+            _videoManager = &VideoManager::Get();
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
@@ -38,12 +40,24 @@ class EditScene : public Scene
         QPushButton* _moveLeft;
         QPushButton* _moveRight;
         int _reorderVideoIndex; // the index of the video to be reordered
+        int _durationIndex; // the index of the video that we are currently getting the duration of
+        int _totalDuration;
+        VideoManager* _videoManager;
+        SceneManager& _sceneManager = SceneManager::Get();
 
     public slots:
         void thumbnailClicked();
         void reorderLeft();
         void reorderRight();
         void pausePlay();
+        void changeTime(qint64 time);
+        void movedSlider(int val);
+        void pressedSlider();
+        void releasedSlider();
+        void changeMediaStatus(QMediaPlayer::MediaStatus status);
+        void changeVolume();
+        void showProjects();
+        void showVideoLibrary();
 };
 
 #endif // EDITSCENE_H

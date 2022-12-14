@@ -82,5 +82,6 @@ void CreateProjectScene::MakeConnections()
 void CreateProjectScene::CreateProject()
 {
     _projectManager.CreateProject(_nameInput->text());
+
     _sceneManager.SetScene("projects");
 }
