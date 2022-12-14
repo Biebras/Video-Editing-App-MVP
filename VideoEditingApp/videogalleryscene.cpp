@@ -59,7 +59,6 @@ void VideoGalleryScene::ArrangeWidgets()
     _mainLayout = new QVBoxLayout();
     _mainLayout->setAlignment(Qt::AlignTop);
 
-
     // create layouts for each area
     ModularLayout* header = new ModularLayout();
     header->addWidget(_backButton);
@@ -68,13 +67,8 @@ void VideoGalleryScene::ArrangeWidgets()
     header->addStretch();
     header->addWidget(_addVideos);
 
-
     header->GetLayoutWidget()->setLayout(header);
     _mainLayout->addWidget(header->GetLayoutWidget());
-
-    // get the window widget
-    SceneManager& sceneManager = SceneManager::Get();
-    QWidget* window = sceneManager.GetWindow();
 
     //videos layout
     QWidget* videosLayoutWidget = new QWidget();
@@ -96,7 +90,7 @@ void VideoGalleryScene::ArrangeWidgets()
                 if(index >= _selectVideos.size())
                     break;
 
-                _videoLayout->addWidget(_selectVideos[index]);
+                _videoLayout->addWidget(_selectVideos[index], i, j);
                 _selectVideos[index]->setIconSize(_selectVideos[index]->size());
             }
         }
@@ -156,12 +150,31 @@ void VideoGalleryScene::UpdateScene()
                 _selectVideos[i]->setText("No thumbnail for this video");
         } else
             _selectVideos[i]->setText("No thumbnail for this video");
-        _videoLayout->addWidget(_selectVideos[i]);
     }
 
-    // reconnect
-    foreach(auto button, _selectVideos)
-        connect(button, SIGNAL(clicked()), this, SLOT(AddVideo()));
+    int cols = 2;
+
+    if(!_sceneManager.GetWindow()->IsAppLayout)
+        cols = 3;
+
+    int rows = _selectVideos.size() / cols + _selectVideos.size() % 2;
+
+    // create new ModularLayout for each row and add to mainLayout
+    for (int i = 0; i < rows; i++)
+    {
+        //ModularLayout *videoRow = new ModularLayout();
+        for (int j = 0; j < cols; j++)
+        {
+            int index = i * cols + j;
+
+            if(index >= _selectVideos.size())
+                break;
+
+            _videoLayout->addWidget(_selectVideos[index], i, j);
+            _selectVideos[index]->setIconSize(_selectVideos[index]->size());
+            connect(_selectVideos[index], SIGNAL(clicked()), this, SLOT(AddVideo()));
+        }
+    }
 }
 
 void VideoGalleryScene::GoBack()

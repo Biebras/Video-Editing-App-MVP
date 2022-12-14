@@ -1,26 +1,14 @@
-#include "scenemanager.h"
 #include "editscene.h"
 #include "videogalleryscene.h"
 #include "projectsscene.h"
 #include "createprojectscene.h"
 #include "trimscene.h"
 #include "modularlayout.h"
-
-QWidget* SceneManager::GetWindow()
-{
-    return _window;
-}
+#include "scenemanager.h"
 
 void SceneManager::InitScenes()
 {
-    _window = new QWidget();
-
-    _window->setWindowTitle("App");
-    _window->setMinimumSize(400, 720);
-    _window->resize(_window->minimumSize());
-
-    //set window background colour
-    _window->setStyleSheet("background-color: #01200F;");
+    _window = new PrimaryWindow();
 
     _sceneLayout = new ModularLayout();
 
@@ -62,6 +50,12 @@ void SceneManager::SetScene(QString sceneName)
     }
 }
 
+void SceneManager::UpdateCurrentScene()
+{
+    if(_currentScene != NULL)
+        _currentScene->UpdateScene();
+}
+
 Scene* SceneManager::GetScene(QString sceneName)
 {
     foreach(auto scene, _scenes)
@@ -83,5 +77,12 @@ void SceneManager::ShowWindow()
 {
         _window->show();
 }
+
+
+PrimaryWindow* SceneManager::GetWindow()
+{
+    return _window;
+}
+
 
 

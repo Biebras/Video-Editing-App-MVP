@@ -30,7 +30,7 @@ class VideoGalleryScene : public Scene
         VideoManager& _videoManager = VideoManager::Get();
         ProjectManager& _projectManager = ProjectManager::Get();
         SceneManager& _sceneManager = SceneManager::Get();
-        QVBoxLayout* _videoLayout = new QVBoxLayout();
+        QGridLayout* _videoLayout = new QGridLayout();
         QPushButton* _backButton;
         QLabel* _title;
         QPushButton* _addVideos;
