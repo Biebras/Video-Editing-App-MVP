@@ -61,5 +61,4 @@ compile_commands.json
 .DS_Store
 
 #Project folder
-./VideoEditingApp/Projects/*
-*/.json
+VideoEditingApp/Projects/
