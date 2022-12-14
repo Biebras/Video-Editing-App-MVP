@@ -62,3 +62,4 @@ compile_commands.json
 
 #Project folder
 ./VideoEditingApp/Projects/*
+*/.json
