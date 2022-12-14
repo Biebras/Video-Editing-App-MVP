@@ -12,14 +12,14 @@ void CreateProjectScene::CreateWidgets()
 
     // input
     _nameLabel = new QLabel("Project Name: ");
-    _nameLabel->setStyleSheet("font-size: 16pt");
+    _nameLabel->setStyleSheet("font-size: 20pt; color: #9EC5AB;");
     _nameInput = new QLineEdit();
-    _nameInput->setStyleSheet("font-size: 16px;");
+    _nameInput->setStyleSheet("font-size: 18px; padding: 5px; background-color: #32746D;");
 
     // button
     _createProject = new QPushButton("Create Project");
     _createProject->setToolTip("Create Project");
-    _createProject->setStyleSheet("font-size: 16px;");
+    _createProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; font-size: 18px; padding: 10px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 }
 
 void CreateProjectScene::ArrangeWidgets()
