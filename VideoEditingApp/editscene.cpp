@@ -10,12 +10,12 @@ void EditScene::CreateWidgets()
     // header
     _backButton = new QPushButton("");
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
-    _backButton->setToolTip("Go Back");
+    _backButton->setToolTip(tr("Go Back"));
     _backButton->setFixedSize(QSize(50, 50));
     _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _shareButton = new QPushButton();
     _shareButton->setIcon(QIcon(":/icons/shareIcon.png"));
-    _shareButton->setToolTip("Share");
+    _shareButton->setToolTip(tr("Share"));
     _shareButton->setFixedSize(QSize(50, 50));
     _shareButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _addButton = new QPushButton();

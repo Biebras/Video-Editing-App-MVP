@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
     if(argc != 2)
         cout << "There should be two arguments" << endl;
 
+    QTranslator myappTranslator;
+    myappTranslator.load(QLocale(), QLatin1String("myapp"), QLatin1String("_"), QLatin1String(":/i18n"));
+    app.installTranslator(&myappTranslator);
+
     VideoManager& videoManager = VideoManager::Get();
     ProjectManager& projectManager = ProjectManager::Get();
 

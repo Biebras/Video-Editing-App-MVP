@@ -6,19 +6,19 @@ void CreateProjectScene::CreateWidgets()
     // back button
     _backButton = new QPushButton();
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
-    _backButton->setToolTip("Go Back");
+    _backButton->setToolTip(tr("Go Back"));
     _backButton->setFixedSize(QSize(50, 50));
     _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // input
-    _nameLabel = new QLabel("Project Name: ");
+    _nameLabel = new QLabel(tr("Project Name: "));
     _nameLabel->setStyleSheet("font-size: 20pt; color: #9EC5AB;");
     _nameInput = new QLineEdit();
     _nameInput->setStyleSheet("font-size: 18px; padding: 5px; background-color: #32746D;");
 
     // button
-    _createProject = new QPushButton("Create Project");
-    _createProject->setToolTip("Create Project");
+    _createProject = new QPushButton(tr("Create Project"));
+    _createProject->setToolTip(tr("Create Project"));
     _createProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; font-size: 18px; padding: 10px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 }
 
