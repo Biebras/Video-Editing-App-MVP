@@ -11,6 +11,8 @@ PrimaryWindow::PrimaryWindow()
     setStyleSheet("background-color: #01200F;");
     QWidget* centerWidget = new QWidget();
     setCentralWidget(centerWidget);
+
+    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #000000; border: 0px; }");
 }
 
 void PrimaryWindow::resizeEvent(QResizeEvent *event)
