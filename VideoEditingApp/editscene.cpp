@@ -256,11 +256,7 @@ void EditScene::UpdateScene()
 
     if (_videoManager->GetTotalVideos() > 0)
     {
-        qDebug() << "should be playing";
-        qDebug() << _videoManager->GetVideo(0)->GetFilePath();
         _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
-        //_videoPlayer->setMedia(QUrl(_videoManager->GetVideo(0)->GetFilePath()));
-        qDebug() << "iusf";
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->play();
     }
@@ -345,7 +341,7 @@ void EditScene::thumbnailClicked()
 
     if (_reorderVideoIndex == 0)
         _moveLeft->setEnabled(false);
-    else if (_reorderVideoIndex == _thumbnails.size()-1)
+    if (_reorderVideoIndex == _thumbnails.size()-1)
         _moveRight->setEnabled(false);
 }
 
@@ -513,7 +509,7 @@ void EditScene::changeTime(qint64 time)
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
 
-        _videoManager->PrintAllVideos();
+//        _videoManager->PrintAllVideos();
     }
 
 }
@@ -598,6 +594,6 @@ void EditScene::showVideoLibrary()
 //        _videoManager->GetVideo(i)->SetStart(0);
 //        _videoManager->GetVideo(i)->SetEnd(0);
 //    }
-
+    _videoManager->PrintAllVideos();
     _sceneManager.SetScene("gallery");
 }
