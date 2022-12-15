@@ -11,5 +11,6 @@
         <file>icons/volumeIcon.png</file>
         <file>icons/muteIcon.png</file>
         <file>icons/rightIcon.png</file>
+        <file>icons/diskette.png</file>
     </qresource>
 </RCC>

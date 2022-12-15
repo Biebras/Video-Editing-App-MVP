@@ -15,7 +15,6 @@ class EditScene : public Scene
     public:
         EditScene(QString sceneName) : Scene(sceneName)
         {
-            _videoManager = &VideoManager::Get();
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
@@ -28,7 +27,7 @@ class EditScene : public Scene
         void ArrangeWidgets() override;
         void MakeConnections() override;
         QPushButton* _backButton;
-        QPushButton* _shareButton;
+        QPushButton* _saveButton;
         QPushButton* _addButton;
         QVideoWidget* _videoWidget;
         VideoPlayer* _videoPlayer;
@@ -45,7 +44,7 @@ class EditScene : public Scene
         int _reorderVideoIndex; // the index of the video to be reordered
         int _durationIndex; // the index of the video that we are currently getting the duration of
         int _totalDuration;
-        VideoManager* _videoManager;
+        VideoManager& _videoManager = VideoManager::Get();
         SceneManager& _sceneManager = SceneManager::Get();
         ProjectManager& _projectManager = ProjectManager::Get();
 
@@ -68,6 +67,7 @@ class EditScene : public Scene
         void changeVolume();
         void showProjects();
         void showVideoLibrary();
+        void saveChanges();
 };
 
 #endif // EDITSCENE_H
