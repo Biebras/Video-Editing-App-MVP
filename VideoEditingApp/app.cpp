@@ -20,7 +20,9 @@ int main(int argc, char *argv[])
         cout << "There should be two arguments" << endl;
 
     QTranslator myappTranslator;
-    myappTranslator.load(QLocale(), QLatin1String("myapp"), QLatin1String("_"), QLatin1String(":/i18n"));
+    qDebug() << QApplication::applicationDirPath();
+    auto smth = myappTranslator.load(":languages/translation_meow.qm");
+    qDebug() << smth;
     app.installTranslator(&myappTranslator);
 
     VideoManager& videoManager = VideoManager::Get();

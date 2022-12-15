@@ -51,6 +51,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+TRANSLATIONS = languages/translation_fr.ts languages/translation_meow.ts languages/translation_en.ts
+
 RESOURCES += \
-    icons.qrc
+    icons.qrc \
+    languages.qrc
 
