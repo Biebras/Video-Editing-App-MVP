@@ -76,7 +76,7 @@ void EditScene::CreateWidgets()
     for (int i = 0; i < _videoManager.GetTotalVideos(); i++)
     {
         _thumbnails.append(new QPushButton());
-        _thumbnails[i]->setStyleSheet("background-color: #011502;");
+        _thumbnails[i]->setStyleSheet("background-color: black;");
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
         QString filePath = _videoManager.GetVideo(i)->GetFilePath();
@@ -97,20 +97,24 @@ void EditScene::CreateWidgets()
         _thumbnails[i]->setEnabled(false);
     }
 
+
     // reorder buttons
     _moveLeft = new QPushButton();
     _moveLeft->setIcon(QIcon(":/icons/backIcon.png"));
+    _moveLeft->setToolTip("Move left");
     _moveLeft->setFixedSize(QSize(50, 50));
     _moveLeft->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveLeft->setEnabled(false);
     _moveRight = new QPushButton();
     _moveRight->setIcon(QIcon(":/icons/rightIcon.png"));
+    _moveRight->setToolTip("Move right");
     _moveRight->setFixedSize(QSize(50, 50));
     _moveRight->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveRight->setEnabled(false);
 
     _removeButton = new QPushButton();
     _removeButton->setIcon(QIcon(":/icons/removeIcon.png"));
+    _removeButton->setToolTip("Remove video");
     _removeButton->setFixedSize(QSize(50, 50));
     _removeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _removeButton->setEnabled(false);
@@ -142,12 +146,16 @@ void EditScene::ArrangeWidgets()
     header->addStretch();
     header->addWidget(_saveButton);
     header->addWidget(_addButton);
+    header->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
 
 //    ModularLayout* videoArea = new ModularLayout();
     _videoArea->addWidget(_videoWidget);
+    _videoArea->setSpacing(0);
+    _videoArea->setMargin(0);
 
     ModularLayout* timeArea = new ModularLayout();
     timeArea->addWidget(_timeLabel);
+    timeArea->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
 
     ModularLayout* pauseArea = new ModularLayout();
     pauseArea->addStretch();
@@ -164,6 +172,7 @@ void EditScene::ArrangeWidgets()
         _thumbnailArea->addWidget(thumbnail);
     }
     _thumbnailArea->setSpacing(0);
+    _thumbnailArea->setMargin(0);
 
     ModularLayout* reorderArea = new ModularLayout();
     reorderArea->addStretch();
@@ -178,6 +187,7 @@ void EditScene::ArrangeWidgets()
     footer->addWidget(_effectButton);
     footer->addWidget(_audioButton);
     footer->addStretch();
+    footer->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
 
     // set the layout of all the layout widgets
     header->GetLayoutWidget()->setLayout(header);
@@ -200,8 +210,11 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(reorderArea->GetLayoutWidget());
     mainLayout->addWidget(footer->GetLayoutWidget());
 
-    this->setLayout(mainLayout);
+    mainLayout->setSpacing(0);
+    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0,0,0,0);
 
+    this->setLayout(mainLayout);
 }
 
 void EditScene::UpdateScene()
@@ -235,6 +248,7 @@ void EditScene::UpdateScene()
         } else
             _thumbnails[i]->setText("No thumbnail for this video");
         _thumbnails[i]->setEnabled(false);
+        _thumbnails[i]->setStyleSheet("QPushButton { background: black; }");
         _thumbnailArea->addWidget(_thumbnails[i]);
     }
 
@@ -282,6 +296,8 @@ void EditScene::UpdateScene()
     _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
 
     _videoPlayer->setNotifyInterval(100);
+
+
 
      // reconnect signals and slots
 

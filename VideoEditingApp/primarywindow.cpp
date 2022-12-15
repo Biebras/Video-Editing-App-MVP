@@ -8,7 +8,7 @@ PrimaryWindow::PrimaryWindow()
     setWindowTitle("App");
     setMinimumSize(400, 720);
     resize(minimumSize());
-    setStyleSheet("background-color: #01200F;");
+    setStyleSheet("background-color: #01200F");
 }
 
 void PrimaryWindow::resizeEvent(QResizeEvent *event)
