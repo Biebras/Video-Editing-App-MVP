@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     QTranslator myappTranslator;
     qDebug() << QApplication::applicationDirPath();
-    auto smth = myappTranslator.load(":languages/translation_meow.qm");
+    auto smth = myappTranslator.load(":languages/translation_en.qm");
     qDebug() << smth;
     app.installTranslator(&myappTranslator);
 

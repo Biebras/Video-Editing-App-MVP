@@ -9,6 +9,10 @@ PrimaryWindow::PrimaryWindow()
     setMinimumSize(400, 720);
     resize(minimumSize());
     setStyleSheet("background-color: #01200F;");
+    QWidget* centerWidget = new QWidget();
+    setCentralWidget(centerWidget);
+
+    CreateMenuWindow();
 }
 
 void PrimaryWindow::resizeEvent(QResizeEvent *event)
@@ -25,4 +29,33 @@ void PrimaryWindow::resizeEvent(QResizeEvent *event)
         IsAppLayout = true;
         _sceneManager.UpdateCurrentScene();
     }
+}
+
+void PrimaryWindow::LoadLanguage(const QString &rLanguage)
+{
+
+}
+
+void PrimaryWindow::CreateMenuWindow()
+{
+    QMenuBar* menuBar = new QMenuBar();
+    setMenuBar(menuBar);
+    menuBar->setStyleSheet("background-color: red;");
+
+    QMenu* menu = new QMenu("Languages");
+    menuBar->addMenu(menu);
+
+    QAction* catAction = new QAction("Cat");
+    QAction* englishAction = new QAction("Eanglish");
+    QAction* frenchAction = new QAction("French");
+
+    menu->addAction(englishAction);
+    menu->addAction(frenchAction);
+    menu->addAction(catAction);
+}
+
+void PrimaryWindow::CreateLanguageMenu(void)
+{
+    //QActionGroup* langGroup = new QActionGroup(ui.menuLanguage);
+   // langGroup->setExclusive(true);
 }
