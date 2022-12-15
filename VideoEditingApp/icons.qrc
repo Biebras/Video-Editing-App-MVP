@@ -13,5 +13,8 @@
         <file>icons/rightIcon.png</file>
         <file>icons/removeIcon.png</file>
         <file>icons/diskette.png</file>
+        <file>icons/france.png</file>
+        <file>icons/kitty.png</file>
+        <file>icons/united-kingdom.png</file>
     </qresource>
 </RCC>

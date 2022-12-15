@@ -6,6 +6,21 @@
 void ProjectsScene::CreateWidgets()
 {
     // header
+    _english = new QPushButton();
+    _english->setFixedSize(QSize(50, 50));
+    _english->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
+    _english->setIcon(QIcon(":icons/united-kingdom.png"));
+    _english->setToolTip(tr("Eanglish Language"));
+    _franch = new QPushButton();
+    _franch->setFixedSize(QSize(50, 50));
+    _franch->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _franch->setIcon(QIcon(":icons/france.png"));
+    _franch->setToolTip(tr("French Language"));
+    _cat = new QPushButton();
+    _cat->setFixedSize(QSize(50, 50));
+    _cat->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _cat->setIcon(QIcon(":icons/kitty.png"));
+    _cat->setToolTip(tr("Cat Language"));
     _addProject = new QPushButton();
     _addProject->setIcon(QIcon(":icons/addIcon.png"));
     _addProject->setToolTip(tr("Create Project"));
@@ -13,7 +28,7 @@ void ProjectsScene::CreateWidgets()
     _addProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // title
-    _title = new QLabel("My Projects");
+    _title = new QLabel(tr("My Projects"));
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font: 30pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
 
@@ -27,6 +42,9 @@ void ProjectsScene::ArrangeWidgets()
     // layout for header
     ModularLayout* header = new ModularLayout();
     header->addStretch();
+    header->addWidget(_english);
+    header->addWidget(_franch);
+    header->addWidget(_cat);
     header->addWidget(_addProject);
     header->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
     header->setSpacing(0);
@@ -65,6 +83,9 @@ void ProjectsScene::ArrangeWidgets()
 void ProjectsScene::MakeConnections()
 { 
     connect(_addProject, SIGNAL(clicked()), this, SLOT(ChangeSceneToCreateProject()));
+    //connect(_english, SIGNAL(clicked()), this, SLOT(ChangeLanToEn()));
+    //connect(_franch, SIGNAL(clicked()), this, SLOT(ChangeLanToFr()));
+    connect(_cat, SIGNAL(clicked()), this, SLOT(ChangeLanToCat()));
     /** connections:
      *  add project button -> create project scene
      **/
@@ -114,4 +135,17 @@ void ProjectsScene::ChangeSceneToCreateProject()
     _sceneManager.SetScene("createProject");
 }
 
+void ProjectsScene::ChangeLanToEn()
+{
+    //qApp->removeTranslator(&transl)
+}
 
+void ProjectsScene::ChangeLanToFr()
+{
+    //_sceneManager.SetScene("createProject");
+}
+
+void ProjectsScene::ChangeLanToCat()
+{
+
+}
