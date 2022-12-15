@@ -19,7 +19,7 @@ void ProjectsScene::CreateWidgets()
 void ProjectsScene::ArrangeWidgets()
 {
     _mainLayout->setAlignment(Qt::AlignTop);
-
+    _projectsLayout = new QVBoxLayout();
     // layout for header
     ModularLayout* header = new ModularLayout();
     header->addStretch();

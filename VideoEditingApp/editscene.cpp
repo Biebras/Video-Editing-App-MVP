@@ -66,7 +66,7 @@ void EditScene::CreateWidgets()
     _videoSlider->setToolTip("Move through video");
 
     _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
-    _videoSlider->setTickInterval(1000);
+    _videoSlider->setTickInterval(100);
     _videoSlider->setEnabled(false);
 
     // thumbnails
@@ -234,12 +234,9 @@ void EditScene::UpdateScene()
     _totalDuration = 0;
 
     // remove from video area
-//    while (_videoArea->count() > 0)
-//    {
     QWidget *w = _videoArea->takeAt(0)->widget();
     if (w)
         w->deleteLater();
-//    }
     delete _videoPlayer;
 
 
@@ -271,6 +268,8 @@ void EditScene::UpdateScene()
     _videoSlider->setValue(0);
     _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
     _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
+
+    _videoPlayer->setNotifyInterval(100);
 
      // reconnect signals and slots
 
@@ -523,7 +522,7 @@ void EditScene::movedSlider(int val)
 {
     // update the current time to the value on the slider
     _videoPlayer->SetCurrentTime(val);
-    // check if the video playing should be updated
+    // check if the video playing should be updatedpauseIcon
     _videoPlayer->Update();
     _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
     _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
