@@ -11,6 +11,8 @@ void SceneManager::InitScenes()
     _window = new PrimaryWindow();
     _sceneLayout = new ModularLayout();
     _window->centralWidget()->setLayout(_sceneLayout);
+    _sceneLayout->setSpacing(0);
+    _sceneLayout->setMargin(0);
 
     Scene* editScene = new EditScene("edit");
     Scene* videoGalleryScene = new VideoGalleryScene("gallery");
