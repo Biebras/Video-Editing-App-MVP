@@ -109,6 +109,12 @@ void EditScene::CreateWidgets()
     _moveRight->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _moveRight->setEnabled(false);
 
+    _removeButton = new QPushButton();
+    _removeButton->setIcon(QIcon(":/icons/removeIcon.png"));
+    _removeButton->setFixedSize(QSize(50, 50));
+    _removeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _removeButton->setEnabled(false);
+
     // footer
     _trimButton = new QPushButton();
     _trimButton->setIcon(QIcon(":/icons/trimIcon.png"));
@@ -121,8 +127,10 @@ void EditScene::CreateWidgets()
     _effectButton->setFixedSize(QSize(50, 50));
     _effectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _audioButton = new QPushButton();
-    _audioButton->setIcon(QIcon(":/icons/muteIcon.png"));
+
+    _audioButton->setIcon(QIcon(":/icons/audioIcon.png"));
     _audioButton->setToolTip(tr("Add Audio"));
+
     _audioButton->setFixedSize(QSize(50, 50));
     _audioButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
@@ -163,6 +171,7 @@ void EditScene::ArrangeWidgets()
     reorderArea->addStretch();
     reorderArea->addWidget(_moveLeft);
     reorderArea->addWidget(_moveRight);
+    reorderArea->addWidget(_removeButton);
     reorderArea->addStretch();
 
     ModularLayout* footer = new ModularLayout();
@@ -265,6 +274,9 @@ void EditScene::UpdateScene()
     _pauseButton->setEnabled(false);
     _volumeButton->setEnabled(false);
     _videoSlider->setEnabled(false);
+    _moveLeft->setEnabled(false);
+    _moveRight->setEnabled(false);
+    _removeButton->setEnabled(false);
 
     // resest buttons
     _videoSlider->setValue(0);
@@ -314,17 +326,14 @@ void EditScene::MakeConnections()
     // when the slider is moved, update the current time and check if the video needs updating
     connect(_videoSlider, SIGNAL(sliderMoved(int)), this, SLOT(movedSlider(int)));
 
-    // when the user starts moving the slider, pause the video
-//    connect(_videoSlider, SIGNAL(sliderPressed()), this, SLOT(pressedSlider()));
-
-    // when the user releases the slider, play the video
-//    connect(_videoSlider, SIGNAL(sliderReleased()), this, SLOT(releasedSlider()));
-
     // when a video ends, play the next video in the project
     connect(_videoPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(changeMediaStatus(QMediaPlayer::MediaStatus)));
 
     // when volume button pressed, mute or unmute video
     connect(_volumeButton, SIGNAL(clicked()), this, SLOT(changeVolume()));
+
+    // when remove video button pressed, remove the video
+    connect(_removeButton, SIGNAL(clicked()), this, SLOT(removeVideo()));
 }
 
 void EditScene::thumbnailClicked()
@@ -347,6 +356,7 @@ void EditScene::thumbnailClicked()
         _moveLeft->setEnabled(false);
     if (_reorderVideoIndex == _thumbnails.size()-1)
         _moveRight->setEnabled(false);
+    _removeButton->setEnabled(true);
 }
 
 void EditScene::reorderLeft()
@@ -355,6 +365,7 @@ void EditScene::reorderLeft()
         thumbnail->setEnabled(true);
     _moveLeft->setEnabled(false);
     _moveRight->setEnabled(false);
+    _removeButton->setEnabled(false);
 
     // swap videos
     Video* second = _videoManager.GetVideo(_reorderVideoIndex);
@@ -392,6 +403,7 @@ void EditScene::reorderRight()
         thumbnail->setEnabled(true);
     _moveLeft->setEnabled(false);
     _moveRight->setEnabled(false);
+    _removeButton->setEnabled(false);
 
     // swap videos
     Video* first = _videoManager.GetVideo(_reorderVideoIndex);
@@ -513,9 +525,6 @@ void EditScene::changeTime(qint64 time)
         _videoPlayer->SetCurrentTime(0);
         _videoPlayer->SetCurrentVideo(_videoManager.GetVideo(0));
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
-
-
-//        _videoManager->PrintAllVideos();
     }
 
 }
@@ -528,21 +537,6 @@ void EditScene::movedSlider(int val)
     _videoPlayer->Update();
     _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
     _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
-}
-
-void EditScene::pressedSlider()
-{
-    // pause the video and set icon
-//    _videoPlayer->pause();
-//    _pauseButton->setIcon(QIcon(":icons/playIcon.png"));
-}
-
-void EditScene::releasedSlider()
-{
-    // play the video and set icon
-//    _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
-//    _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
-
 }
 
 void EditScene::changeMediaStatus(QMediaPlayer::MediaStatus status)
@@ -575,14 +569,26 @@ void EditScene::changeVolume()
     }
 }
 
+void EditScene::removeVideo()
+{
+    // remove video at _reorderVideoIndex from the project
+
+    // recalculate the start and end times of videos after this one
+    int dur = 0;
+    for (int i = _videoManager.GetTotalVideos()-1; i > _reorderVideoIndex; i--)
+    {
+        dur = _videoManager.GetVideo(i)->GetDuration();
+        _videoManager.GetVideo(i)->SetStart(_videoManager.GetVideo(i-1)->GetStart());
+        _videoManager.GetVideo(i)->SetEnd(_videoManager.GetVideo(i)->GetStart()+dur);
+    }
+
+    // remove video from video manager
+    _videoManager.RemoveVideo(_videoManager.GetVideo(_reorderVideoIndex));
+    _sceneManager.SetScene("edit");
+}
+
 void EditScene::showProjects()
 {
-//    _videoPlayer->setMedia(QMediaContent());
-//    _timeLabel->setText("00:00:00/00:00:00");
-//    _pauseButton->setEnabled(false);
-//    _volumeButton->setEnabled(false);
-//    _videoSlider->setSliderPosition(0);
-//    _videoSlider->setEnabled(false);
     _sceneManager.SetScene("projects");
 }
 
@@ -594,19 +600,5 @@ void EditScene::saveChanges()
 
 void EditScene::showVideoLibrary()
 {
-    //qDebug() << "going to library";
-//    _videoPlayer->setMedia(QMediaContent());
-//    _timeLabel->setText("00:00:00/00:00:00");
-//    _pauseButton->setEnabled(false);
-//    _volumeButton->setEnabled(false);
-//    _videoSlider->setSliderPosition(0);
-//    _videoSlider->setEnabled(false);
-
-//    for (int i = 0; i < _videoManager->GetTotalVideos(); i++)
-//    {
-//        _videoManager->GetVideo(i)->SetStart(0);
-//        _videoManager->GetVideo(i)->SetEnd(0);
-//    }
-    _videoManager.PrintAllVideos();
     _sceneManager.SetScene("gallery");
 }
