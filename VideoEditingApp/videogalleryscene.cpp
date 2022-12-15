@@ -187,8 +187,5 @@ void VideoGalleryScene::AddVideo()
 {
     int index = _selectVideos.indexOf(qobject_cast<QPushButton* >(QObject::sender()));
     _videoManager.AddVideo(_projectManager.GetCurrentProject()->GetVideo(index));
-//    qDebug()  << "-------gallery scene--------------------";
-//    _videoManager.PrintAllVideos();
-//    qDebug() << "-------gallery scene--------------------";
     _sceneManager.SetScene("edit");
 }
