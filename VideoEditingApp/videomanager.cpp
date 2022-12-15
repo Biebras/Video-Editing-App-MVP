@@ -118,7 +118,8 @@ VideoManager::~VideoManager()
 
 void VideoManager::AddVideo(Video* video)
 {
-    _videos.push_back(video);
+    Video* newVideo = new Video(video);
+    _videos.push_back(newVideo);
 }
 
 void VideoManager::RemoveVideo(Video* video)
