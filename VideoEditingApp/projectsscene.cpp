@@ -6,12 +6,12 @@
 void ProjectsScene::CreateWidgets()
 {
     // header
-    _title = new QLabel("My Projects");
+    _title = new QLabel(tr("My Projects"));
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font: 30pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
     _addProject = new QPushButton();
     _addProject->setIcon(QIcon(":icons/addIcon.png"));
-    _addProject->setToolTip("Create Project");
+    _addProject->setToolTip(tr("Create Project"));
     _addProject->setFixedSize(QSize(50, 50));
     _addProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 }
@@ -34,7 +34,7 @@ void ProjectsScene::ArrangeWidgets()
     QWidget* projectsLayoutWidget = new QWidget();
     projectsLayoutWidget->setLayout(_projectsLayout);
 
-    QPushButton* projectButton = new QPushButton("projectName");
+    QPushButton* projectButton = new QPushButton(tr("projectName"));
     _projectsLayout->addWidget(projectButton);
 
     _mainLayout->addWidget(header->GetLayoutWidget());

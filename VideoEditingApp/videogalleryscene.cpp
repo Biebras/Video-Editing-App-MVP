@@ -14,7 +14,7 @@ void VideoGalleryScene::CreateWidgetsForVideoGallery()
         {
             // create new button with thumbnail as icon if it exists
             _selectVideos.append(new QPushButton());
-            _selectVideos[i]->setToolTip("Select Video");
+            _selectVideos[i]->setToolTip(tr("Select Video"));
             QString filePath = currentProject->GetVideo(i)->GetFilePath();
             QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
             if (QFile(thumbnailPath).exists()) // if file exists
@@ -25,9 +25,9 @@ void VideoGalleryScene::CreateWidgetsForVideoGallery()
                 {
                     _selectVideos[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
                 } else
-                    _selectVideos[i]->setText("No thumbnail for this video");
+                    _selectVideos[i]->setText(tr("No thumbnail for this video"));
             } else
-                _selectVideos[i]->setText("No thumbnail for this video");
+                _selectVideos[i]->setText(tr("No thumbnail for this video"));
         }
     }
 }
@@ -37,15 +37,15 @@ void VideoGalleryScene::CreateWidgets()
     // header
     _backButton = new QPushButton();
     _backButton->setIcon(QIcon(":/icons/backIcon.png"));
-    _backButton->setToolTip("Go Back");
+    _backButton->setToolTip(tr("Go Back"));
     _backButton->setFixedSize(QSize(50, 50));
     _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-    _title = new QLabel("Video Gallery");
+    _title = new QLabel(tr("Video Gallery"));
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font: 20pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
     _addVideos = new QPushButton();
     _addVideos->setIcon(QIcon(":icons/addIcon.png"));
-    _addVideos->setToolTip("Add Video(s)");
+    _addVideos->setToolTip(tr("Add Video(s)"));
     _addVideos->setFixedSize(QSize(50, 50));
     _addVideos->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
@@ -134,7 +134,7 @@ void VideoGalleryScene::UpdateScene()
     for (int i = 0; i < currentProject->GetTotalVideos(); i++)
     {
         _selectVideos.append(new QPushButton());
-        _selectVideos[i]->setToolTip("Select Video");
+        _selectVideos[i]->setToolTip(tr("Select Video"));
         QString filePath = currentProject->GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
@@ -147,9 +147,9 @@ void VideoGalleryScene::UpdateScene()
                 _selectVideos[i]->setIconSize(_selectVideos[i]->size());
 
             } else
-                _selectVideos[i]->setText("No thumbnail for this video");
+                _selectVideos[i]->setText(tr("No thumbnail for this video"));
         } else
-            _selectVideos[i]->setText("No thumbnail for this video");
+            _selectVideos[i]->setText(tr("No thumbnail for this video"));
     }
 
     int cols = 2;
@@ -179,7 +179,6 @@ void VideoGalleryScene::UpdateScene()
 
 void VideoGalleryScene::GoBack()
 {
-    qDebug() << "clicked";
     _sceneManager.SetScene("edit");
 }
 
