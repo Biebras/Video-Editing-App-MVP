@@ -27,9 +27,15 @@ void ProjectsScene::ArrangeWidgets()
     header->addStretch();
     header->addWidget(_addProject);
 
-    //projects layout
+//    //projects layout
+//    QWidget* projectsLayoutWidget = new QWidget();
+//    projectsLayoutWidget->setLayout(_projectsLayout);
+
     QWidget* projectsLayoutWidget = new QWidget();
     projectsLayoutWidget->setLayout(_projectsLayout);
+
+    QPushButton* projectButton = new QPushButton("projectName");
+    _projectsLayout->addWidget(projectButton);
 
     _mainLayout->addWidget(header->GetLayoutWidget());
     _mainLayout->addWidget(projectsLayoutWidget);
@@ -47,6 +53,7 @@ void ProjectsScene::MakeConnections()
 
 void ProjectsScene::UpdateScene()
 {
+
     while (_projectsLayout->count() > 0)
     {
         QWidget *w = _projectsLayout->takeAt(0)->widget();
@@ -66,7 +73,6 @@ void ProjectsScene::UpdateScene()
         _projectButtons.push_back(projectButton);
         _projectsLayout->addWidget(projectButton);
         projectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; height: 50px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-        //connect(projectButton, SIGNAL(clicked()), this, SLOT(ChangeSceneToEdit()));
 
         connect(projectButton, &QPushButton::clicked, [project]()
         {
