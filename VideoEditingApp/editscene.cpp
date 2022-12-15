@@ -13,11 +13,11 @@ void EditScene::CreateWidgets()
     _backButton->setToolTip("Go Back");
     _backButton->setFixedSize(QSize(50, 50));
     _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-    _shareButton = new QPushButton();
-    _shareButton->setIcon(QIcon(":/icons/shareIcon.png"));
-    _shareButton->setToolTip("Share");
-    _shareButton->setFixedSize(QSize(50, 50));
-    _shareButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _saveButton = new QPushButton();
+    _saveButton->setIcon(QIcon(":/icons/diskette.png"));
+    _saveButton->setToolTip("Save");
+    _saveButton->setFixedSize(QSize(50, 50));
+    _saveButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _addButton = new QPushButton();
     _addButton->setIcon(QIcon(":/icons/addIcon.png"));
     _addButton->setToolTip("Add Video");
@@ -30,10 +30,10 @@ void EditScene::CreateWidgets()
     _videoPlayer->setVideoOutput(_videoWidget);
 
     //  if there is at least one video in the project, play it
-    if (_videoManager->GetTotalVideos() > 0)
+    if (_videoManager.GetTotalVideos() > 0)
     {
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
-        _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(0)->GetFilePath())));
+        _videoPlayer->SetCurrentVideo(_videoManager.GetVideo(0));
         _videoPlayer->play();
     }
 
@@ -71,13 +71,13 @@ void EditScene::CreateWidgets()
 
     // thumbnails
     // loop through videos
-    for (int i = 0; i < _videoManager->GetTotalVideos(); i++)
+    for (int i = 0; i < _videoManager.GetTotalVideos(); i++)
     {
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setStyleSheet("background-color: #011502;");
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
-        QString filePath = _videoManager->GetVideo(i)->GetFilePath();
+        QString filePath = _videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
         {
@@ -132,7 +132,7 @@ void EditScene::ArrangeWidgets()
     ModularLayout* header = new ModularLayout();
     header->addWidget(_backButton);
     header->addStretch();
-    header->addWidget(_shareButton);
+    header->addWidget(_saveButton);
     header->addWidget(_addButton);
 
 //    ModularLayout* videoArea = new ModularLayout();
@@ -206,12 +206,12 @@ void EditScene::UpdateScene()
     }
     _thumbnails.clear();
 
-    for (int i = 0; i < _videoManager->GetTotalVideos(); i++)
+    for (int i = 0; i < _videoManager.GetTotalVideos(); i++)
     {
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip("Reorder Video");
-        QString filePath = _videoManager->GetVideo(i)->GetFilePath();
+        QString filePath = _videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
         {
@@ -248,10 +248,11 @@ void EditScene::UpdateScene()
     _videoArea->addWidget(_videoWidget);
 
     //  if there is at least one video in the project, play it
-    if (_videoManager->GetTotalVideos() > 0)
+
+    if (_videoManager.GetTotalVideos() > 0)
     {
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
-        _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(0)->GetFilePath())));
+        _videoPlayer->SetCurrentVideo(_videoManager.GetVideo(0));
         _videoPlayer->play();
     }
 
@@ -290,6 +291,9 @@ void EditScene::MakeConnections()
 
     // when add button pressed, go to video library scene
     connect(_addButton, SIGNAL(clicked()), this, SLOT(showVideoLibrary()));
+
+    //save changes button
+    connect(_saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
 
     // when thumbnail buttons pressed, allow user to reorder the video they have chosen
     for (auto thumbnail : _thumbnails)
@@ -351,22 +355,22 @@ void EditScene::reorderLeft()
     _moveRight->setEnabled(false);
 
     // swap videos
-    Video* second = _videoManager->GetVideo(_reorderVideoIndex);
+    Video* second = _videoManager.GetVideo(_reorderVideoIndex);
     int secondEnd = second->GetEnd();
     int secondDuration = second->GetDuration();
-    int firstStart = _videoManager->GetVideo(_reorderVideoIndex-1)->GetStart();
-    _videoManager->RemoveVideo(_videoManager->GetVideo(_reorderVideoIndex));
-    _videoManager->InsertVideo(_reorderVideoIndex-1, second);
+    int firstStart = _videoManager.GetVideo(_reorderVideoIndex-1)->GetStart();
+    _videoManager.RemoveVideo(_videoManager.GetVideo(_reorderVideoIndex));
+    _videoManager.InsertVideo(_reorderVideoIndex-1, second);
 
     // recalculate start and end times of videos
     // first video should have start of initial first video
-    _videoManager->GetVideo(_reorderVideoIndex-1)->SetStart(firstStart);
+    _videoManager.GetVideo(_reorderVideoIndex-1)->SetStart(firstStart);
     // first video should have end of its start + its duration
-    _videoManager->GetVideo(_reorderVideoIndex-1)->SetEnd(firstStart+secondDuration);
+    _videoManager.GetVideo(_reorderVideoIndex-1)->SetEnd(firstStart+secondDuration);
     // second video start should have first videos end
-    _videoManager->GetVideo(_reorderVideoIndex)->SetStart(_videoManager->GetVideo(_reorderVideoIndex-1)->GetEnd());
+    _videoManager.GetVideo(_reorderVideoIndex)->SetStart(_videoManager.GetVideo(_reorderVideoIndex-1)->GetEnd());
     // second video end should be the same end as the initial second video
-    _videoManager->GetVideo(_reorderVideoIndex)->SetEnd(secondEnd);
+    _videoManager.GetVideo(_reorderVideoIndex)->SetEnd(secondEnd);
 
     // swap icons
     QIcon tempIcon = _thumbnails[_reorderVideoIndex]->icon();
@@ -388,21 +392,21 @@ void EditScene::reorderRight()
     _moveRight->setEnabled(false);
 
     // swap videos
-    Video* first = _videoManager->GetVideo(_reorderVideoIndex);
+    Video* first = _videoManager.GetVideo(_reorderVideoIndex);
     int firstStart = first->GetStart();
-    int secondEnd = _videoManager->GetVideo(_reorderVideoIndex+1)->GetEnd();
-    int secondDuration = _videoManager->GetVideo(_reorderVideoIndex+1)->GetDuration();
-    _videoManager->RemoveVideo(_videoManager->GetVideo(_reorderVideoIndex));
-    _videoManager->InsertVideo(_reorderVideoIndex+1, first);
+    int secondEnd = _videoManager.GetVideo(_reorderVideoIndex+1)->GetEnd();
+    int secondDuration = _videoManager.GetVideo(_reorderVideoIndex+1)->GetDuration();
+    _videoManager.RemoveVideo(_videoManager.GetVideo(_reorderVideoIndex));
+    _videoManager.InsertVideo(_reorderVideoIndex+1, first);
 
     // first videos start should be the initial first videos start
-    _videoManager->GetVideo(_reorderVideoIndex)->SetStart(firstStart);
+    _videoManager.GetVideo(_reorderVideoIndex)->SetStart(firstStart);
     // first videos end should be its start + its duration
-    _videoManager->GetVideo(_reorderVideoIndex)->SetEnd(firstStart + secondDuration);
+    _videoManager.GetVideo(_reorderVideoIndex)->SetEnd(firstStart + secondDuration);
     // second videos start should be first videos end
-    _videoManager->GetVideo(_reorderVideoIndex+1)->SetStart(_videoManager->GetVideo(_reorderVideoIndex)->GetEnd());
+    _videoManager.GetVideo(_reorderVideoIndex+1)->SetStart(_videoManager.GetVideo(_reorderVideoIndex)->GetEnd());
     // second videos end should be initial second videos end
-    _videoManager->GetVideo(_reorderVideoIndex+1)->SetEnd(secondEnd);
+    _videoManager.GetVideo(_reorderVideoIndex+1)->SetEnd(secondEnd);
 
     // swap icons
     QIcon tempIcon = _thumbnails[_reorderVideoIndex]->icon();
@@ -445,7 +449,7 @@ void EditScene::changeTime(qint64 time)
     int mseconds = actualTime % 60;
 
     // get total duration of videos
-    int total = _videoManager->GetTotalDuration();
+    int total = _videoManager.GetTotalDuration();
 
     int totalSeconds = total/1000 % 60;
     int totalMinutes = total/60000;
@@ -461,42 +465,42 @@ void EditScene::changeTime(qint64 time)
     _videoSlider->setMaximum(total);
 
     // find the durations of the videos by playing each one at the start
-    if (_videoPlayer->duration() > 0 && _durationIndex < _videoManager->GetTotalVideos() - 1 && (_fin || _first))
+    if (_videoPlayer->duration() > 0 && _durationIndex < _videoManager.GetTotalVideos() - 1 && (_fin || _first))
     {
         _fin = false;
         _first = false;
         // change the video playing
-        _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(_durationIndex));
+        _videoPlayer->SetCurrentVideo(_videoManager.GetVideo(_durationIndex));
 
         // set the start and end of current video and change the video playing to the next one
-        _videoManager->GetVideo(_durationIndex)->SetStart(_totalDuration);
+        _videoManager.GetVideo(_durationIndex)->SetStart(_totalDuration);
         _totalDuration += _videoPlayer->duration();
-        _videoManager->GetVideo(_durationIndex)->SetEnd(_totalDuration);
+        _videoManager.GetVideo(_durationIndex)->SetEnd(_totalDuration);
 
         _durationIndex++;
 
         // change the video playing
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(_durationIndex)->GetFilePath())));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(_durationIndex)->GetFilePath())));
 
         _fin = true;
 
     }
-    else if (_videoPlayer->duration() > 1 &&_durationIndex == _videoManager->GetTotalVideos() - 1 && (_fin || _videoManager->GetTotalVideos() < 2))
+    else if (_videoPlayer->duration() > 1 &&_durationIndex == _videoManager.GetTotalVideos() - 1 && (_fin || _videoManager.GetTotalVideos() < 2))
     {
         // all videos loaded
         // set the start and end of current video and change the video playing to the first one
-        if (_videoManager->GetTotalVideos() > 1)
+        if (_videoManager.GetTotalVideos() > 1)
         {
-            _videoManager->GetVideo(_durationIndex)->SetStart(_totalDuration);
+            _videoManager.GetVideo(_durationIndex)->SetStart(_totalDuration);
         }
         else
-            _videoManager->GetVideo(_durationIndex)->SetStart(0);
+            _videoManager.GetVideo(_durationIndex)->SetStart(0);
 
         _totalDuration += _videoPlayer->duration();
 
-        _videoManager->GetVideo(_durationIndex)->SetEnd(_totalDuration);
+        _videoManager.GetVideo(_durationIndex)->SetEnd(_totalDuration);
         _durationIndex += 1;
-        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager->GetVideo(0)->GetFilePath())));
+        _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(0)->GetFilePath())));
 
         _pauseButton->setEnabled(true);
         _volumeButton->setEnabled(true);
@@ -505,7 +509,7 @@ void EditScene::changeTime(qint64 time)
             thumbnail->setEnabled(true);
 
         _videoPlayer->SetCurrentTime(0);
-        _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
+        _videoPlayer->SetCurrentVideo(_videoManager.GetVideo(0));
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
 
 
@@ -580,6 +584,12 @@ void EditScene::showProjects()
     _sceneManager.SetScene("projects");
 }
 
+void EditScene::saveChanges()
+{
+    Project* currentProject = _projectManager.GetCurrentProject();
+    _videoManager.SaveVideos(currentProject->GetProjectPath());
+}
+
 void EditScene::showVideoLibrary()
 {
     //qDebug() << "going to library";
@@ -595,6 +605,6 @@ void EditScene::showVideoLibrary()
 //        _videoManager->GetVideo(i)->SetStart(0);
 //        _videoManager->GetVideo(i)->SetEnd(0);
 //    }
-    _videoManager->PrintAllVideos();
+    _videoManager.PrintAllVideos();
     _sceneManager.SetScene("gallery");
 }
