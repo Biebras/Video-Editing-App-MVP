@@ -3,7 +3,7 @@
 
 #include <QtWidgets>
 
-class PrimaryWindow : public QWidget
+class PrimaryWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -13,6 +13,10 @@ class PrimaryWindow : public QWidget
         bool IsAppLayout;
 
     private:
+        void LoadLanguage(const QString& rLanguage);
+        void CreateMenuWindow();
+        void CreateLanguageMenu(void);
+
          const int AppLayoutMaxX = 800;
 
     protected:

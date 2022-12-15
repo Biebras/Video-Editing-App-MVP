@@ -9,8 +9,8 @@
 void SceneManager::InitScenes()
 {
     _window = new PrimaryWindow();
-
     _sceneLayout = new ModularLayout();
+    _window->centralWidget()->setLayout(_sceneLayout);
     _sceneLayout->setSpacing(0);
     _sceneLayout->setMargin(0);
 
@@ -26,7 +26,7 @@ void SceneManager::InitScenes()
     _scenes.push_back(createProjectScene);
     _scenes.push_back(trimScene);
 
-    _window->setLayout(_sceneLayout);
+    //_window->setLayout(_sceneLayout);
 
     //load all scenes to scene layout
     foreach(auto scene, _scenes)
