@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     //set up translation
     QTranslator translator;
-    translator.load(":languages/translation_en.qm");
+    translator.load(":languages/translation_meow.qm");
     app.installTranslator(&translator);
 
     projectManager.LoadProjects(argv[1]);

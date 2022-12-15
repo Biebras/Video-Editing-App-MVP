@@ -15,6 +15,7 @@ class Video
         int _volume = 1;
 
     public:
+        Video(Video* video);
         Video(QString path, int start, int end, int volume);
         QString GetFilePath();
         void SetStart(int start);

@@ -8,6 +8,15 @@ Video::Video(QString path, int start, int end, int volume)
     _volume = volume;
 }
 
+Video::Video(Video* video)
+{
+    _pathName = video->GetFilePath();
+    _start = video->GetStart();
+    _end = video->GetEnd();
+    _volume = video->GetVolume();
+    _rawDuration = video->GetRawDuration();
+}
+
 QString Video::GetFilePath()
 {
     return _pathName;

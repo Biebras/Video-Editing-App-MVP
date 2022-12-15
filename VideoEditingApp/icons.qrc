@@ -1,20 +1,21 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/audioIcon.png</file>
-        <file>icons/backIcon.png</file>
-        <file>icons/effectIcon.png</file>
-        <file>icons/pauseIcon.png</file>
-        <file>icons/playIcon.png</file>
+        <file>icons/audioIcon.svg</file>
+        <file>icons/effectIcon.svg</file>
+        <file>icons/pauseIcon.svg</file>
+        <file>icons/playIcon.svg</file>
         <file>icons/shareIcon.png</file>
-        <file>icons/trimIcon.png</file>
-        <file>icons/volumeIcon.png</file>
-        <file>icons/muteIcon.png</file>
-        <file>icons/rightIcon.png</file>
-        <file>icons/removeIcon.png</file>
-        <file>icons/diskette.png</file>
+        <file>icons/trimIcon.svg</file>
+        <file>icons/volumeIcon.svg</file>
+        <file>icons/muteIcon.svg</file>
+        <file>icons/rightIcon.svg</file>
+        <file>icons/removeIcon.svg</file>
         <file>icons/france.png</file>
         <file>icons/kitty.png</file>
         <file>icons/united-kingdom.png</file>
         <file>icons/addIcon.svg</file>
+        <file>icons/save.svg</file>
+        <file>icons/moveLeft.svg</file>
+        <file>icons/backButton.svg</file>
     </qresource>
 </RCC>

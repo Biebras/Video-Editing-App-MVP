@@ -36,25 +36,27 @@ void VideoGalleryScene::CreateWidgets()
 {
     // header
     _backButton = new QPushButton();
-    _backButton->setIcon(QIcon(":/icons/backIcon.png"));
+    _backButton->setIcon(QIcon(":/icons/backButton.svg"));
     _backButton->setToolTip(tr("Go Back"));
-    _backButton->setFixedSize(QSize(50, 50));
-    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _backButton->setFixedSize(QSize(30, 30));
+    _backButton->setIconSize(QSize(25, 25));
+    _backButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 
     _title = new QLabel(tr("Video Gallery"));
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font: 20pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
 
     _addVideos = new QPushButton();
-    _addVideos->setIcon(QIcon(":icons/addIcon.png"));
+    _addVideos->setIcon(QIcon(":icons/addIcon.svg"));
     _addVideos->setToolTip(tr("Add Video(s)"));
-    _addVideos->setFixedSize(QSize(50, 50));
-    _addVideos->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _addVideos->setFixedSize(QSize(30, 30));
+    _addVideos->setIconSize(QSize(25, 25));
+    _addVideos->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 
     // title
     _title = new QLabel("Video Gallery");
     _title->setAlignment(Qt::AlignCenter);
-    _title->setStyleSheet("font: 20pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
+    _title->setStyleSheet("font: 10pt 'Helvetica Neue'; color: #9EC5AB; font-weight: bold;");
 
     // videos area
 
@@ -74,8 +76,6 @@ void VideoGalleryScene::ArrangeWidgets()
     header->addStretch();
     header->addWidget(_addVideos);
     header->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
-    header->setSpacing(0);
-    header->setMargin(0);
 
     ModularLayout* title = new ModularLayout();
     title->addWidget(_title);
@@ -120,17 +120,8 @@ void VideoGalleryScene::ArrangeWidgets()
 
 void VideoGalleryScene::MakeConnections()
 {
-    /** connections:
-     *  recalculate no. rows when screen size changes
-     *  back button -> projects scene
-     *  video selected -> highlight widget
-     *  add video button -> edit scene, load videos
-     **/
-
     connect(_backButton, SIGNAL(clicked()), this, SLOT(GoBack()));
-
-    foreach(auto button, _selectVideos)
-        connect(button, SIGNAL(clicked()), this, SLOT(AddVideo()));
+    connect(_addVideos, SIGNAL(clicked()), this, SLOT(FindVideos()));
 }
 
 void VideoGalleryScene::UpdateScene()
@@ -205,4 +196,32 @@ void VideoGalleryScene::AddVideo()
     int index = _selectVideos.indexOf(qobject_cast<QPushButton* >(QObject::sender()));
     _videoManager.AddVideo(_projectManager.GetCurrentProject()->GetVideo(index));
     _sceneManager.SetScene("edit");
+}
+
+void VideoGalleryScene::FindVideos()
+{
+    #if defined(_WIN32)
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home",tr("Videos and thumbnails (*.wmv *.png)"));
+    #else
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home/csunix/sc21sv/Documents/Year 2/UI/Cw/Video-Editing-App-MVP/VideoEditingApp/Projects",tr("Videos and thumbnails  (*.mp4 *.MOV *.png)"));
+    #endif
+    Project* currentProject = _projectManager.GetCurrentProject();
+
+    foreach(auto path, fileNames)
+    {
+        //Copy files
+        QFile file(path);
+        QFileInfo fileInfo(file.fileName());
+        QString copyPath = currentProject->GetProjectPath() + "/" + fileInfo.fileName();
+        QFile::copy(path, copyPath);
+
+        if(fileInfo.fileName().contains(".png"))
+            continue;
+
+        //Create video
+        Video* video = new Video(copyPath, 0, 0, 1);
+        currentProject->AddVideo(video);
+    }
+
+    _sceneManager.SetScene("gallery");
 }

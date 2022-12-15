@@ -5,10 +5,11 @@ void CreateProjectScene::CreateWidgets()
 {
     // back button
     _backButton = new QPushButton();
-    _backButton->setIcon(QIcon(":/icons/backIcon.png"));
+    _backButton->setIcon(QIcon(":/icons/backButton.svg"));
     _backButton->setToolTip(tr("Go Back"));
-    _backButton->setFixedSize(QSize(50, 50));
-    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _backButton->setFixedSize(QSize(30, 30));
+    _backButton->setIconSize(QSize(25, 25));
+    _backButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 
     // input
     _nameLabel = new QLabel(tr("Project Name: "));
@@ -25,11 +26,14 @@ void CreateProjectScene::CreateWidgets()
 void CreateProjectScene::ArrangeWidgets()
 {
     QVBoxLayout* mainLayout = new QVBoxLayout();
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
 
     // layout for disabled header
     ModularLayout* header = new ModularLayout();
     header->addWidget(_backButton);
     header->addStretch();
+    header->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
 
     // layout for input
     ModularLayout* inputLayout = new ModularLayout();
