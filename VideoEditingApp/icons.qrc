@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/addIcon.png</file>
         <file>icons/audioIcon.png</file>
         <file>icons/backIcon.png</file>
         <file>icons/effectIcon.png</file>
@@ -16,5 +15,6 @@
         <file>icons/france.png</file>
         <file>icons/kitty.png</file>
         <file>icons/united-kingdom.png</file>
+        <file>icons/addIcon.svg</file>
     </qresource>
 </RCC>

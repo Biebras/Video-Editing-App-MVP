@@ -10,27 +10,31 @@ void ProjectsScene::CreateWidgets()
     _english->setFixedSize(QSize(50, 50));
     _english->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
     _english->setIcon(QIcon(":icons/united-kingdom.png"));
+    _english->setIconSize(QSize(25, 25));
     _english->setToolTip(tr("Eanglish Language"));
     _franch = new QPushButton();
     _franch->setFixedSize(QSize(50, 50));
-    _franch->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _franch->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
     _franch->setIcon(QIcon(":icons/france.png"));
+    _franch->setIconSize(QSize(25, 25));
     _franch->setToolTip(tr("French Language"));
     _cat = new QPushButton();
     _cat->setFixedSize(QSize(50, 50));
-    _cat->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _cat->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
     _cat->setIcon(QIcon(":icons/kitty.png"));
+    _cat->setIconSize(QSize(25, 25));
     _cat->setToolTip(tr("Cat Language"));
     _addProject = new QPushButton();
-    _addProject->setIcon(QIcon(":icons/addIcon.png"));
+    _addProject->setIcon(QIcon(":icons/addIcon.svg"));
     _addProject->setToolTip(tr("Create Project"));
     _addProject->setFixedSize(QSize(50, 50));
-    _addProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _addProject->setIconSize(QSize(50, 50));
+    _addProject->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 
     // title
     _title = new QLabel(tr("My Projects"));
     _title->setAlignment(Qt::AlignCenter);
-    _title->setStyleSheet("font: 30pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
+    _title->setStyleSheet("font: 12pt 'Helvetica Neue'; color: #9EC5AB; font-weight: bold;");
 
 }
 
@@ -47,8 +51,7 @@ void ProjectsScene::ArrangeWidgets()
     header->addWidget(_cat);
     header->addWidget(_addProject);
     header->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
-    header->setSpacing(0);
-    header->setMargin(0);
+
 
     // layout for title
     ModularLayout* title = new ModularLayout();

@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
     if(argc != 2)
         cout << "There should be two arguments" << endl;
 
-
     VideoManager& videoManager = VideoManager::Get();
     ProjectManager& projectManager = ProjectManager::Get();
 
