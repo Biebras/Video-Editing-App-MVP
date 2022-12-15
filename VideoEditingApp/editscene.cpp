@@ -42,9 +42,9 @@ void EditScene::CreateWidgets()
     _totalDuration = 0;
 
     // time area
-//    _timeLabel = new QLabel();
-//    _timeLabel->setAlignment(Qt::AlignCenter);
-//    _timeLabel->setStyleSheet("font-size: 18pt; color: #9EC5AB;");
+    _timeLabel = new QLabel();
+    _timeLabel->setAlignment(Qt::AlignCenter);
+    _timeLabel->setStyleSheet("font-size: 18pt; color: #9EC5AB;");
 
     // pause/play area
     _pauseButton = new QPushButton();
@@ -61,13 +61,13 @@ void EditScene::CreateWidgets()
     _volumeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // slider area
-//    _videoSlider = new QSlider();
-//    _videoSlider->setOrientation(Qt::Horizontal);
-//    _videoSlider->setToolTip("Move through video");
+    _videoSlider = new QSlider();
+    _videoSlider->setOrientation(Qt::Horizontal);
+    _videoSlider->setToolTip("Move through video");
 
-//    _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
-//    _videoSlider->setTickInterval(1000);
-//    _videoSlider->setEnabled(false);
+    _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
+    _videoSlider->setTickInterval(1000);
+    _videoSlider->setEnabled(false);
 
     // thumbnails
     // loop through videos
@@ -138,8 +138,8 @@ void EditScene::ArrangeWidgets()
 //    ModularLayout* videoArea = new ModularLayout();
     _videoArea->addWidget(_videoWidget);
 
-//    ModularLayout* timeArea = new ModularLayout();
-//    timeArea->addWidget(_timeLabel);
+    ModularLayout* timeArea = new ModularLayout();
+    timeArea->addWidget(_timeLabel);
 
     ModularLayout* pauseArea = new ModularLayout();
     pauseArea->addStretch();
@@ -147,8 +147,8 @@ void EditScene::ArrangeWidgets()
     pauseArea->addWidget(_volumeButton);
     pauseArea->addStretch();
 
-//    ModularLayout* videoEditArea = new ModularLayout();
-//    videoEditArea->addWidget(_videoSlider);
+    ModularLayout* videoEditArea = new ModularLayout();
+    videoEditArea->addWidget(_videoSlider);
 
 //    ModularLayout* thumbnailArea = new ModularLayout();
     for (auto thumbnail : _thumbnails)
@@ -173,9 +173,9 @@ void EditScene::ArrangeWidgets()
     // set the layout of all the layout widgets
     header->GetLayoutWidget()->setLayout(header);
     _videoArea->GetLayoutWidget()->setLayout(_videoArea);
-//    timeArea->GetLayoutWidget()->setLayout(timeArea);
+    timeArea->GetLayoutWidget()->setLayout(timeArea);
     pauseArea->GetLayoutWidget()->setLayout(pauseArea);
-//    videoEditArea->GetLayoutWidget()->setLayout(videoEditArea);
+    videoEditArea->GetLayoutWidget()->setLayout(videoEditArea);
     _thumbnailArea->GetLayoutWidget()->setLayout(_thumbnailArea);
     reorderArea->GetLayoutWidget()->setLayout(reorderArea);
     footer->GetLayoutWidget()->setLayout(footer);
@@ -184,9 +184,9 @@ void EditScene::ArrangeWidgets()
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->addWidget(header->GetLayoutWidget());
     mainLayout->addWidget(_videoArea->GetLayoutWidget(), 4);
-//    mainLayout->addWidget(timeArea->GetLayoutWidget());
+    mainLayout->addWidget(timeArea->GetLayoutWidget());
     mainLayout->addWidget(pauseArea->GetLayoutWidget());
-//    mainLayout->addWidget(videoEditArea->GetLayoutWidget());
+    mainLayout->addWidget(videoEditArea->GetLayoutWidget());
     mainLayout->addWidget(_thumbnailArea->GetLayoutWidget());
     mainLayout->addWidget(reorderArea->GetLayoutWidget());
     mainLayout->addWidget(footer->GetLayoutWidget());
@@ -250,8 +250,6 @@ void EditScene::UpdateScene()
 
     _videoArea->addWidget(_videoWidget);
 
-    // reconnect signals and slots
-
     //  if there is at least one video in the project, play it
 
     if (_videoManager->GetTotalVideos() > 0)
@@ -261,6 +259,20 @@ void EditScene::UpdateScene()
         _videoPlayer->play();
     }
 
+    // reset time label
+    _timeLabel->setText("00:00:00/00:00:00");
+
+    //  disable these until video loads
+    _pauseButton->setEnabled(false);
+    _volumeButton->setEnabled(false);
+    _videoSlider->setEnabled(false);
+
+    // resest buttons
+    _videoSlider->setValue(0);
+    _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
+    _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
+
+     // reconnect signals and slots
 
     // when thumbnail buttons pressed, allow user to reorder the video they have chosen
     for (auto thumbnail : _thumbnails)
@@ -271,22 +283,10 @@ void EditScene::UpdateScene()
 
     // when a video ends, play the next video in the project
     connect(_videoPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(changeMediaStatus(QMediaPlayer::MediaStatus)));
-
-
-
 }
 
 void EditScene::MakeConnections()
 {
-    /** connections:
-     *  back button -> projects scene
-     *  share button -> export scene
-     *  add button -> video library scene
-     *  trim button -> trim scene
-     *  effect button -> fx scene
-     *  audio button -> audio scene
-    **/
-
     // when back button pressed go to projects scene
     connect(_backButton, SIGNAL(clicked()), this, SLOT(showProjects()));
 
@@ -308,7 +308,7 @@ void EditScene::MakeConnections()
     connect(_videoPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(changeTime(qint64)));
 
     // when the slider is moved, update the current time and check if the video needs updating
-//    connect(_videoSlider, SIGNAL(sliderMoved(int)), this, SLOT(movedSlider(int)));
+    connect(_videoSlider, SIGNAL(sliderMoved(int)), this, SLOT(movedSlider(int)));
 
     // when the user starts moving the slider, pause the video
 //    connect(_videoSlider, SIGNAL(sliderPressed()), this, SLOT(pressedSlider()));
@@ -441,26 +441,26 @@ void EditScene::changeTime(qint64 time)
     int actualTime = time + currentVid->GetStart();
     _videoPlayer->SetCurrentTime(actualTime);
 
-//    //split the time into corresponding mins, secs and millisecs
-//    int seconds = actualTime/1000 % 60;
-//    int minutes = actualTime/60000;
-//    int mseconds = actualTime % 60;
+    //split the time into corresponding mins, secs and millisecs
+    int seconds = actualTime/1000 % 60;
+    int minutes = actualTime/60000;
+    int mseconds = actualTime % 60;
 
     // get total duration of videos
     int total = _videoManager->GetTotalDuration();
 
-//    int totalSeconds = total/1000 % 60;
-//    int totalMinutes = total/60000;
-//    int totalMseconds = total % 60;
+    int totalSeconds = total/1000 % 60;
+    int totalMinutes = total/60000;
+    int totalMseconds = total % 60;
 
     // format the time into a string to display
-//    char timeStr[22];
-//    std::sprintf(timeStr, "%02d:%02d:%02d/%02d:%02d:%02d", minutes, seconds, mseconds, totalMinutes, totalSeconds, totalMseconds);
-//    _timeLabel->setText(QString::fromStdString(timeStr));
+    char timeStr[22];
+    std::sprintf(timeStr, "%02d:%02d:%02d/%02d:%02d:%02d", minutes, seconds, mseconds, totalMinutes, totalSeconds, totalMseconds);
+    _timeLabel->setText(QString::fromStdString(timeStr));
 
     // adjust the slider to the current time
-//    _videoSlider->setValue(actualTime);
-//    _videoSlider->setMaximum(total);
+    _videoSlider->setValue(actualTime);
+    _videoSlider->setMaximum(total);
 
     // find the durations of the videos by playing each one at the start
     if (_videoPlayer->duration() > 0 && _durationIndex < _videoManager->GetTotalVideos() - 1 && (_fin || _first))
@@ -502,12 +502,14 @@ void EditScene::changeTime(qint64 time)
 
         _pauseButton->setEnabled(true);
         _volumeButton->setEnabled(true);
+        _videoSlider->setEnabled(true);
         for (auto thumbnail : _thumbnails)
             thumbnail->setEnabled(true);
 
         _videoPlayer->SetCurrentTime(0);
         _videoPlayer->SetCurrentVideo(_videoManager->GetVideo(0));
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
+
 
 //        _videoManager->PrintAllVideos();
     }
@@ -517,10 +519,11 @@ void EditScene::changeTime(qint64 time)
 void EditScene::movedSlider(int val)
 {
     // update the current time to the value on the slider
-//    _videoPlayer->SetCurrentTime(val);
-//    // check if the video playing should be updated
-//    _videoPlayer->Update();
-//    _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
+    _videoPlayer->SetCurrentTime(val);
+    // check if the video playing should be updated
+    _videoPlayer->Update();
+    _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
+    _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
 }
 
 void EditScene::pressedSlider()
