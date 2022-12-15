@@ -16,6 +16,7 @@ void ProjectsScene::CreateWidgets()
     _title = new QLabel("My Projects");
     _title->setAlignment(Qt::AlignCenter);
     _title->setStyleSheet("font: 30pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
+
 }
 
 void ProjectsScene::ArrangeWidgets()
@@ -37,19 +38,23 @@ void ProjectsScene::ArrangeWidgets()
     title->addWidget(_title);
     title->addStretch();
 
-    //projects layout
-    QWidget* projectsLayoutWidget = new QWidget();
-    projectsLayoutWidget->setLayout(_projectsLayout);
-
-
     title->GetLayoutWidget()->setLayout(title);
+
     
     QPushButton* projectButton = new QPushButton(tr("projectName"));
     _projectsLayout->addWidget(projectButton);
 
     _mainLayout->addWidget(header->GetLayoutWidget());
     _mainLayout->addWidget(title->GetLayoutWidget());
-    _mainLayout->addWidget(projectsLayoutWidget);
+
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidgetResizable(true);
+    QWidget* projectsLayoutWidget = new QWidget();
+    _mainLayout->addWidget(scrollArea);
+    scrollArea->setWidget(projectsLayoutWidget);
+    projectsLayoutWidget->setLayout(_projectsLayout);
+
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     _mainLayout->setSpacing(0);
     _mainLayout->setMargin(0);
@@ -80,10 +85,12 @@ void ProjectsScene::UpdateScene()
 
     _projectButtons.clear();
 
+
     foreach(auto project, _projectManager.GetProjects())
     {
         QString projectName =  project->GetProjectName();
         QPushButton* projectButton = new QPushButton(projectName);
+        projectButton->setFixedHeight(100);
         projectButton->setToolTip("Select Project");
         _projectButtons.push_back(projectButton);
         _projectsLayout->addWidget(projectButton);
@@ -99,6 +106,7 @@ void ProjectsScene::UpdateScene()
             _sceneManager.SetScene("edit");
         });
     }
+
 }
 
 void ProjectsScene::ChangeSceneToCreateProject()

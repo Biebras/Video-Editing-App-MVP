@@ -28,10 +28,10 @@ class ProjectsScene : public Scene
         ProjectManager& _projectManager = ProjectManager::Get();
         QVBoxLayout* _mainLayout = new QVBoxLayout();
         QVBoxLayout* _projectsLayout = new QVBoxLayout();
-        QVBoxLayout* _projectsLayout123 = new QVBoxLayout();
         QLabel* _title;
         QPushButton* _addProject;
         QList<QPushButton*> _projectButtons;
+
         // no way of finding previous projects, so leave displaying those for now
 
     public slots:
