@@ -573,15 +573,15 @@ void EditScene::removeVideo()
 
     // recalculate the start and end times of videos after this one
     int dur = 0;
-    for (int i = _videoManager->GetTotalVideos()-1; i > _reorderVideoIndex; i--)
+    for (int i = _videoManager.GetTotalVideos()-1; i > _reorderVideoIndex; i--)
     {
-        dur = _videoManager->GetVideo(i)->GetDuration();
-        _videoManager->GetVideo(i)->SetStart(_videoManager->GetVideo(i-1)->GetStart());
-        _videoManager->GetVideo(i)->SetEnd(_videoManager->GetVideo(i)->GetStart()+dur);
+        dur = _videoManager.GetVideo(i)->GetDuration();
+        _videoManager.GetVideo(i)->SetStart(_videoManager.GetVideo(i-1)->GetStart());
+        _videoManager.GetVideo(i)->SetEnd(_videoManager.GetVideo(i)->GetStart()+dur);
     }
 
     // remove video from video manager
-    _videoManager->RemoveVideo(_videoManager->GetVideo(_reorderVideoIndex));
+    _videoManager.RemoveVideo(_videoManager.GetVideo(_reorderVideoIndex));
     _sceneManager.SetScene("edit");
 }
 
