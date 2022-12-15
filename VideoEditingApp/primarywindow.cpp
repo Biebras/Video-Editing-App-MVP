@@ -25,6 +25,4 @@ void PrimaryWindow::resizeEvent(QResizeEvent *event)
         IsAppLayout = true;
         _sceneManager.UpdateCurrentScene();
     }
-
-    qDebug() << IsAppLayout;
 }
