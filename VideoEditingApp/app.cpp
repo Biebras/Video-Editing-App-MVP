@@ -24,7 +24,9 @@ int main(int argc, char *argv[])
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #000000; border: 0px; }");
 
     QTranslator myappTranslator;
-    myappTranslator.load(QLocale(), QLatin1String("myapp"), QLatin1String("_"), QLatin1String(":/i18n"));
+    qDebug() << QApplication::applicationDirPath();
+    auto smth = myappTranslator.load(":languages/translation_meow.qm");
+    qDebug() << smth;
     app.installTranslator(&myappTranslator);
 
     VideoManager& videoManager = VideoManager::Get();

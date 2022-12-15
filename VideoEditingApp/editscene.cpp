@@ -16,13 +16,13 @@ void EditScene::CreateWidgets()
     
     _saveButton = new QPushButton();
     _saveButton->setIcon(QIcon(":/icons/diskette.png"));
-    _saveButton->setToolTip("Save");
+    _saveButton->setToolTip(tr("Save"));
     _saveButton->setFixedSize(QSize(50, 50));
     _saveButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     _addButton = new QPushButton();
     _addButton->setIcon(QIcon(":/icons/addIcon.png"));
-    _addButton->setToolTip("Add Video");
+    _addButton->setToolTip(tr("Add Video"));
     _addButton->setFixedSize(QSize(50,50));
     _addButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
@@ -51,21 +51,21 @@ void EditScene::CreateWidgets()
     // pause/play area
     _pauseButton = new QPushButton();
     _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
-    _pauseButton->setToolTip("Pause");
+    _pauseButton->setToolTip(tr("Pause"));
     _pauseButton->setFixedSize(QSize(50, 50));
 
     _pauseButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _pauseButton->setEnabled(false);
     _volumeButton = new QPushButton();
     _volumeButton->setIcon(QIcon(":/icons/muteIcon.png"));
-    _volumeButton->setToolTip("Mute Volume");
+    _volumeButton->setToolTip(tr("Mute Volume"));
     _volumeButton->setFixedSize(QSize(50, 50));
     _volumeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
     // slider area
     _videoSlider = new QSlider();
     _videoSlider->setOrientation(Qt::Horizontal);
-    _videoSlider->setToolTip("Move through video");
+    _videoSlider->setToolTip(tr("Move through video"));
 
     _videoSlider->setStyleSheet("QSlider::groove:horizontal { border: 1px solid #104F55; height: 8px; background: #32746D; margin: 2px 0; border-radius: 5px;} QSlider::handle:horizontal { background: #9EC5AB; border: 1px solid #5c5c5c; width: 16px; height: 16px; border-radius: 8px; margin: -4px 0; }");
     _videoSlider->setTickInterval(100);
@@ -78,7 +78,7 @@ void EditScene::CreateWidgets()
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setStyleSheet("background-color: black;");
         _thumbnails[i]->setFixedHeight(80);
-        _thumbnails[i]->setToolTip("Reorder Video");
+        _thumbnails[i]->setToolTip(tr("Reorder Video"));
         QString filePath = _videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
@@ -91,9 +91,9 @@ void EditScene::CreateWidgets()
                 //_thumbnails[i]->setIconSize(_thumbnails[i]->size());
                 _thumbnails[i]->setIconSize(QSize(_thumbnails[i]->width() - 20, _thumbnails[i]->height() - 20));
             } else
-                _thumbnails[i]->setText("No thumbnail for this video");
+                _thumbnails[i]->setText(tr("No thumbnail for this video"));
         } else
-            _thumbnails[i]->setText("No thumbnail for this video");
+            _thumbnails[i]->setText(tr("No thumbnail for this video"));
         _thumbnails[i]->setEnabled(false);
     }
 
@@ -122,17 +122,19 @@ void EditScene::CreateWidgets()
     // footer
     _trimButton = new QPushButton();
     _trimButton->setIcon(QIcon(":/icons/trimIcon.png"));
-    _trimButton->setToolTip("Trim Video");
+    _trimButton->setToolTip(tr("Trim Video"));
     _trimButton->setFixedSize(QSize(50, 50));
     _trimButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _effectButton = new QPushButton();
     _effectButton->setIcon(QIcon(":/icons/effectIcon.png"));
-    _effectButton->setToolTip("Add Effects");
+    _effectButton->setToolTip(tr("Add Effects"));
     _effectButton->setFixedSize(QSize(50, 50));
     _effectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
     _audioButton = new QPushButton();
+
     _audioButton->setIcon(QIcon(":/icons/audioIcon.png"));
-    _audioButton->setToolTip("Add Audio");
+    _audioButton->setToolTip(tr("Add Audio"));
+
     _audioButton->setFixedSize(QSize(50, 50));
     _audioButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
@@ -232,7 +234,7 @@ void EditScene::UpdateScene()
     {
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setFixedHeight(80);
-        _thumbnails[i]->setToolTip("Reorder Video");
+        _thumbnails[i]->setToolTip(tr("Reorder Video"));
         QString filePath = _videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
         if (QFile(thumbnailPath).exists()) // if file exists
@@ -244,9 +246,9 @@ void EditScene::UpdateScene()
                 _thumbnails[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
                 _thumbnails[i]->setIconSize(QSize(_thumbnails[i]->width() - 20, _thumbnails[i]->height() - 20));
             } else
-                _thumbnails[i]->setText("No thumbnail for this video");
+                _thumbnails[i]->setText(tr("No thumbnail for this video"));
         } else
-            _thumbnails[i]->setText("No thumbnail for this video");
+            _thumbnails[i]->setText(tr("No thumbnail for this video"));
         _thumbnails[i]->setEnabled(false);
         _thumbnails[i]->setStyleSheet("QPushButton { background: black; }");
         _thumbnailArea->addWidget(_thumbnails[i]);
@@ -571,14 +573,14 @@ void EditScene::changeVolume()
     {
         _videoPlayer->GetCurrentVideo()->SetVolume(0);
         _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
-        _volumeButton->setToolTip("Unmute video");
+        _volumeButton->setToolTip(tr("Unmute video"));
         _videoPlayer->setVolume(0);
     } else
     {
         // if unmuted, mute
         _videoPlayer->GetCurrentVideo()->SetVolume(1);
         _volumeButton->setIcon(QIcon(":icons/volumeIcon.png"));
-        _volumeButton->setToolTip("Mute video");
+        _volumeButton->setToolTip(tr("Mute video"));
         _videoPlayer->setVolume(100);
     }
 }
