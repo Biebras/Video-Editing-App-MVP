@@ -13,10 +13,6 @@ class PrimaryWindow : public QMainWindow
         bool IsAppLayout;
 
     private:
-        void LoadLanguage(const QString& rLanguage);
-        void CreateMenuWindow();
-        void CreateLanguageMenu(void);
-
          const int AppLayoutMaxX = 800;
 
     protected:

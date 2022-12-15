@@ -31,11 +31,17 @@ class ProjectsScene : public Scene
         QVBoxLayout* _projectsLayout123 = new QVBoxLayout();
         QLabel* _title;
         QPushButton* _addProject;
+        QPushButton* _english;
+        QPushButton* _franch;
+        QPushButton* _cat;
         QList<QPushButton*> _projectButtons;
         // no way of finding previous projects, so leave displaying those for now
 
     public slots:
         void ChangeSceneToCreateProject();
+        void ChangeLanToEn();
+        void ChangeLanToFr();
+        void ChangeLanToCat();
 };
 
 #endif // PROJECTSSCENE_H

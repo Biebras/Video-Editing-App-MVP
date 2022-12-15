@@ -21,6 +21,7 @@ SOURCES += \
         the_button.cpp \
         the_player.cpp \
         tomeo.cpp \
+        translationmanager.cpp \
         trimscene.cpp \
         video.cpp \
         videogalleryscene.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     scenemanager.h \
     the_button.h \
     the_player.h \
+    translationmanager.h \
     trimscene.h \
     video.h \
     videogalleryscene.h \
