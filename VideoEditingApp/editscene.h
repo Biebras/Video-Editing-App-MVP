@@ -41,6 +41,7 @@ class EditScene : public Scene
         QList<QPushButton*> _thumbnails;
         QPushButton* _moveLeft;
         QPushButton* _moveRight;
+        QPushButton* _removeButton;
         int _reorderVideoIndex; // the index of the video to be reordered
         int _durationIndex; // the index of the video that we are currently getting the duration of
         int _totalDuration;
@@ -61,12 +62,11 @@ class EditScene : public Scene
         void pausePlay();
         void changeTime(qint64 time);
         void movedSlider(int val);
-        void pressedSlider();
-        void releasedSlider();
         void changeMediaStatus(QMediaPlayer::MediaStatus status);
         void changeVolume();
         void showProjects();
         void showVideoLibrary();
+        void removeVideo();
         void saveChanges();
 };
 
