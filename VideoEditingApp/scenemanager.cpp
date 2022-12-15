@@ -52,7 +52,7 @@ void SceneManager::SetScene(QString sceneName)
 
 void SceneManager::UpdateCurrentScene()
 {
-    if(_currentScene != NULL)
+    if(_currentScene != NULL && _currentScene->GetSceneName() == "gallery")
         _currentScene->UpdateScene();
 }
 
