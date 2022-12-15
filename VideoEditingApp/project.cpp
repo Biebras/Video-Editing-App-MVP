@@ -20,6 +20,8 @@ Project::~Project()
 
 void Project::LoadProjectVideos()
 {
+    // Delete the current project
+    _videos.clear();
 
     //Create access to directory's contet
     QDir dir (_pathName);

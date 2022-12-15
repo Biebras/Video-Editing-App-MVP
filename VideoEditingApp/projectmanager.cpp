@@ -79,7 +79,7 @@ Project* ProjectManager::GetProject(int index)
     if (index < GetTotalProjects() && index > -1)
         return _projects[index];
 
-    qDebug() <<  "Couldn't retrieve video at index: " << index;
+    qDebug() <<  "Couldn't retrieve project at index: " << index;
     return NULL;
 }
 

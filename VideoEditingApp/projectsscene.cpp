@@ -19,6 +19,7 @@ void ProjectsScene::CreateWidgets()
     foreach(auto project, _projectManager.GetProjects())
     {
         QPushButton* projectButton = new QPushButton(project->GetProjectName());
+        projectButton->setToolTip("Choose Project");
         _projectButtons.push_back(projectButton);
     }
 }
