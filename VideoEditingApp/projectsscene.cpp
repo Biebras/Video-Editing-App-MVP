@@ -14,20 +14,12 @@ void ProjectsScene::CreateWidgets()
     _addProject->setToolTip("Create Project");
     _addProject->setFixedSize(QSize(50, 50));
     _addProject->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-
-    //projects
-    foreach(auto project, _projectManager.GetProjects())
-    {
-        QPushButton* projectButton = new QPushButton(project->GetProjectName());
-        projectButton->setToolTip("Choose Project");
-        _projectButtons.push_back(projectButton);
-    }
 }
 
 void ProjectsScene::ArrangeWidgets()
 {
     _mainLayout->setAlignment(Qt::AlignTop);
-
+    _projectsLayout = new QVBoxLayout();
     // layout for header
     ModularLayout* header = new ModularLayout();
     header->addStretch();
@@ -38,11 +30,6 @@ void ProjectsScene::ArrangeWidgets()
     //projects layout
     QWidget* projectsLayoutWidget = new QWidget();
     projectsLayoutWidget->setLayout(_projectsLayout);
-
-    foreach(auto button, _projectButtons)
-    {
-            _projectsLayout->addWidget(button);
-    }
 
     _mainLayout->addWidget(header->GetLayoutWidget());
     _mainLayout->addWidget(projectsLayoutWidget);
@@ -66,7 +53,7 @@ void ProjectsScene::UpdateScene()
 
         if (w)
         {
-            w->deleteLater();
+            delete w;
         }
     }
 
