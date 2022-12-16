@@ -55,19 +55,21 @@ Video* VideoPlayer::GetVideo(int milliseconds)
 void VideoPlayer::SetCurrentTime(int milliseconds)
 {
     _currentTime = milliseconds;
-//    this->Update(); // this will check if the video now needs to be updated
 }
 
+// returns current time
 int VideoPlayer::GetCurrentTime2()
 {
     return _currentTime;
 }
 
+// sets current video
 void VideoPlayer::SetCurrentVideo(Video* video)
 {
     _currentVideo = video;
 }
 
+//returns current video
 Video* VideoPlayer::GetCurrentVideo()
 {
     return _currentVideo;

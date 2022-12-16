@@ -13,6 +13,7 @@ class PrimaryWindow : public QMainWindow
         bool IsAppLayout;
 
     private:
+        //from where horizontal mode begins
          const int AppLayoutMaxX = 800;
 
     protected:
