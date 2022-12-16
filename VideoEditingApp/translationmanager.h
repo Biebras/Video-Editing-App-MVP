@@ -11,6 +11,7 @@ class TranslationManager
     public:
         TranslationManager(const TranslationManager&) = delete;
 
+        //singleton
         static TranslationManager& Get()
         {
             static TranslationManager instance;

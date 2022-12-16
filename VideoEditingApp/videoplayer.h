@@ -8,7 +8,9 @@
 class VideoPlayer : public QMediaPlayer
 {
     public:
-        VideoPlayer() : QMediaPlayer(NULL) {
+        VideoPlayer() : QMediaPlayer(NULL)
+        {
+            //get video manager singleton
             _videoManager = &VideoManager::Get();
         };
         void Update();

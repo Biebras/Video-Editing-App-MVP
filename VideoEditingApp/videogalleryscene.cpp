@@ -216,7 +216,21 @@ void VideoGalleryScene::FindVideos()
         QFile file(path);
         QFileInfo fileInfo(file.fileName());
         QString copyPath = currentProject->GetProjectPath() + "/" + fileInfo.fileName();
+        QFile copyFile(copyPath);
+
+        if(copyFile.exists())
+        {
+            qDebug() << "Can't copy video: " + copyPath + " as it already exists in target directory";
+            continue;
+        }
+
         QFile::copy(path, copyPath);
+
+        if(file.error() != QFile::NoError)
+        {
+            qDebug() << "Can't copy video: " + path + " as there was some errors";
+            continue;
+        }
 
         if(fileInfo.fileName().contains(".png"))
             continue;
