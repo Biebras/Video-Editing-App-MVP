@@ -206,7 +206,7 @@ void VideoGalleryScene::FindVideos()
     #if defined(_WIN32)
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home",tr("Videos and thumbnails (*.wmv *.png)"));
     #else
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home/csunix/sc21sv/Documents/Year 2/UI/Cw/Video-Editing-App-MVP/VideoEditingApp/Projects",tr("Videos and thumbnails  (*.mp4 *.MOV *.png)"));
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home",tr("Videos and thumbnails  (*.mp4 *.MOV *.png)"));
     #endif
     Project* currentProject = _projectManager.GetCurrentProject();
 

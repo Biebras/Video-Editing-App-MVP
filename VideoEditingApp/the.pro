@@ -18,8 +18,6 @@ SOURCES += \
         projectsscene.cpp \
         scene.cpp \
         scenemanager.cpp \
-        the_button.cpp \
-        the_player.cpp \
         translationmanager.cpp \
         trimscene.cpp \
         video.cpp \
@@ -38,8 +36,6 @@ HEADERS += \
     projectsscene.h \
     scene.h \
     scenemanager.h \
-    the_button.h \
-    the_player.h \
     translationmanager.h \
     trimscene.h \
     video.h \
