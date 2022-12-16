@@ -9,6 +9,7 @@ class VideoManager
     public:
         VideoManager(const VideoManager&) = delete;
 
+        // singleton
         static VideoManager& Get()
         {
             static VideoManager instance;

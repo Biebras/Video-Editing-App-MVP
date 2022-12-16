@@ -9,6 +9,7 @@ class ProjectManager
     public:
         ProjectManager(const ProjectManager&) = delete;
 
+        //singleton
         static ProjectManager& Get()
         {
             static ProjectManager instance;

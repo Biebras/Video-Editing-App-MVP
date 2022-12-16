@@ -11,6 +11,7 @@ class SceneManager
     public:
         SceneManager(const SceneManager&) = delete;
 
+        //singleton
         static SceneManager& Get()
         {
             static SceneManager instance;
