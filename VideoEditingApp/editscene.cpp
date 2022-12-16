@@ -371,7 +371,7 @@ void EditScene::MakeConnections()
     //save changes button
     connect(_saveButton, SIGNAL(clicked()), this, SLOT(saveChanges()));
 
-    // when thumbnail buttons pressed, allow user to reorder the video they have chosen
+    // when thumbnail buttons pressed, allow user to reorder the video they have chosen or come out of this mode
     for (auto thumbnail : _thumbnails)
         connect(thumbnail, SIGNAL(clicked()), this, SLOT(thumbnailClicked()));
 
@@ -400,6 +400,28 @@ void EditScene::MakeConnections()
 
 void EditScene::thumbnailClicked()
 {
+    // thumbnail is clicked either to reorder/remove videos, or to come out of that functionality
+
+    bool comeOut = false;
+    for (int i = 0; i < _thumbnails.size(); i++)
+    {
+        // if one of the thumbnail is not enabled, it is already in the mode to reorder/remove videos
+        if (_thumbnails[i]->isEnabled() == false)
+            comeOut = true;
+    }
+
+    // come out of reorder/remove functionality
+    if (comeOut)
+    {
+        // enable thumbnail videos and disable reorder/remove videos
+        for (auto thumbnail : _thumbnails)
+            thumbnail->setEnabled(true);
+        _moveLeft->setEnabled(false);
+        _moveRight->setEnabled(false);
+        _removeButton->setEnabled(false);
+        return;
+    }
+
     // enable move left and right buttons
     _moveLeft->setEnabled(true);
     _moveRight->setEnabled(true);
