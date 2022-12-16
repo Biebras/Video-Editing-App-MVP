@@ -1,6 +1,8 @@
 #include "trimscene.h"
 #include "modularlayout.h"
 
+// this is not implemented currently - but this provides a basic layout for the scene for any further implementation
+
 void TrimScene::CreateWidgets()
 {
     // header
@@ -124,10 +126,7 @@ void TrimScene::ArrangeWidgets()
 
 void TrimScene::MakeConnections()
 {
-    /** connections:
-     *
-     *
-     **/
+
 }
 
 void TrimScene::Retranslate()

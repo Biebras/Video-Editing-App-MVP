@@ -10,6 +10,7 @@ class TrimScene : public Scene
     public:
         TrimScene(QString sceneName) : Scene(sceneName)
         {
+            // initialise the scene
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();

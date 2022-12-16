@@ -14,6 +14,7 @@ class VideoGalleryScene : public Scene
     public:
         VideoGalleryScene(QString sceneName) : Scene(sceneName)
         {
+            // initialise the scene
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();

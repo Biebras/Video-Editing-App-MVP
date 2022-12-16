@@ -80,30 +80,35 @@ void EditScene::CreateWidgets()
     // loop through videos
     for (int i = 0; i < _videoManager.GetTotalVideos(); i++)
     {
+        // add a button to the thumbnails list
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setStyleSheet("background-color: black;");
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip(tr("Reorder Video"));
+        // calculate the file path for the thumbnail
         QString filePath = _videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
-        if (QFile(thumbnailPath).exists()) // if file exists
+        if (QFile(thumbnailPath).exists()) // if thumbnail file exists
         {
             QImageReader *imageReader = new QImageReader(thumbnailPath);
             QImage sprite = imageReader->read(); // read the thumbnail image
             if (!sprite.isNull())
             {
+                // if the reading was successful, set the thumbnail as the icon of the button
                 _thumbnails[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
-                //_thumbnails[i]->setIconSize(_thumbnails[i]->size());
                 _thumbnails[i]->setIconSize(QSize(_thumbnails[i]->width() - 20, _thumbnails[i]->height() - 20));
             } else
+                // if failed, show no thumbnail in text
                 _thumbnails[i]->setText(tr("No thumbnail for this video"));
         } else
+            // if failed, show no thumbnail in text
             _thumbnails[i]->setText(tr("No thumbnail for this video"));
+        // initially don't enable until the videos are loaded
         _thumbnails[i]->setEnabled(false);
     }
 
 
-    // reorder buttons
+    // reorder/remove buttons
     _moveLeft = new QPushButton();
     _moveLeft->setIcon(QIcon(":/icons/moveLeft.svg"));
     _moveLeft->setToolTip(tr("Move left"));
@@ -154,6 +159,7 @@ void EditScene::CreateWidgets()
 void EditScene::ArrangeWidgets()
 {
     // create the layouts for each area
+    // header layout
     ModularLayout* header = new ModularLayout();
     header->addWidget(_backButton);
     header->addStretch();
@@ -161,26 +167,29 @@ void EditScene::ArrangeWidgets()
     header->addWidget(_addButton);
     header->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
 
-//    ModularLayout* videoArea = new ModularLayout();
+    // video area layout
     _videoArea->addWidget(_videoWidget);
     _videoArea->setSpacing(0);
     _videoArea->setMargin(0);
 
+    // time area layout
     ModularLayout* timeArea = new ModularLayout();
     timeArea->addWidget(_timeLabel);
     timeArea->GetLayoutWidget()->setStyleSheet("QWidget {background: #011502;}");
 
+    // pause area layout
     ModularLayout* pauseArea = new ModularLayout();
     pauseArea->addStretch();
     pauseArea->addWidget(_pauseButton);
     pauseArea->addWidget(_volumeButton);
     pauseArea->addStretch();
 
+    // video editing area layout
     ModularLayout* videoEditArea = new ModularLayout();
     videoEditArea->setContentsMargins(1, 0, 1, 3);
     videoEditArea->addWidget(_videoSlider);
 
-//    ModularLayout* thumbnailArea = new ModularLayout();
+    // add all the thumbnail buttons to the thumbnail area
     for (auto thumbnail : _thumbnails)
     {
         _thumbnailArea->addWidget(thumbnail);
@@ -188,6 +197,7 @@ void EditScene::ArrangeWidgets()
     _thumbnailArea->setSpacing(0);
     _thumbnailArea->setMargin(0);
 
+    // reorder/remove area layout
     ModularLayout* reorderArea = new ModularLayout();
     reorderArea->addStretch();
     reorderArea->addWidget(_moveLeft);
@@ -195,6 +205,7 @@ void EditScene::ArrangeWidgets()
     reorderArea->addWidget(_removeButton);
     reorderArea->addStretch();
 
+    // footer layout
     ModularLayout* footer = new ModularLayout();
     footer->addStretch();
     footer->addWidget(_trimButton);
@@ -224,6 +235,7 @@ void EditScene::ArrangeWidgets()
     mainLayout->addWidget(reorderArea->GetLayoutWidget());
     mainLayout->addWidget(footer->GetLayoutWidget());
 
+    // set the padding to 0
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
     mainLayout->setContentsMargins(0,0,0,0);
@@ -233,7 +245,7 @@ void EditScene::ArrangeWidgets()
 
 void EditScene::UpdateScene()
 {
-   // update thumbnails
+   // remove all the thumbnails
     while (_thumbnailArea->count() > 0)
     {
         QWidget *w = _thumbnailArea->takeAt(0)->widget();
@@ -242,19 +254,23 @@ void EditScene::UpdateScene()
     }
     _thumbnails.clear();
 
+    // lopp through the current project's videos to generate buttons and thumbnails
     for (int i = 0; i < _videoManager.GetTotalVideos(); i++)
     {
+        // add a button to thumbnails
         _thumbnails.append(new QPushButton());
         _thumbnails[i]->setFixedHeight(80);
         _thumbnails[i]->setToolTip(tr("Reorder Video"));
+        // calculate the file path the thumbnail will be at
         QString filePath = _videoManager.GetVideo(i)->GetFilePath();
         QString thumbnailPath = filePath.left(filePath.length() - 4) + ".png";
-        if (QFile(thumbnailPath).exists()) // if file exists
+        if (QFile(thumbnailPath).exists()) // if thumbnail file exists
         {
             QImageReader *imageReader = new QImageReader(thumbnailPath);
             QImage sprite = imageReader->read(); // read the thumbnail image
             if (!sprite.isNull())
             {
+                // if reading was successful, set the icon of the button to the thumbnail
                 _thumbnails[i]->setIcon(QIcon(QPixmap::fromImage(sprite)));
                 _thumbnails[i]->setIconSize(QSize(_thumbnails[i]->width() - 20, _thumbnails[i]->height() - 20));
             } else
@@ -263,6 +279,7 @@ void EditScene::UpdateScene()
             _thumbnails[i]->setText(tr("No thumbnail for this video"));
         _thumbnails[i]->setEnabled(false);
         _thumbnails[i]->setStyleSheet("QPushButton { background: black; }");
+        // add to layout
         _thumbnailArea->addWidget(_thumbnails[i]);
     }
 
@@ -270,7 +287,7 @@ void EditScene::UpdateScene()
     _durationIndex = 0;
     _totalDuration = 0;
 
-    // remove from video area
+    // remove video widget from video area
     QWidget *w = _videoArea->takeAt(0)->widget();
     if (w)
         w->deleteLater();
@@ -285,7 +302,6 @@ void EditScene::UpdateScene()
     _videoArea->addWidget(_videoWidget);
 
     //  if there is at least one video in the project, play it
-
     if (_videoManager.GetTotalVideos() > 0)
     {
         _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(0)->GetFilePath())));
@@ -309,6 +325,7 @@ void EditScene::UpdateScene()
     _pauseButton->setIcon(QIcon(":icons/pauseIcon.svg"));
     _volumeButton->setIcon(QIcon(":icons/muteIcon.svg"));
 
+    // set a notify interval to ensure clean display
     _videoPlayer->setNotifyInterval(100);
 
 
@@ -328,6 +345,7 @@ void EditScene::UpdateScene()
 
 void EditScene::Retranslate()
 {
+    // translate the strings into a specified language
     _backButton->setToolTip(tr("Go Back"));
     _saveButton->setToolTip(tr("Save"));
     _addButton->setToolTip(tr("Add Video"));
@@ -396,22 +414,25 @@ void EditScene::thumbnailClicked()
             _thumbnails[i]->setEnabled(false);
     }
 
+    // disable any buttons if they are at the ends of the project to ensure no errors occur
     if (_reorderVideoIndex == 0)
         _moveLeft->setEnabled(false);
     if (_reorderVideoIndex == _thumbnails.size()-1)
         _moveRight->setEnabled(false);
+    // allow user to remove the current video
     _removeButton->setEnabled(true);
 }
 
 void EditScene::reorderLeft()
 {
+    // renable the thumbnails and disable the reorder and remove buttons until a thumbnail is clicked on again
     for (auto thumbnail : _thumbnails)
         thumbnail->setEnabled(true);
     _moveLeft->setEnabled(false);
     _moveRight->setEnabled(false);
     _removeButton->setEnabled(false);
 
-    // swap videos
+    // swap videos by swapping start and end times, and then moving them in the videos list
     Video* second = _videoManager.GetVideo(_reorderVideoIndex);
     int secondEnd = second->GetEnd();
     int secondDuration = second->GetDuration();
@@ -443,13 +464,14 @@ void EditScene::reorderLeft()
 
 void EditScene::reorderRight()
 {
+    // renable the thumbnails and disable the reorder and remove buttons until a thumbnail is clicked on again
     for (auto thumbnail : _thumbnails)
         thumbnail->setEnabled(true);
     _moveLeft->setEnabled(false);
     _moveRight->setEnabled(false);
     _removeButton->setEnabled(false);
 
-    // swap videos
+    // swap videos by swapping start and end times, and then moving them in the videos list
     Video* first = _videoManager.GetVideo(_reorderVideoIndex);
     int firstStart = first->GetStart();
     int secondEnd = _videoManager.GetVideo(_reorderVideoIndex+1)->GetEnd();
@@ -483,11 +505,13 @@ void EditScene::pausePlay()
     // change icon and state based on current state
     if (_videoPlayer->state() == QMediaPlayer::PausedState)
     {
+        // if paused, play
         _videoPlayer->play();
         _pauseButton->setIcon(QIcon(":/icons/pauseIcon.svg"));
         _pauseButton->setToolTip("Pause");
     } else
     {
+        // if playing, pause
         _videoPlayer->Pause();
         _pauseButton->setIcon(QIcon(":/icons/playIcon.svg"));
         _pauseButton->setToolTip("Play");
@@ -525,6 +549,7 @@ void EditScene::changeTime(qint64 time)
     // find the durations of the videos by playing each one at the start
     if (_videoPlayer->duration() > 0 && _durationIndex < _videoManager.GetTotalVideos() - 1 && (_fin || _first))
     {
+        // reset _fin and _first
         _fin = false;
         _first = false;
         // change the video playing
@@ -535,11 +560,13 @@ void EditScene::changeTime(qint64 time)
         _totalDuration += _videoPlayer->duration();
         _videoManager.GetVideo(_durationIndex)->SetEnd(_totalDuration);
 
+        // one video is loaded so increment _durationIndex
         _durationIndex++;
 
         // change the video playing
         _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(_durationIndex)->GetFilePath())));
 
+        // this if statement has finished so we can allow the next one to proceed
         _fin = true;
 
     }
@@ -554,18 +581,23 @@ void EditScene::changeTime(qint64 time)
         else
             _videoManager.GetVideo(_durationIndex)->SetStart(0);
 
+        // set the total duration
         _totalDuration += _videoPlayer->duration();
 
         _videoManager.GetVideo(_durationIndex)->SetEnd(_totalDuration);
+        //increment _durationIndex to signal that all video files are loaded
         _durationIndex += 1;
+        // set the first video in the project to play
         _videoPlayer->setMedia(QUrl(QUrl::fromLocalFile(_videoManager.GetVideo(0)->GetFilePath())));
 
+        // enable the buttons now videos are loaded
         _pauseButton->setEnabled(true);
         _volumeButton->setEnabled(true);
         _videoSlider->setEnabled(true);
         for (auto thumbnail : _thumbnails)
             thumbnail->setEnabled(true);
 
+        // play the first video in the project
         _videoPlayer->SetCurrentTime(0);
         _videoPlayer->SetCurrentVideo(_videoManager.GetVideo(0));
         _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
@@ -633,16 +665,19 @@ void EditScene::removeVideo()
 
 void EditScene::showProjects()
 {
+    // show the projects scene
     _sceneManager.SetScene("projects");
 }
 
 void EditScene::saveChanges()
 {
+    // get the current project and save it
     Project* currentProject = _projectManager.GetCurrentProject();
     _videoManager.SaveVideos(currentProject->GetProjectPath());
 }
 
 void EditScene::showVideoLibrary()
 {
+    // show the video gallery scene to let the user add videos
     _sceneManager.SetScene("gallery");
 }

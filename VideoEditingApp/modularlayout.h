@@ -9,6 +9,7 @@ class ModularLayout : public QHBoxLayout
     public:
         ModularLayout()  : QHBoxLayout()
         {
+            // set a layout widget for the layout automatically
             _layoutWidget = new QWidget();
             _layoutWidget->setLayout(this);
         };
