@@ -25,6 +25,7 @@ void CreateProjectScene::CreateWidgets()
 
 void CreateProjectScene::ArrangeWidgets()
 {
+    // all layouts will go inside the main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -48,6 +49,7 @@ void CreateProjectScene::ArrangeWidgets()
     buttonLayout->addWidget(_createProject);
     buttonLayout->addStretch();
 
+    // set the layouts of the respective layout widgets
     header->GetLayoutWidget()->setLayout(header);
     inputLayout->GetLayoutWidget()->setLayout(inputLayout);
     buttonLayout->GetLayoutWidget()->setLayout(buttonLayout);
@@ -57,9 +59,11 @@ void CreateProjectScene::ArrangeWidgets()
     inputBoxLayout->addWidget(inputLayout->GetLayoutWidget());
     inputBoxLayout->addWidget(buttonLayout->GetLayoutWidget());
 
+    // create a group box for the user to enter the project name in
     QGroupBox* inputBox = new QGroupBox();
     inputBox->setLayout(inputBoxLayout);
 
+    // add the widgets to the main layout and show it
     mainLayout->addWidget(header->GetLayoutWidget());
     mainLayout->addStretch();
     mainLayout->addWidget(inputBox);
@@ -70,6 +74,7 @@ void CreateProjectScene::ArrangeWidgets()
 
 void CreateProjectScene::Retranslate()
 {
+    // translate the strings into a specified language
     _backButton->setToolTip(tr("Go Back"));
     _nameLabel->setText(tr("Project Name: "));
     _createProject->setText(tr("Create Project"));
@@ -83,15 +88,18 @@ void CreateProjectScene::UpdateScene()
 
 void CreateProjectScene::MakeConnections()
 {
+    // if the create project button is pressed, create the project and show the edit scene or projects scene
     connect(_createProject, SIGNAL(clicked()), this, SLOT(CreateProject()));
-
+    // if the back button is pressed show the projects scene
     connect(_backButton, SIGNAL(clicked()), this, SLOT(GoBack()));
 }
 
 void CreateProjectScene::CreateProject()
 {
+    // create a project with the name the user entered
     Project* project = _projectManager.CreateProject(_nameInput->text());
 
+    // set the current project and show next scene
     if(project != NULL)
     {
         _projectManager.SetCurrentProject(project);
@@ -104,5 +112,6 @@ void CreateProjectScene::CreateProject()
 
 void CreateProjectScene::GoBack()
 {
+    // return to the projects screen
     _sceneManager.SetScene("projects");
 }

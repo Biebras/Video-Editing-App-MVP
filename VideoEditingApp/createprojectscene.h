@@ -13,6 +13,7 @@ class CreateProjectScene : public Scene
     public:
         CreateProjectScene(QString sceneName) : Scene(sceneName)
         {
+            //initialise the scene
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();

@@ -15,6 +15,7 @@ class EditScene : public Scene
     public:
         EditScene(QString sceneName) : Scene(sceneName)
         {
+            // initialise the scene
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
@@ -53,7 +54,7 @@ class EditScene : public Scene
         ModularLayout* _thumbnailArea = new ModularLayout();
         ModularLayout* _videoArea = new ModularLayout();
 
-
+        // to keep track of which videos have been loaded to the video player
         bool _fin = false;
         bool _first = true;
 

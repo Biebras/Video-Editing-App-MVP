@@ -14,6 +14,7 @@ class ProjectsScene : public Scene
     public:
         ProjectsScene(QString sceneName) : Scene(sceneName)
         {
+            // initialise the scene
             CreateWidgets();
             ArrangeWidgets();
             MakeConnections();
@@ -37,8 +38,6 @@ class ProjectsScene : public Scene
         QPushButton* _franch;
         QPushButton* _cat;
         QList<QPushButton*> _projectButtons;
-
-        // no way of finding previous projects, so leave displaying those for now
 
     public slots:
         void ChangeSceneToCreateProject();
