@@ -203,6 +203,7 @@ void VideoGalleryScene::AddVideo()
 
 void VideoGalleryScene::FindVideos()
 {
+    // get file explorer
     #if defined(_WIN32)
     QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/home",tr("Videos and thumbnails (*.wmv *.png)"));
     #else
@@ -210,6 +211,7 @@ void VideoGalleryScene::FindVideos()
     #endif
     Project* currentProject = _projectManager.GetCurrentProject();
 
+    //loop through selected files
     foreach(auto path, fileNames)
     {
         //Copy files
@@ -218,20 +220,24 @@ void VideoGalleryScene::FindVideos()
         QString copyPath = currentProject->GetProjectPath() + "/" + fileInfo.fileName();
         QFile copyFile(copyPath);
 
+        //if copy file does not exist continue with other files
         if(copyFile.exists())
         {
             qDebug() << "Can't copy video: " + copyPath + " as it already exists in target directory";
             continue;
         }
 
+        //copy to project directory
         QFile::copy(path, copyPath);
 
+        // if copy failed continue with other files
         if(file.error() != QFile::NoError)
         {
             qDebug() << "Can't copy video: " + path + " as there was some errors";
             continue;
         }
 
+        //if thumbnail, continue with orhet files
         if(fileInfo.fileName().contains(".png"))
             continue;
 
