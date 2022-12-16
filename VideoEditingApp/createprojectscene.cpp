@@ -72,6 +72,7 @@ void CreateProjectScene::Retranslate()
 {
     _backButton->setToolTip(tr("Go Back"));
     _nameLabel->setText(tr("Project Name: "));
+    _createProject->setText(tr("Create Project"));
     _createProject->setToolTip(tr("Create Project"));
 }
 

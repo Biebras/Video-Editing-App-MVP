@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en">
+<TS version="2.1" language="cs_CZ">
 <context>
     <name>CreateProjectScene</name>
     <message>
         <location filename="../createprojectscene.cpp" line="9"/>
+        <location filename="../createprojectscene.cpp" line="73"/>
         <source>Go Back</source>
         <translation>Mow Meow</translation>
     </message>
     <message>
-        <location filename="../createprojectscene.cpp" line="14"/>
+        <location filename="../createprojectscene.cpp" line="15"/>
+        <location filename="../createprojectscene.cpp" line="74"/>
         <source>Project Name: </source>
         <translation>Meeow Meow: </translation>
     </message>
     <message>
-        <location filename="../createprojectscene.cpp" line="20"/>
         <location filename="../createprojectscene.cpp" line="21"/>
+        <location filename="../createprojectscene.cpp" line="22"/>
+        <location filename="../createprojectscene.cpp" line="75"/>
         <source>Create Project</source>
         <translation>Meoow Meow</translation>
     </message>
@@ -24,70 +27,97 @@
     <name>EditScene</name>
     <message>
         <location filename="../editscene.cpp" line="13"/>
+        <location filename="../editscene.cpp" line="331"/>
         <source>Go Back</source>
         <translation>Mo Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="19"/>
+        <location filename="../editscene.cpp" line="20"/>
+        <location filename="../editscene.cpp" line="332"/>
         <source>Save</source>
         <translation>Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="25"/>
+        <location filename="../editscene.cpp" line="27"/>
+        <location filename="../editscene.cpp" line="333"/>
         <source>Add Video</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="54"/>
+        <location filename="../editscene.cpp" line="57"/>
+        <location filename="../editscene.cpp" line="334"/>
         <source>Pause</source>
         <translation>Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="61"/>
+        <location filename="../editscene.cpp" line="65"/>
+        <location filename="../editscene.cpp" line="335"/>
         <source>Mute Volume</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="68"/>
+        <location filename="../editscene.cpp" line="73"/>
+        <location filename="../editscene.cpp" line="336"/>
         <source>Move through video</source>
         <translation>Meow Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="81"/>
-        <location filename="../editscene.cpp" line="215"/>
+        <location filename="../editscene.cpp" line="86"/>
+        <location filename="../editscene.cpp" line="249"/>
         <source>Reorder Video</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="94"/>
-        <location filename="../editscene.cpp" line="96"/>
-        <location filename="../editscene.cpp" line="227"/>
-        <location filename="../editscene.cpp" line="229"/>
+        <location filename="../editscene.cpp" line="99"/>
+        <location filename="../editscene.cpp" line="101"/>
+        <location filename="../editscene.cpp" line="261"/>
+        <location filename="../editscene.cpp" line="263"/>
         <source>No thumbnail for this video</source>
         <translation>Meow Meow Meow Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="115"/>
+        <location filename="../editscene.cpp" line="109"/>
+        <location filename="../editscene.cpp" line="337"/>
+        <source>Move left</source>
+        <translation>Meow meow</translation>
+    </message>
+    <message>
+        <location filename="../editscene.cpp" line="117"/>
+        <location filename="../editscene.cpp" line="338"/>
+        <source>Move right</source>
+        <translation>Meow meow</translation>
+    </message>
+    <message>
+        <location filename="../editscene.cpp" line="125"/>
+        <location filename="../editscene.cpp" line="339"/>
+        <source>Remove video</source>
+        <translation>Meoow meow</translation>
+    </message>
+    <message>
+        <location filename="../editscene.cpp" line="134"/>
+        <location filename="../editscene.cpp" line="340"/>
         <source>Trim Video</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="120"/>
+        <location filename="../editscene.cpp" line="141"/>
+        <location filename="../editscene.cpp" line="341"/>
         <source>Add Effects</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="125"/>
+        <location filename="../editscene.cpp" line="148"/>
+        <location filename="../editscene.cpp" line="342"/>
         <source>Add Audio</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="566"/>
+        <location filename="../editscene.cpp" line="604"/>
         <source>Unmute video</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../editscene.cpp" line="573"/>
+        <location filename="../editscene.cpp" line="611"/>
         <source>Mute video</source>
         <translation>Meow Meow</translation>
     </message>
@@ -95,49 +125,91 @@
 <context>
     <name>ProjectsScene</name>
     <message>
-        <location filename="../projectsscene.cpp" line="9"/>
+        <location filename="../projectsscene.cpp" line="14"/>
+        <location filename="../projectsscene.cpp" line="135"/>
+        <source>English Language</source>
+        <translation>Mew</translation>
+    </message>
+    <message>
+        <location filename="../projectsscene.cpp" line="20"/>
+        <location filename="../projectsscene.cpp" line="136"/>
+        <source>French Language</source>
+        <translation>Mehow</translation>
+    </message>
+    <message>
+        <location filename="../projectsscene.cpp" line="26"/>
+        <location filename="../projectsscene.cpp" line="137"/>
+        <source>Cat Language</source>
+        <translation>Meow</translation>
+    </message>
+    <message>
+        <location filename="../projectsscene.cpp" line="35"/>
+        <location filename="../projectsscene.cpp" line="139"/>
         <source>My Projects</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../projectsscene.cpp" line="14"/>
+        <location filename="../projectsscene.cpp" line="115"/>
+        <source>Select Project</source>
+        <translation>Meow Meoooow</translation>
+    </message>
+    <message>
+        <location filename="../projectsscene.cpp" line="29"/>
+        <location filename="../projectsscene.cpp" line="138"/>
         <source>Create Project</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../projectsscene.cpp" line="37"/>
         <source>projectName</source>
-        <translation>MeowMeow</translation>
+        <translation type="vanished">MeowMeow</translation>
     </message>
 </context>
 <context>
     <name>VideoGalleryScene</name>
     <message>
         <location filename="../videogalleryscene.cpp" line="17"/>
-        <location filename="../videogalleryscene.cpp" line="137"/>
+        <location filename="../videogalleryscene.cpp" line="142"/>
         <source>Select Video</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
         <location filename="../videogalleryscene.cpp" line="28"/>
         <location filename="../videogalleryscene.cpp" line="30"/>
-        <location filename="../videogalleryscene.cpp" line="150"/>
-        <location filename="../videogalleryscene.cpp" line="152"/>
+        <location filename="../videogalleryscene.cpp" line="155"/>
+        <location filename="../videogalleryscene.cpp" line="157"/>
         <source>No thumbnail for this video</source>
         <translation>MeowMeow</translation>
     </message>
     <message>
         <location filename="../videogalleryscene.cpp" line="40"/>
+        <location filename="../videogalleryscene.cpp" line="187"/>
         <source>Go Back</source>
         <translation>MeowMeow</translation>
     </message>
     <message>
-        <location filename="../videogalleryscene.cpp" line="43"/>
+        <location filename="../videogalleryscene.cpp" line="188"/>
         <source>Video Gallery</source>
         <translation>Meow Meow</translation>
     </message>
     <message>
-        <location filename="../videogalleryscene.cpp" line="48"/>
+        <location filename="../videogalleryscene.cpp" line="207"/>
+        <location filename="../videogalleryscene.cpp" line="209"/>
+        <source>Open File</source>
+        <translation>Meow meoww</translation>
+    </message>
+    <message>
+        <location filename="../videogalleryscene.cpp" line="207"/>
+        <source>Videos and thumbnails (*.wmv *.png)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../videogalleryscene.cpp" line="209"/>
+        <source>Videos and thumbnails  (*.mp4 *.MOV *.png)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../videogalleryscene.cpp" line="47"/>
+        <location filename="../videogalleryscene.cpp" line="189"/>
         <source>Add Video(s)</source>
         <translation>MeowMeow Meow</translation>
     </message>

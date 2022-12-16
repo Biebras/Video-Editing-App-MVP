@@ -106,7 +106,7 @@ void EditScene::CreateWidgets()
     // reorder buttons
     _moveLeft = new QPushButton();
     _moveLeft->setIcon(QIcon(":/icons/moveLeft.svg"));
-    _moveLeft->setToolTip("Move left");
+    _moveLeft->setToolTip(tr("Move left"));
     _moveLeft->setFixedSize(QSize(30, 30));
     _moveLeft->setIconSize(QSize(25, 25));
     _moveLeft->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
@@ -114,7 +114,7 @@ void EditScene::CreateWidgets()
 
     _moveRight = new QPushButton();
     _moveRight->setIcon(QIcon(":/icons/rightIcon.svg"));
-    _moveRight->setToolTip("Move right");
+    _moveRight->setToolTip(tr("Move right"));
     _moveRight->setFixedSize(QSize(30, 30));
     _moveRight->setIconSize(QSize(25, 25));
     _moveRight->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
@@ -122,7 +122,7 @@ void EditScene::CreateWidgets()
 
     _removeButton = new QPushButton();
     _removeButton->setIcon(QIcon(":/icons/removeIcon.svg"));
-    _removeButton->setToolTip("Remove video");
+    _removeButton->setToolTip(tr("Remove video"));
     _removeButton->setFixedSize(QSize(30, 30));
     _removeButton->setIconSize(QSize(25, 25));
     _removeButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
@@ -334,9 +334,9 @@ void EditScene::Retranslate()
     _pauseButton->setToolTip(tr("Pause"));
     _volumeButton->setToolTip(tr("Mute Volume"));
     _videoSlider->setToolTip(tr("Move through video"));
-     _moveLeft->setToolTip("Move left");
-    _moveRight->setToolTip("Move right");
-    _removeButton->setToolTip("Remove video");
+     _moveLeft->setToolTip(tr("Move left"));
+    _moveRight->setToolTip(tr("Move right"));
+    _removeButton->setToolTip(tr("Remove video"));
     _trimButton->setToolTip(tr("Trim Video"));
     _effectButton->setToolTip(tr("Add Effects"));
     _audioButton->setToolTip(tr("Add Audio"));
