@@ -20,7 +20,6 @@ SOURCES += \
         scenemanager.cpp \
         the_button.cpp \
         the_player.cpp \
-        tomeo.cpp \
         translationmanager.cpp \
         trimscene.cpp \
         video.cpp \
