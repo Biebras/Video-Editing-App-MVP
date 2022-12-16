@@ -36,13 +36,22 @@ ProjectManager::~ProjectManager()
     _projects.clear();
 }
 
-void ProjectManager::CreateProject(QString projectName)
+Project* ProjectManager::CreateProject(QString projectName)
 {
     QDir dir(_projectsFolderPath);
+    QDir newDir(_projectsFolderPath + "/" + projectName);
+
+    if(newDir.exists() == true)
+    {
+        qDebug() << "Can't create project with this name already exists";
+        return NULL;
+    }
+
     dir.mkdir(projectName);
 
     Project* project = new Project(_projectsFolderPath + "/" + projectName, projectName);
     AddProject(project);
+    return project;
 }
 
 void ProjectManager::AddProject(Project *project)

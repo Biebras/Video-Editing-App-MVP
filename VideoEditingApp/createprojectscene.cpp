@@ -90,7 +90,14 @@ void CreateProjectScene::MakeConnections()
 
 void CreateProjectScene::CreateProject()
 {
-    _projectManager.CreateProject(_nameInput->text());
+    Project* project = _projectManager.CreateProject(_nameInput->text());
+
+    if(project != NULL)
+    {
+        _projectManager.SetCurrentProject(project);
+        _sceneManager.SetScene("edit");
+        return;
+    }
 
     _sceneManager.SetScene("projects");
 }

@@ -17,7 +17,7 @@ class ProjectManager
 
         void LoadProjects(QString projectsFolderPath);
         ~ProjectManager();
-        void CreateProject(QString projectName);
+        Project* CreateProject(QString projectName);
         void AddProject(Project* project);
         void RemoveProject(Project* project);
         void SetCurrentProject(Project* project);
