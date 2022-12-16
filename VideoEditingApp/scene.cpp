@@ -19,3 +19,8 @@ void Scene::UpdateScene()
 {
 
 }
+
+void Scene::Retranslate()
+{
+
+}

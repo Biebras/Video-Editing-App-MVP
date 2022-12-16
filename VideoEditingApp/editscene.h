@@ -21,6 +21,7 @@ class EditScene : public Scene
         };
 
         void UpdateScene() override;
+        void Retranslate() override;
 
     private:
         void CreateWidgets() override;

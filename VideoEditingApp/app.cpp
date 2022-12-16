@@ -23,11 +23,12 @@ int main(int argc, char *argv[])
 
     VideoManager& videoManager = VideoManager::Get();
     ProjectManager& projectManager = ProjectManager::Get();
+    TranslationManager& translationManager = TranslationManager::Get();
 
     //set up translation
     QTranslator translator;
-    translator.load(":languages/translation_en.qm");
-    app.installTranslator(&translator);
+
+    translationManager.InitTranslation(translator);
 
     projectManager.LoadProjects(argv[1]);
 

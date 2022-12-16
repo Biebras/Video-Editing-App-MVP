@@ -22,6 +22,7 @@ class SceneManager
         Scene* GetScene(QString sceneName);
         Scene* GetCurrentScene();
         void UpdateCurrentScene();
+        void RetranslateScenes();
         void ShowWindow();
         PrimaryWindow* GetWindow();
 

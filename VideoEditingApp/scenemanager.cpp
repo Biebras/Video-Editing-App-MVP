@@ -58,6 +58,14 @@ void SceneManager::UpdateCurrentScene()
         _currentScene->UpdateScene();
 }
 
+void SceneManager::RetranslateScenes()
+{
+    foreach(auto scene, _scenes)
+    {
+        scene->Retranslate();
+    }
+}
+
 Scene* SceneManager::GetScene(QString sceneName)
 {
     foreach(auto scene, _scenes)

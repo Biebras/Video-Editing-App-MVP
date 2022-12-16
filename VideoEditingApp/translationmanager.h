@@ -1,8 +1,10 @@
 #ifndef TRANSLATIONMANAGER_H
 #define TRANSLATIONMANAGER_H
 
+#include <QTranslator>
 #include <QApplication>
-#include <QtWidgets>
+#include <QDebug>
+#include "scenemanager.h"
 
 class TranslationManager
 {
@@ -15,12 +17,13 @@ class TranslationManager
             return instance;
         };
 
-        void InitTranslations();
-        void SetLanguage(QString language, QApplication& app);
+        void InitTranslation(QTranslator& translator);
+        void SetLanguage(QString language);
 
     private:
-        TranslationManager(){};
+        TranslationManager(){}
         QTranslator* _translator;
+        SceneManager& _sceneManager = SceneManager::Get();
 };
 
 #endif // TRANSLATIONMANAGER_H

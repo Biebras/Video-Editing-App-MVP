@@ -129,3 +129,13 @@ void TrimScene::MakeConnections()
      *
      **/
 }
+
+void TrimScene::Retranslate()
+{
+
+}
+
+void TrimScene::UpdateScene()
+{
+
+}

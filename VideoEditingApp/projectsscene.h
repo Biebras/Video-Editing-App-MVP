@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include "scenemanager.h"
 #include "projectmanager.h"
+#include "translationmanager.h"
 
 class ProjectsScene : public Scene
 {
@@ -19,6 +20,7 @@ class ProjectsScene : public Scene
         };
 
         void UpdateScene() override;
+        void Retranslate() override;
 
     private:
         void CreateWidgets() override;
@@ -26,6 +28,7 @@ class ProjectsScene : public Scene
         void MakeConnections() override;
         SceneManager& _sceneManager = SceneManager::Get();
         ProjectManager& _projectManager = ProjectManager::Get();
+        TranslationManager& _translationManager = TranslationManager::Get();
         QVBoxLayout* _mainLayout = new QVBoxLayout();
         QVBoxLayout* _projectsLayout = new QVBoxLayout();
         QLabel* _title;

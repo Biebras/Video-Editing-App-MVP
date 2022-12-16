@@ -1,14 +1,15 @@
 #include "translationmanager.h"
-#include <QDebug>
-#include <QTranslator>
-#include <QApplication>
 
-void TranslationManager::InitTranslations()
+void TranslationManager::InitTranslation(QTranslator& translator)
 {
-//    _translator = &translator;
+    _translator = &translator;
+
+    SetLanguage("en");
 }
 
-void TranslationManager::SetLanguage(QString language, QApplication& app)
+void TranslationManager::SetLanguage(QString language)
 {
-
+    _translator->load(":languages/translation_" + language + ".qm");
+    qApp->installTranslator(_translator);
+    _sceneManager.RetranslateScenes();
 }

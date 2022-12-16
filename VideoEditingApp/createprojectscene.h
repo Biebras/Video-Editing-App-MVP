@@ -18,6 +18,9 @@ class CreateProjectScene : public Scene
             MakeConnections();
         };
 
+        void UpdateScene() override;
+        void Retranslate() override;
+
     private:
         void CreateWidgets() override;
         void ArrangeWidgets() override;

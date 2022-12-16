@@ -20,6 +20,7 @@ class Scene : public QWidget
         }
 
         virtual void UpdateScene();
+        virtual void Retranslate();
 
     private:
         virtual void CreateWidgets();

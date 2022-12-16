@@ -41,10 +41,6 @@ void VideoGalleryScene::CreateWidgets()
     _backButton->setFixedSize(QSize(50, 50));
     _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
 
-    _title = new QLabel(tr("Video Gallery"));
-    _title->setAlignment(Qt::AlignCenter);
-    _title->setStyleSheet("font: 20pt 'Helvetica Neue'; color: #FCEA4D; font-weight: bold;");
-
     _addVideos = new QPushButton();
     _addVideos->setIcon(QIcon(":icons/addIcon.png"));
     _addVideos->setToolTip(tr("Add Video(s)"));
@@ -193,6 +189,13 @@ void VideoGalleryScene::UpdateScene()
             connect(_selectVideos[index], SIGNAL(clicked()), this, SLOT(AddVideo()));
         }
     }
+}
+
+void VideoGalleryScene::Retranslate()
+{
+    _backButton->setToolTip(tr("Go Back"));
+    _title->setText(tr("Video Gallery"));
+    _addVideos->setToolTip(tr("Add Video(s)"));
 }
 
 void VideoGalleryScene::GoBack()

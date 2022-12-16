@@ -11,7 +11,7 @@ void ProjectsScene::CreateWidgets()
     _english->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
     _english->setIcon(QIcon(":icons/united-kingdom.png"));
     _english->setIconSize(QSize(25, 25));
-    _english->setToolTip(tr("Eanglish Language"));
+    _english->setToolTip(tr("English Language"));
     _franch = new QPushButton();
     _franch->setFixedSize(QSize(50, 50));
     _franch->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
@@ -61,10 +61,6 @@ void ProjectsScene::ArrangeWidgets()
 
     title->GetLayoutWidget()->setLayout(title);
 
-    
-    QPushButton* projectButton = new QPushButton(tr("projectName"));
-    _projectsLayout->addWidget(projectButton);
-
     _mainLayout->addWidget(header->GetLayoutWidget());
     _mainLayout->addWidget(title->GetLayoutWidget());
 
@@ -86,8 +82,8 @@ void ProjectsScene::ArrangeWidgets()
 void ProjectsScene::MakeConnections()
 { 
     connect(_addProject, SIGNAL(clicked()), this, SLOT(ChangeSceneToCreateProject()));
-    //connect(_english, SIGNAL(clicked()), this, SLOT(ChangeLanToEn()));
-    //connect(_franch, SIGNAL(clicked()), this, SLOT(ChangeLanToFr()));
+    connect(_english, SIGNAL(clicked()), this, SLOT(ChangeLanToEn()));
+    connect(_franch, SIGNAL(clicked()), this, SLOT(ChangeLanToFr()));
     connect(_cat, SIGNAL(clicked()), this, SLOT(ChangeLanToCat()));
     /** connections:
      *  add project button -> create project scene
@@ -115,7 +111,7 @@ void ProjectsScene::UpdateScene()
         QString projectName =  project->GetProjectName();
         QPushButton* projectButton = new QPushButton(projectName);
         projectButton->setFixedHeight(100);
-        projectButton->setToolTip("Select Project");
+        projectButton->setToolTip(tr("Select Project"));
         _projectButtons.push_back(projectButton);
         _projectsLayout->addWidget(projectButton);
         projectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; height: 50px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
@@ -133,6 +129,16 @@ void ProjectsScene::UpdateScene()
 
 }
 
+void ProjectsScene::Retranslate()
+{
+    _english->setToolTip(tr("English Language"));
+    _franch->setToolTip(tr("French Language"));
+    _cat->setToolTip(tr("Cat Language"));
+    _addProject->setToolTip(tr("Create Project"));
+    _title->setText(tr("My Projects"));
+    UpdateScene();
+}
+
 void ProjectsScene::ChangeSceneToCreateProject()
 {
     _sceneManager.SetScene("createProject");
@@ -140,15 +146,15 @@ void ProjectsScene::ChangeSceneToCreateProject()
 
 void ProjectsScene::ChangeLanToEn()
 {
-    //qApp->removeTranslator(&transl)
+    _translationManager.SetLanguage("en");
 }
 
 void ProjectsScene::ChangeLanToFr()
 {
-    //_sceneManager.SetScene("createProject");
+    _translationManager.SetLanguage("fr");
 }
 
 void ProjectsScene::ChangeLanToCat()
 {
-
+    _translationManager.SetLanguage("meow");
 }

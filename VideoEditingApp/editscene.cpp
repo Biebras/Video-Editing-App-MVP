@@ -314,6 +314,22 @@ void EditScene::UpdateScene()
     connect(_videoPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(changeMediaStatus(QMediaPlayer::MediaStatus)));
 }
 
+void EditScene::Retranslate()
+{
+    _backButton->setToolTip(tr("Go Back"));
+    _saveButton->setToolTip(tr("Save"));
+    _addButton->setToolTip(tr("Add Video"));
+    _pauseButton->setToolTip(tr("Pause"));
+    _volumeButton->setToolTip(tr("Mute Volume"));
+    _videoSlider->setToolTip(tr("Move through video"));
+     _moveLeft->setToolTip("Move left");
+    _moveRight->setToolTip("Move right");
+    _removeButton->setToolTip("Remove video");
+    _trimButton->setToolTip(tr("Trim Video"));
+    _effectButton->setToolTip(tr("Add Effects"));
+    _audioButton->setToolTip(tr("Add Audio"));
+}
+
 void EditScene::MakeConnections()
 {
     // when back button pressed go to projects scene

@@ -64,6 +64,18 @@ void CreateProjectScene::ArrangeWidgets()
     this->setLayout(mainLayout);
 }
 
+void CreateProjectScene::Retranslate()
+{
+    _backButton->setToolTip(tr("Go Back"));
+    _nameLabel->setText(tr("Project Name: "));
+    _createProject->setToolTip(tr("Create Project"));
+}
+
+void CreateProjectScene::UpdateScene()
+{
+
+}
+
 void CreateProjectScene::MakeConnections()
 {
     connect(_createProject, SIGNAL(clicked()), this, SLOT(CreateProject()));
