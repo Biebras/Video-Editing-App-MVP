@@ -23,7 +23,7 @@ void Project::LoadProjectVideos()
     // Delete the current project
     _videos.clear();
 
-    //Create access to directory's contet
+    //Create access to directory's contetedit
     QDir dir (_pathName);
     //Create itirator to iterate directories
     QDirIterator itirator(dir);

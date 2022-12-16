@@ -9,22 +9,25 @@ void EditScene::CreateWidgets()
 {
     // header
     _backButton = new QPushButton("");
-    _backButton->setIcon(QIcon(":/icons/backIcon.png"));
+    _backButton->setIcon(QIcon(":/icons/backButton.svg"));
     _backButton->setToolTip(tr("Go Back"));
-    _backButton->setFixedSize(QSize(50, 50));
-    _backButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-    
+    _backButton->setFixedSize(QSize(30, 30));
+    _backButton->setIconSize(QSize(25, 25));
+    _backButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
+
     _saveButton = new QPushButton();
-    _saveButton->setIcon(QIcon(":/icons/diskette.png"));
+    _saveButton->setIcon(QIcon(":/icons/save.svg"));
     _saveButton->setToolTip(tr("Save"));
-    _saveButton->setFixedSize(QSize(50, 50));
-    _saveButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _saveButton->setFixedSize(QSize(30, 30));
+    _saveButton->setIconSize(QSize(25, 25));
+    _saveButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 
     _addButton = new QPushButton();
-    _addButton->setIcon(QIcon(":/icons/addIcon.png"));
+    _addButton->setIcon(QIcon(":/icons/addIcon.svg"));
     _addButton->setToolTip(tr("Add Video"));
-    _addButton->setFixedSize(QSize(50,50));
-    _addButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _addButton->setFixedSize(QSize(30,30));
+    _addButton->setIconSize(QSize(25, 25));
+    _addButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 
     // video area
     _videoWidget = new QVideoWidget();
@@ -46,21 +49,23 @@ void EditScene::CreateWidgets()
     // time area
     _timeLabel = new QLabel();
     _timeLabel->setAlignment(Qt::AlignCenter);
-    _timeLabel->setStyleSheet("font-size: 18pt; color: #9EC5AB;");
+    _timeLabel->setStyleSheet("font-size: 11pt; color: #9EC5AB;");
 
     // pause/play area
     _pauseButton = new QPushButton();
-    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
+    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.svg"));
     _pauseButton->setToolTip(tr("Pause"));
-    _pauseButton->setFixedSize(QSize(50, 50));
-
-    _pauseButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _pauseButton->setFixedSize(QSize(30, 30));
+    _pauseButton->setIconSize(QSize(25, 25));
+    _pauseButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
     _pauseButton->setEnabled(false);
+
     _volumeButton = new QPushButton();
-    _volumeButton->setIcon(QIcon(":/icons/muteIcon.png"));
+    _volumeButton->setIcon(QIcon(":/icons/muteIcon.svg"));
     _volumeButton->setToolTip(tr("Mute Volume"));
-    _volumeButton->setFixedSize(QSize(50, 50));
-    _volumeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _volumeButton->setFixedSize(QSize(30, 30));
+     _volumeButton->setIconSize(QSize(25, 25));
+    _volumeButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
 
     // slider area
     _videoSlider = new QSlider();
@@ -100,44 +105,50 @@ void EditScene::CreateWidgets()
 
     // reorder buttons
     _moveLeft = new QPushButton();
-    _moveLeft->setIcon(QIcon(":/icons/backIcon.png"));
+    _moveLeft->setIcon(QIcon(":/icons/moveLeft.svg"));
     _moveLeft->setToolTip("Move left");
-    _moveLeft->setFixedSize(QSize(50, 50));
-    _moveLeft->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _moveLeft->setFixedSize(QSize(30, 30));
+    _moveLeft->setIconSize(QSize(25, 25));
+    _moveLeft->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
     _moveLeft->setEnabled(false);
+
     _moveRight = new QPushButton();
-    _moveRight->setIcon(QIcon(":/icons/rightIcon.png"));
+    _moveRight->setIcon(QIcon(":/icons/rightIcon.svg"));
     _moveRight->setToolTip("Move right");
-    _moveRight->setFixedSize(QSize(50, 50));
-    _moveRight->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _moveRight->setFixedSize(QSize(30, 30));
+    _moveRight->setIconSize(QSize(25, 25));
+    _moveRight->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
     _moveRight->setEnabled(false);
 
     _removeButton = new QPushButton();
-    _removeButton->setIcon(QIcon(":/icons/removeIcon.png"));
+    _removeButton->setIcon(QIcon(":/icons/removeIcon.svg"));
     _removeButton->setToolTip("Remove video");
-    _removeButton->setFixedSize(QSize(50, 50));
-    _removeButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _removeButton->setFixedSize(QSize(30, 30));
+    _removeButton->setIconSize(QSize(25, 25));
+    _removeButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #01200F; } QPushButton:hover { background-color: #044220; }");
     _removeButton->setEnabled(false);
 
     // footer
     _trimButton = new QPushButton();
-    _trimButton->setIcon(QIcon(":/icons/trimIcon.png"));
+    _trimButton->setIcon(QIcon(":/icons/trimIcon.svg"));
     _trimButton->setToolTip(tr("Trim Video"));
-    _trimButton->setFixedSize(QSize(50, 50));
-    _trimButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _trimButton->setFixedSize(QSize(30, 30));
+    _trimButton->setIconSize(QSize(25, 25));
+    _trimButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
+
     _effectButton = new QPushButton();
-    _effectButton->setIcon(QIcon(":/icons/effectIcon.png"));
+    _effectButton->setIcon(QIcon(":/icons/effectIcon.svg"));
     _effectButton->setToolTip(tr("Add Effects"));
-    _effectButton->setFixedSize(QSize(50, 50));
-    _effectButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
+    _effectButton->setFixedSize(QSize(30, 30));
+    _effectButton->setIconSize(QSize(25, 25));
+    _effectButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
+
     _audioButton = new QPushButton();
-
-    _audioButton->setIcon(QIcon(":/icons/audioIcon.png"));
+    _audioButton->setIcon(QIcon(":/icons/audioIcon.svg"));
     _audioButton->setToolTip(tr("Add Audio"));
-
-    _audioButton->setFixedSize(QSize(50, 50));
-    _audioButton->setStyleSheet("QPushButton { border: 1px solid #104F55; border-radius: 5px; background-color: #9EC5AB; } QPushButton:hover { background-color: #FCEA4D; }");
-
+    _audioButton->setFixedSize(QSize(30, 30));
+    _audioButton->setIconSize(QSize(25, 25));
+    _audioButton->setStyleSheet("QPushButton {border-radius: 5px; background-color: #011502; } QPushButton:hover { background-color: #044220; }");
 }
 
 void EditScene::ArrangeWidgets()
@@ -166,6 +177,7 @@ void EditScene::ArrangeWidgets()
     pauseArea->addStretch();
 
     ModularLayout* videoEditArea = new ModularLayout();
+    videoEditArea->setContentsMargins(1, 0, 1, 3);
     videoEditArea->addWidget(_videoSlider);
 
 //    ModularLayout* thumbnailArea = new ModularLayout();
@@ -294,8 +306,8 @@ void EditScene::UpdateScene()
 
     // resest buttons
     _videoSlider->setValue(0);
-    _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
-    _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
+    _pauseButton->setIcon(QIcon(":icons/pauseIcon.svg"));
+    _volumeButton->setIcon(QIcon(":icons/muteIcon.svg"));
 
     _videoPlayer->setNotifyInterval(100);
 
@@ -426,7 +438,7 @@ void EditScene::reorderLeft()
     int time = _videoPlayer->GetCurrentTime2();
     _videoPlayer->Update();
     _videoPlayer->Play(time);
-    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
+    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.svg"));
 }
 
 void EditScene::reorderRight()
@@ -463,7 +475,7 @@ void EditScene::reorderRight()
     int time = _videoPlayer->GetCurrentTime2();
     _videoPlayer->Update();
     _videoPlayer->Play(time);
-    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
+    _pauseButton->setIcon(QIcon(":/icons/pauseIcon.svg"));
 }
 
 void EditScene::pausePlay()
@@ -472,12 +484,12 @@ void EditScene::pausePlay()
     if (_videoPlayer->state() == QMediaPlayer::PausedState)
     {
         _videoPlayer->play();
-        _pauseButton->setIcon(QIcon(":/icons/pauseIcon.png"));
+        _pauseButton->setIcon(QIcon(":/icons/pauseIcon.svg"));
         _pauseButton->setToolTip("Pause");
     } else
     {
         _videoPlayer->Pause();
-        _pauseButton->setIcon(QIcon(":/icons/playIcon.png"));
+        _pauseButton->setIcon(QIcon(":/icons/playIcon.svg"));
         _pauseButton->setToolTip("Play");
     }
 }
@@ -568,7 +580,7 @@ void EditScene::movedSlider(int val)
     // check if the video playing should be updatedpauseIcon
     _videoPlayer->Update();
     _videoPlayer->Play(_videoPlayer->GetCurrentTime2());
-    _pauseButton->setIcon(QIcon(":icons/pauseIcon.png"));
+    _pauseButton->setIcon(QIcon(":icons/pauseIcon.svg"));
 }
 
 void EditScene::changeMediaStatus(QMediaPlayer::MediaStatus status)
@@ -588,14 +600,14 @@ void EditScene::changeVolume()
     if (_videoPlayer->GetCurrentVideo()->GetVolume() > 0)
     {
         _videoPlayer->GetCurrentVideo()->SetVolume(0);
-        _volumeButton->setIcon(QIcon(":icons/muteIcon.png"));
+        _volumeButton->setIcon(QIcon(":icons/muteIcon.svg"));
         _volumeButton->setToolTip(tr("Unmute video"));
         _videoPlayer->setVolume(0);
     } else
     {
         // if unmuted, mute
         _videoPlayer->GetCurrentVideo()->SetVolume(1);
-        _volumeButton->setIcon(QIcon(":icons/volumeIcon.png"));
+        _volumeButton->setIcon(QIcon(":icons/volumeIcon.svg"));
         _volumeButton->setToolTip(tr("Mute video"));
         _videoPlayer->setVolume(100);
     }
